@@ -1,0 +1,364 @@
+/* type group: Heading, Text, Kicker, GradText, Mono, Code, Kbd, Prose (spec §4). */
+
+/* Scale steps (shared by Heading and Text). */
+.ui-fs-2xs {
+  font-size: var(--ui-text-2xs);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-fs-xs {
+  font-size: var(--ui-text-xs);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-fs-sm {
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-base);
+}
+
+.ui-fs-base {
+  font-size: var(--ui-text-base);
+  line-height: var(--ui-leading-base);
+}
+
+.ui-fs-md {
+  font-size: var(--ui-text-md);
+  line-height: var(--ui-leading-base);
+}
+
+.ui-fs-lg {
+  font-size: var(--ui-text-lg);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-fs-xl {
+  font-size: var(--ui-text-xl);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-fs-2xl {
+  font-size: var(--ui-text-2xl);
+  line-height: var(--ui-leading-tight);
+}
+
+.ui-fs-3xl {
+  font-size: var(--ui-text-3xl);
+  line-height: var(--ui-leading-tight);
+}
+
+.ui-fs-4xl {
+  font-size: var(--ui-text-4xl);
+  line-height: var(--ui-leading-tight);
+}
+
+.ui-fs-display {
+  font-size: var(--ui-text-display);
+  line-height: var(--ui-leading-display);
+}
+
+/* Tones and weights. */
+.ui-tone-ink-2 {
+  color: var(--ui-ink-2);
+}
+
+.ui-tone-muted {
+  color: var(--ui-muted);
+}
+
+.ui-tone-accent {
+  color: var(--ui-accent-text);
+}
+
+.ui-weight-body {
+  font-weight: var(--ui-weight-body);
+}
+
+.ui-weight-medium {
+  font-weight: var(--ui-weight-medium);
+}
+
+.ui-weight-display {
+  font-weight: var(--ui-weight-display);
+}
+
+.ui-weight-bold {
+  font-weight: var(--ui-weight-bold);
+}
+
+.ui-measure {
+  max-inline-size: var(--ui-measure);
+}
+
+/* Heading. */
+.ui-heading {
+  margin: 0;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-weight: var(--ui-weight-display);
+  letter-spacing: var(--ui-tracking-display);
+  text-wrap: balance;
+}
+
+.ui-heading.ui-tone-ink-2 {
+  color: var(--ui-ink-2);
+}
+
+.ui-heading.ui-tone-muted {
+  color: var(--ui-muted);
+}
+
+.ui-heading.ui-tone-accent {
+  color: var(--ui-accent-text);
+}
+
+/* Text. */
+.ui-text {
+  margin: 0;
+  font-family: var(--ui-font-body);
+  text-wrap: pretty;
+}
+
+/* Kicker: 12px, 600, +0.14em, uppercase. */
+.ui-kicker {
+  margin: 0;
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-2xs);
+  font-weight: var(--ui-weight-kicker);
+  line-height: var(--ui-leading-snug);
+  letter-spacing: var(--ui-tracking-kicker);
+  text-transform: uppercase;
+}
+
+.ui-kicker-accent {
+  color: var(--ui-accent-text);
+}
+
+.ui-kicker-muted {
+  color: var(--ui-muted);
+}
+
+.ui-kicker-ink-2 {
+  color: var(--ui-ink-2);
+}
+
+/* Portfolio allows accent-as-text only at >= 15px semibold (spec §3); a 12px kicker is smaller. */
+[data-theme='portfolio'] .ui-kicker-accent {
+  color: var(--ui-ink-2);
+}
+
+/* GradText: solid accent-text fallback, gradient where background-clip:text works. */
+.ui-grad-text {
+  color: var(--ui-accent-text);
+}
+
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  .ui-grad-text {
+    background: var(--ui-accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+}
+
+@media (forced-colors: active) {
+  .ui-grad-text {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+}
+
+@media print {
+  .ui-grad-text {
+    background: none;
+    color: inherit;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* Mono, Code, Kbd. */
+.ui-mono {
+  font-family: var(--ui-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'zero' 1;
+}
+
+.ui-code,
+.ui-prose :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-xs);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-mono);
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+.ui-code-block,
+.ui-prose pre {
+  margin: 0;
+  padding: var(--ui-space-4);
+  overflow-x: auto;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-mono);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-base);
+  tab-size: 2;
+}
+
+.ui-code-block code,
+.ui-prose pre code {
+  font: inherit;
+}
+
+.ui-kbd {
+  display: inline-block;
+  min-inline-size: 1.6em;
+  padding: 0.05em 0.4em;
+  border: 1px solid var(--ui-line-strong);
+  border-block-end-width: 2px;
+  border-radius: var(--ui-kbd-r);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-mono);
+  font-size: 0.85em;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ui-kbd-combo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.ui-kbd-sep {
+  color: var(--ui-muted);
+}
+
+/* Prose: long-form HTML. */
+.ui-prose {
+  max-inline-size: var(--ui-measure);
+  color: var(--ui-ink-2);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-base);
+  line-height: var(--ui-leading-base);
+  overflow-wrap: break-word;
+}
+
+.ui-prose > * {
+  margin-block: 0;
+}
+
+.ui-prose > * + * {
+  margin-block-start: 1em;
+}
+
+.ui-prose :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-weight: var(--ui-weight-display);
+  letter-spacing: var(--ui-tracking-display);
+  line-height: var(--ui-leading-tight);
+  text-wrap: balance;
+}
+
+.ui-prose > :is(h2, h3, h4) {
+  margin-block-start: 1.8em;
+}
+
+.ui-prose > :is(h2, h3, h4) + * {
+  margin-block-start: 0.6em;
+}
+
+.ui-prose h1 {
+  font-size: var(--ui-text-4xl);
+}
+
+.ui-prose h2 {
+  font-size: var(--ui-text-2xl);
+}
+
+.ui-prose h3 {
+  font-size: var(--ui-text-xl);
+}
+
+.ui-prose :is(h4, h5, h6) {
+  font-size: var(--ui-text-lg);
+}
+
+.ui-prose :is(strong, b) {
+  color: var(--ui-ink);
+  font-weight: var(--ui-weight-display);
+}
+
+/* Links are underlined: never colour alone (WCAG 1.4.1). */
+.ui-prose a {
+  color: var(--ui-accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.ui-prose a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.ui-prose :is(ul, ol) {
+  padding-inline-start: 1.4em;
+}
+
+.ui-prose li + li {
+  margin-block-start: 0.4em;
+}
+
+.ui-prose li::marker {
+  color: var(--ui-muted);
+}
+
+.ui-prose blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--ui-space-4);
+  border-inline-start: 3px solid var(--ui-line-strong);
+  color: var(--ui-ink);
+  font-style: italic;
+}
+
+.ui-prose hr {
+  border: 0;
+  border-block-start: 1px solid var(--ui-line);
+  margin-block: 2em;
+}
+
+.ui-prose :is(img, video, svg) {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+.ui-prose table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-prose :is(th, td) {
+  padding: var(--ui-space-2) var(--ui-space-3);
+  border-block-end: 1px solid var(--ui-line);
+  text-align: start;
+  vertical-align: top;
+}
+
+.ui-prose th {
+  color: var(--ui-ink);
+  font-weight: var(--ui-weight-display);
+}

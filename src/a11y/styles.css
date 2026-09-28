@@ -1,0 +1,58 @@
+/* a11y group: SkipLink, FocusRing. VisuallyHidden's class lives in src/styles/base.css. */
+
+/* SkipLink (WCAG 2.4.1): off screen until focused, then above the sticky nav. No transition. */
+.ui-skip-link {
+  position: absolute;
+  inset-block-start: var(--ui-space-2);
+  inset-inline-start: var(--ui-space-2);
+  z-index: 2147483000;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--ui-target-touch);
+  padding: var(--ui-space-2) var(--ui-space-4);
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-base);
+  font-weight: var(--ui-weight-display);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  box-shadow: var(--ui-e3);
+}
+
+.ui-skip-link:not(:focus):not(:focus-visible) {
+  clip-path: inset(50%);
+  inline-size: 1px;
+  block-size: 1px;
+  min-block-size: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* FocusRing: 2px --ui-focus + 2px offset; never animated away (spec §6.3 rule 8). */
+.ui-focus-ring:focus-visible,
+.ui-focus-ring-within:has(:focus-visible) {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: var(--ui-focus-offset);
+  transition: none;
+}
+
+.ui-focus-ring[data-focus-inset]:focus-visible,
+.ui-focus-ring-within[data-focus-inset]:has(:focus-visible) {
+  outline-offset: calc(-1 * var(--ui-focus-width) - 1px);
+}
+
+@media (forced-colors: active) {
+  .ui-focus-ring:focus-visible,
+  .ui-focus-ring-within:has(:focus-visible) {
+    outline-color: Highlight;
+  }
+
+  .ui-skip-link {
+    border-color: CanvasText;
+  }
+}
