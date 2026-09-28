@@ -1,0 +1,235 @@
+/* layout group: Container, Stack, Cluster, Grid, Section (spec §5). Classes only, no inline styles. */
+
+/* Container: content width + fluid gutter (at least 16px at phone width). */
+.ui-container {
+  inline-size: 100%;
+  max-inline-size: calc(var(--ui-container-max) + 2 * var(--ui-grid-gutter));
+  margin-inline: auto;
+  padding-inline: max(var(--ui-grid-gutter), var(--ui-grid-gutter-min));
+}
+
+.ui-container-marketing {
+  --ui-container-max: var(--ui-grid-content-marketing);
+}
+
+.ui-container-app {
+  --ui-container-max: var(--ui-grid-content-app);
+}
+
+.ui-container-prose {
+  --ui-container-max: var(--ui-measure);
+}
+
+.ui-container-full {
+  max-inline-size: none;
+}
+
+/* Stack and Cluster. */
+.ui-stack {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+:where(ul, ol).ui-stack,
+:where(ul, ol).ui-cluster {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  min-inline-size: 0;
+}
+
+.ui-cluster.ui-nowrap {
+  flex-wrap: nowrap;
+}
+
+.ui-align-start {
+  align-items: flex-start;
+}
+
+.ui-align-center {
+  align-items: center;
+}
+
+.ui-align-end {
+  align-items: flex-end;
+}
+
+.ui-align-baseline {
+  align-items: baseline;
+}
+
+.ui-align-stretch {
+  align-items: stretch;
+}
+
+.ui-justify-start {
+  justify-content: flex-start;
+}
+
+.ui-justify-center {
+  justify-content: center;
+}
+
+.ui-justify-end {
+  justify-content: flex-end;
+}
+
+.ui-justify-between {
+  justify-content: space-between;
+}
+
+/* Gap steps (spec §5 spacing scale). */
+.ui-gap-0 {
+  gap: var(--ui-space-0);
+}
+.ui-gap-0-5 {
+  gap: var(--ui-space-0-5);
+}
+.ui-gap-1 {
+  gap: var(--ui-space-1);
+}
+.ui-gap-1-5 {
+  gap: var(--ui-space-1-5);
+}
+.ui-gap-2 {
+  gap: var(--ui-space-2);
+}
+.ui-gap-3 {
+  gap: var(--ui-space-3);
+}
+.ui-gap-4 {
+  gap: var(--ui-space-4);
+}
+.ui-gap-5 {
+  gap: var(--ui-space-5);
+}
+.ui-gap-6 {
+  gap: var(--ui-space-6);
+}
+.ui-gap-8 {
+  gap: var(--ui-space-8);
+}
+.ui-gap-10 {
+  gap: var(--ui-space-10);
+}
+.ui-gap-12 {
+  gap: var(--ui-space-12);
+}
+.ui-gap-16 {
+  gap: var(--ui-space-16);
+}
+.ui-gap-20 {
+  gap: var(--ui-space-20);
+}
+.ui-gap-24 {
+  gap: var(--ui-space-24);
+}
+.ui-gap-32 {
+  gap: var(--ui-space-32);
+}
+
+/* Grid. */
+.ui-grid {
+  display: grid;
+  min-inline-size: 0;
+}
+
+.ui-grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.ui-grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ui-grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.ui-grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.ui-grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.ui-grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.ui-grid-cols-7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.ui-grid-cols-8 {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+.ui-grid-cols-9 {
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+.ui-grid-cols-10 {
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+.ui-grid-cols-11 {
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+.ui-grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.ui-grid-min-xs {
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+}
+.ui-grid-min-sm {
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+}
+.ui-grid-min-md {
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+}
+.ui-grid-min-lg {
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+}
+
+@media (max-width: 767.98px) {
+  .ui-grid-collapse {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Section bands. */
+.ui-section {
+  display: block;
+}
+
+.ui-section-none {
+  padding-block: 0;
+}
+
+.ui-section-sm {
+  padding-block: var(--ui-space-8);
+}
+
+.ui-section-md {
+  padding-block: clamp(var(--ui-space-12), 8vw, var(--ui-space-20));
+}
+
+.ui-section-lg {
+  padding-block: clamp(var(--ui-space-16), 10vw, var(--ui-space-32));
+}
+
+.ui-section-alt {
+  background: var(--ui-bg-2);
+}
+
+.ui-section-surface {
+  background: var(--ui-surface);
+}
+
+/* Gallery-only helper box (used by layout.gallery.tsx). */
+.ui-gallery-box {
+  padding: var(--ui-space-3);
+  border: 1px dashed var(--ui-line-strong);
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-ink-2);
+  font-size: var(--ui-text-sm);
+}

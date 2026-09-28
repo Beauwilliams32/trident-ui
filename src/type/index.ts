@@ -1,6 +1,24 @@
 /**
- * @trident/ui — type group (spec §7). Re-exported from the package root (src/index.ts).
- * Owned by the type builder: add components here and in this directory only.
- * Component CSS goes in src/type/styles.css (concatenated into dist/styles.css by the build).
+ * @trident/ui — type group (spec §4, §7). Re-exported from the package root (src/index.ts).
+ * Component CSS is in src/type/styles.css (concatenated into dist/styles.css by the build).
  */
-export {}
+export { Heading } from './Heading'
+export type { HeadingProps } from './Heading'
+export { checkHeadingOutline } from './outline'
+export type { HeadingIssue, HeadingLevel } from './outline'
+export { Text } from './Text'
+export type { TextProps } from './Text'
+export { Kicker } from './Kicker'
+export type { KickerProps } from './Kicker'
+export { GradText, countWords } from './GradText'
+export type { GradTextProps } from './GradText'
+export { Mono } from './Mono'
+export type { MonoProps } from './Mono'
+export { Code } from './Code'
+export type { CodeProps } from './Code'
+export { Kbd } from './Kbd'
+export type { KbdProps } from './Kbd'
+export { Prose } from './Prose'
+export type { ProseProps } from './Prose'
+export { TEXT_SIZES } from './scale'
+export type { TextSize, TextTone } from './scale'
