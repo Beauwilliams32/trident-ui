@@ -1,5 +1,6 @@
-import type { ElementType, HTMLAttributes, Ref } from 'react'
+import type { HTMLAttributes, Ref } from 'react'
 import { cx } from '../a11y/internal'
+import type { HtmlTag } from '../utils/poly'
 
 export interface KickerProps extends HTMLAttributes<HTMLElement> {
   /** Element to render. Default "p". A kicker is never a heading. */
@@ -11,6 +12,6 @@ export interface KickerProps extends HTMLAttributes<HTMLElement> {
 
 /** Eyebrow label above a heading: 12px, 600, +0.14em, uppercase (spec §4). */
 export function Kicker({ as = 'p', tone = 'accent', className, ...rest }: KickerProps) {
-  const Comp = as as ElementType
+  const Comp = as as HtmlTag
   return <Comp {...rest} className={cx('ui-kicker', `ui-kicker-${tone}`, className)} />
 }

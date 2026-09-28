@@ -2,6 +2,7 @@ import type { ElementType, HTMLAttributes, Ref } from 'react'
 import { cx } from '../a11y/internal'
 import { gapClass } from './space'
 import type { Space } from './space'
+import type { HtmlTag } from '../utils/poly'
 
 export interface ClusterProps extends HTMLAttributes<HTMLElement> {
   /** Gap between children, as a spacing step. Default 2 (8px). */
@@ -23,10 +24,11 @@ export function Cluster({
   justify = 'start',
   align = 'center',
   wrap = true,
-  as: Comp = 'div',
+  as = 'div',
   className,
   ...rest
 }: ClusterProps) {
+  const Comp = as as HtmlTag
   return (
     <Comp
       {...rest}

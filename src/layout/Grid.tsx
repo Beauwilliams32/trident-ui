@@ -2,6 +2,7 @@ import type { ElementType, HTMLAttributes, Ref } from 'react'
 import { cx } from '../a11y/internal'
 import { gapClass } from './space'
 import type { Space } from './space'
+import type { HtmlTag } from '../utils/poly'
 
 export type GridColumns = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 /** Minimum track width for the auto-fit grid: xs 160px, sm 220px, md 280px, lg 340px. */
@@ -25,7 +26,8 @@ export interface GridProps extends HTMLAttributes<HTMLElement> {
 }
 
 /** CSS grid. Either a fixed column count or an auto-fit grid that never overflows at 360px. */
-export function Grid({ columns, min = 'md', gap = 6, collapse = true, as: Comp = 'div', className, ...rest }: GridProps) {
+export function Grid({ columns, min = 'md', gap = 6, collapse = true, as = 'div', className, ...rest }: GridProps) {
+  const Comp = as as HtmlTag
   return (
     <Comp
       {...rest}

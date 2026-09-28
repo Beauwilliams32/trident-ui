@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { CSSProperties, ElementType } from 'react'
 import { countUpWhenVisible, isCountable } from '../motion-lite'
+import type { HtmlTag } from '../utils/poly'
 
 export interface CountUpProps {
   /**
@@ -22,7 +23,8 @@ export interface CountUpProps {
  * visible. Screen readers get the final value only; the moving digits are aria-hidden.
  * Reduced motion or Pause: the final value, and no requestAnimationFrame.
  */
-export function CountUp({ value, countable, duration, as: Tag = 'span', className, style }: CountUpProps) {
+export function CountUp({ value, countable, duration, as = 'span', className, style }: CountUpProps) {
+  const Tag = as as HtmlTag
   const text = String(value ?? '')
   const digits = useRef<HTMLSpanElement>(null)
   const animates = isCountable(text, countable)

@@ -1,6 +1,7 @@
-import type { ElementType, HTMLAttributes, Ref } from 'react'
+import type { HTMLAttributes, Ref } from 'react'
 import { cx } from '../a11y/internal'
 import type { TextSize, TextTone } from './scale'
+import type { HtmlTag } from '../utils/poly'
 
 export interface TextProps extends HTMLAttributes<HTMLElement> {
   /** Element to render. Default "p". */
@@ -19,7 +20,7 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
 
 /** Body text on the type scale. */
 export function Text({ as = 'p', size = 'base', tone = 'ink', weight, measure, tabular, className, ...rest }: TextProps) {
-  const Comp = as as ElementType
+  const Comp = as as HtmlTag
   return (
     <Comp
       {...rest}

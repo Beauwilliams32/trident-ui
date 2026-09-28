@@ -1,6 +1,7 @@
 import type { CSSProperties, ElementType, HTMLAttributes, PointerEvent, ReactNode } from 'react'
 import { cx } from './cx'
 import { pointerMotionAllowed } from './motion-gate'
+import type { HtmlTag } from '../utils/poly'
 
 export type CardVariant = 'solid' | 'glass'
 export type CardPadding = 'none' | 'sm' | 'md' | 'lg'
@@ -54,7 +55,7 @@ export function Card({
   onPointerLeave,
   ...rest
 }: CardProps) {
-  const Tag: ElementType = as ?? 'div'
+  const Tag = (as ?? 'div') as HtmlTag
   const isInteractive = interactive || variant === 'interactive'
   const surface: CardVariant = variant === 'glass' ? 'glass' : 'solid'
   const named = PADDINGS.includes(padding)

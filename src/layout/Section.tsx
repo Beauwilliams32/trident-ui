@@ -2,6 +2,7 @@ import type { ElementType, HTMLAttributes, Ref } from 'react'
 import { cx } from '../a11y/internal'
 import { Container } from './Container'
 import type { ContainerSize } from './Container'
+import type { HtmlTag } from '../utils/poly'
 
 export interface SectionProps extends HTMLAttributes<HTMLElement> {
   /** Vertical padding. Default "md". */
@@ -24,11 +25,12 @@ export function Section({
   space = 'md',
   tone = 'default',
   container = 'marketing',
-  as: Comp = 'section',
+  as = 'section',
   className,
   children,
   ...rest
 }: SectionProps) {
+  const Comp = as as HtmlTag
   return (
     <Comp {...rest} className={cx('ui-section', `ui-section-${space}`, tone !== 'default' && `ui-section-${tone}`, className)}>
       {container ? <Container size={container}>{children}</Container> : children}

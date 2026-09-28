@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import type { CSSProperties, ElementType, HTMLAttributes, ReactNode } from 'react'
 import { armMotion, observeReveal } from '../motion-lite'
 import { useIsoLayoutEffect } from './hooks'
+import type { HtmlTag } from '../utils/poly'
 
 export interface RevealProps extends HTMLAttributes<HTMLElement> {
   /** Element to render. Default `div`. */
@@ -16,7 +17,8 @@ export interface RevealProps extends HTMLAttributes<HTMLElement> {
  * JS armed html.ui-motion and motion is allowed (base.css), with a 2.5s CSS failsafe. Reduced
  * motion or Pause: shown immediately, no observer.
  */
-export function Reveal({ as: Tag = 'div', index, style, children, ...rest }: RevealProps) {
+export function Reveal({ as = 'div', index, style, children, ...rest }: RevealProps) {
+  const Tag = as as HtmlTag
   const ref = useRef<HTMLElement>(null)
   useIsoLayoutEffect(() => {
     const el = ref.current
