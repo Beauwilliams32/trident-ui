@@ -1,0 +1,43 @@
+/* motion (apps): AmbientGlow and CountUp digits. Transform and opacity only (spec §6.3.1).
+   The drift loop runs longer than 5s, so it must stop under Pause and reduced motion (§6.3.5):
+   the base.css kill switch collapses it, and the rules below also remove it outright. */
+
+.ui-ambient-glow {
+  position: absolute;
+  inset: -20% -10% auto;
+  z-index: 0;
+  height: 70%;
+  pointer-events: none;
+  background: radial-gradient(closest-side, var(--ui-accent-1), transparent 70%);
+  opacity: 0.22;
+  filter: blur(40px);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.ui-ambient-glow[data-tone='accent-2'] {
+  background: radial-gradient(closest-side, var(--ui-accent-2), transparent 70%);
+}
+
+.ui-ambient-glow[data-tone='glow'] {
+  background: radial-gradient(closest-side, var(--ui-glow), transparent 70%);
+  opacity: 0.6;
+}
+
+@keyframes ui-ambient-drift {
+  from {
+    transform: translate3d(-4%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 3%, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion='paused']) .ui-ambient-glow[data-drift] {
+    animation: ui-ambient-drift 14s var(--ui-ease-inout) infinite alternate;
+  }
+}
+
+.ui-count-digits {
+  font-variant-numeric: tabular-nums;
+}
