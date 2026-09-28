@@ -1,0 +1,345 @@
+/* ------------------------------------------------------------------
+   display group: Badge, StatusPill, Chip, Avatar, Card, StatCard.
+   Wrapped in @layer ui-components by scripts/build-styles.mjs.
+   Reads only --ui-* tokens. Motion only behind the gate (spec §6.4).
+   ------------------------------------------------------------------ */
+
+/* Tone model (src/display/tone.ts; contrast proven in tone.test.ts).
+   Fill = role 12% over surface; text = role 75% + ink 25%. Keep both
+   numbers in sync with TONE_TINT_PCT / TONE_INK_PCT. */
+.ui-tone {
+  --ui-tone: var(--ui-ink-2);
+  --ui-tone-fill: color-mix(in srgb, var(--ui-tone) 12%, var(--ui-surface));
+  --ui-tone-ink: color-mix(in srgb, var(--ui-tone) 75%, var(--ui-ink));
+  --ui-tone-edge: color-mix(in srgb, var(--ui-tone) 35%, transparent);
+}
+.ui-tone[data-tone='neutral'] {
+  --ui-tone: var(--ui-ink-2);
+}
+.ui-tone[data-tone='accent'] {
+  --ui-tone: var(--ui-accent-text);
+}
+.ui-tone[data-tone='info'] {
+  --ui-tone: var(--ui-info);
+}
+.ui-tone[data-tone='ok'] {
+  --ui-tone: var(--ui-ok);
+}
+.ui-tone[data-tone='warn'] {
+  --ui-tone: var(--ui-warn);
+}
+.ui-tone[data-tone='danger'] {
+  --ui-tone: var(--ui-danger);
+}
+.ui-tone[data-tone='reasoning'] {
+  --ui-tone: var(--ui-status-reasoning);
+}
+
+/* Badge ------------------------------------------------------------ */
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.22rem 0.6rem;
+  border: 1px solid var(--ui-tone-edge);
+  border-radius: var(--ui-r-pill);
+  background: var(--ui-tone-fill);
+  color: var(--ui-tone-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-xs);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.ui-badge[data-size='sm'] {
+  padding: 0.12rem 0.45rem;
+  font-size: var(--ui-text-2xs);
+}
+.ui-badge__icon,
+.ui-chip__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* StatusPill ------------------------------------------------------- */
+.ui-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.22rem 0.65rem;
+  border: 1px solid var(--ui-tone-edge);
+  border-radius: var(--ui-r-pill);
+  background: var(--ui-tone-fill);
+  color: var(--ui-tone-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-2xs);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ui-status__dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ui-tone);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ui-tone) 22%, transparent);
+}
+
+/* Chip ------------------------------------------------------------- */
+.ui-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 28px;
+  padding: 0 0.6rem;
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-chip-r);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.ui-chip[data-tone]:not([data-tone='neutral']),
+.ui-chip[data-selected] {
+  border-color: var(--ui-tone-edge);
+  background: var(--ui-tone-fill);
+  color: var(--ui-tone-ink);
+}
+.ui-chip[data-selected] {
+  box-shadow: inset 0 0 0 1px var(--ui-tone-ink);
+}
+.ui-chip[data-disabled] {
+  opacity: 0.6;
+}
+.ui-chip:has(.ui-chip__toggle),
+.ui-chip:has(.ui-chip__remove) {
+  padding-inline: 0;
+}
+.ui-chip__toggle,
+.ui-chip__remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: var(--ui-target-min);
+  min-height: var(--ui-target-min);
+  margin: 0;
+  padding: 0 0.6rem;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.ui-chip__remove {
+  justify-content: center;
+  padding: 0;
+  margin-inline-start: -0.35rem;
+}
+.ui-chip:not(:has(.ui-chip__toggle)) > .ui-chip__label:first-child,
+.ui-chip:not(:has(.ui-chip__toggle)) > .ui-chip__icon:first-child {
+  padding-inline-start: 0.6rem;
+}
+.ui-chip__toggle:disabled,
+.ui-chip__remove:disabled {
+  cursor: not-allowed;
+}
+@media (hover: hover) {
+  .ui-chip__toggle:hover:not(:disabled),
+  .ui-chip__remove:hover:not(:disabled) {
+    background: color-mix(in srgb, currentColor 8%, transparent);
+  }
+}
+
+/* Avatar ----------------------------------------------------------- */
+.ui-avatar {
+  --ui-avatar-size: 58px;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--ui-avatar-size);
+  height: var(--ui-avatar-size);
+  overflow: hidden;
+  border-radius: calc(var(--ui-avatar-size) * 0.26);
+  background: var(--ui-surface-raised);
+  box-shadow: inset 0 0 0 1px var(--ui-glass-edge);
+  vertical-align: middle;
+}
+.ui-avatar[data-shape='circle'] {
+  border-radius: 50%;
+}
+.ui-avatar[data-fallback] {
+  /* on-accent on accent-1 is >= 4.5:1 in every theme (spec §9 matrix). */
+  background: var(--ui-accent-1);
+  color: var(--ui-on-accent);
+}
+.ui-avatar__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ui-avatar__initials {
+  font-family: var(--ui-font-display);
+  font-size: calc(var(--ui-avatar-size) * 0.38);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+/* Card ------------------------------------------------------------- */
+.ui-card {
+  --ui-tilt-x: 0;
+  --ui-tilt-y: 0;
+  position: relative;
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-card-r);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  box-shadow: var(--ui-e1);
+  isolation: isolate;
+}
+.ui-card[data-padding='none'] {
+  padding: 0;
+}
+.ui-card[data-padding='sm'] {
+  padding: var(--ui-space-4);
+}
+.ui-card[data-padding='md'] {
+  padding: var(--ui-card-pad);
+}
+.ui-card[data-padding='lg'] {
+  padding: var(--ui-space-8);
+}
+.ui-card[data-variant='glass'] {
+  border-color: var(--ui-glass-edge);
+  background: var(--ui-glass);
+  box-shadow: var(--ui-e2);
+  -webkit-backdrop-filter: blur(var(--ui-glass-blur)) saturate(var(--ui-glass-saturate));
+  backdrop-filter: blur(var(--ui-glass-blur)) saturate(var(--ui-glass-saturate));
+}
+.ui-card[data-accent] {
+  border-color: color-mix(in srgb, var(--ui-accent-1) 30%, var(--ui-line));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ui-accent-1) 9%, transparent), transparent 70%),
+    var(--ui-surface);
+}
+.ui-card[data-interactive]:focus-within {
+  border-color: var(--ui-line-strong);
+}
+@media (forced-colors: active) {
+  .ui-card {
+    border-color: CanvasText;
+  }
+}
+
+/* Specular sweep: a pseudo-element moved by transform only. Hidden
+   unless the motion gate is open; the kill switch in base.css still
+   collapses durations for reduced motion and Pause. */
+.ui-card[data-interactive]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 35%, var(--ui-specular) 50%, transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-60%);
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-interactive] {
+    transition:
+      transform var(--ui-dur-med) var(--ui-ease),
+      box-shadow var(--ui-dur-med) var(--ui-ease);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-interactive]:hover {
+    transform: translateY(var(--ui-lift));
+    box-shadow: var(--ui-e3);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-interactive]::before {
+    transition:
+      transform var(--ui-dur-reveal) var(--ui-ease),
+      opacity var(--ui-dur-fast) var(--ui-ease);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-interactive]:hover::before {
+    opacity: 1;
+    transform: translateX(60%);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-tilt] {
+    transform: perspective(900px) rotateX(calc(var(--ui-tilt-x) * -1 * var(--ui-tilt-max)))
+      rotateY(calc(var(--ui-tilt-y) * var(--ui-tilt-max)));
+    transition: transform var(--ui-dur-fast) var(--ui-ease);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-tilt][data-interactive]:hover {
+    transform: perspective(900px) translateY(var(--ui-lift)) rotateX(calc(var(--ui-tilt-x) * -1 * var(--ui-tilt-max)))
+      rotateY(calc(var(--ui-tilt-y) * var(--ui-tilt-max)));
+  }
+}
+
+/* StatCard --------------------------------------------------------- */
+.ui-stat {
+  display: grid;
+  gap: var(--ui-space-1);
+  align-content: start;
+}
+.ui-stat[data-padding='md'] {
+  padding: var(--ui-space-5);
+}
+.ui-stat__label,
+.ui-stat__value,
+.ui-stat__trend,
+.ui-stat__sub {
+  margin: 0;
+}
+.ui-stat__label {
+  color: var(--ui-muted);
+  font-size: var(--ui-text-2xs);
+  font-weight: var(--ui-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ui-stat__value {
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-2xl);
+  font-weight: var(--ui-weight-display);
+  line-height: 1.05;
+  letter-spacing: var(--ui-tracking-display);
+  overflow-wrap: anywhere;
+}
+.ui-stat__trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  margin-top: var(--ui-space-1);
+  padding: 0.26rem 0.55rem;
+  border: 1px solid var(--ui-tone-edge);
+  border-radius: var(--ui-r-pill);
+  background: var(--ui-tone-fill);
+  color: var(--ui-tone-ink);
+  font-size: var(--ui-text-xs);
+  font-weight: var(--ui-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+.ui-stat__note {
+  font-weight: var(--ui-weight-medium);
+}
+.ui-stat__sub {
+  color: var(--ui-muted);
+  font-size: var(--ui-text-sm);
+}
