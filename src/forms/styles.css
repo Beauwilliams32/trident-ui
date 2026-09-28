@@ -1,0 +1,395 @@
+/* ------------------------------------------------------------------
+   forms: Form, Field, Fieldset, Input, Textarea, Select, Checkbox,
+   Radio, Switch, FormError, ErrorSummary (spec §7, §9).
+   Native controls, token colours, no colour tweens (§6.3 rule 1).
+   ------------------------------------------------------------------ */
+
+.ui-form {
+  display: grid;
+  gap: var(--ui-space-5);
+}
+
+/* Field */
+.ui-field {
+  display: grid;
+  gap: var(--ui-space-1-5);
+  min-width: 0;
+}
+
+.ui-field__label,
+.ui-fieldset__legend {
+  color: var(--ui-ink);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-medium);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-field__req {
+  color: var(--ui-danger);
+}
+
+.ui-field__hint,
+.ui-choice__hint {
+  margin: 0;
+  color: var(--ui-muted);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-1-5);
+  margin: 0;
+  color: var(--ui-danger);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-medium);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-field__error-icon {
+  flex: none;
+  margin-top: 1px;
+}
+
+/* Text inputs, textarea, select */
+.ui-input {
+  display: block;
+  width: 100%;
+  min-height: var(--ui-input-h);
+  margin: 0;
+  padding: 0 var(--ui-space-3);
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-input-r);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  /* >= 16px so iOS Safari never zooms on focus. */
+  font-size: max(16px, var(--ui-text-base));
+  line-height: 1.4;
+}
+
+.ui-input::placeholder {
+  color: var(--ui-muted);
+  opacity: 1;
+}
+
+.ui-input:hover:not(:disabled) {
+  border-color: var(--ui-ink-2);
+}
+
+.ui-input[aria-invalid='true'] {
+  border-color: var(--ui-danger);
+  box-shadow: inset 0 0 0 1px var(--ui-danger);
+}
+
+.ui-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ui-input[type='file'] {
+  padding-block: var(--ui-space-2);
+}
+
+.ui-textarea {
+  min-height: calc(var(--ui-input-h) * 2);
+  padding-block: var(--ui-space-2);
+  line-height: var(--ui-leading-base);
+  resize: vertical;
+}
+
+.ui-select {
+  position: relative;
+  display: block;
+}
+
+.ui-select__control {
+  appearance: none;
+  padding-inline-end: calc(var(--ui-space-3) * 2 + 18px);
+  cursor: pointer;
+}
+
+.ui-select__control[multiple] {
+  padding-block: var(--ui-space-2);
+  padding-inline-end: var(--ui-space-3);
+}
+
+.ui-select__control[multiple] + .ui-select__icon {
+  display: none;
+}
+
+.ui-select__control option {
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+}
+
+.ui-select__icon {
+  position: absolute;
+  inset-inline-end: var(--ui-space-3);
+  top: 50%;
+  translate: 0 -50%;
+  color: var(--ui-ink-2);
+  pointer-events: none;
+}
+
+/* Fieldset */
+.ui-fieldset {
+  display: grid;
+  gap: var(--ui-space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ui-fieldset__legend {
+  margin-bottom: var(--ui-space-1-5);
+  padding: 0;
+}
+
+.ui-fieldset__options {
+  display: grid;
+  gap: var(--ui-space-3);
+}
+
+/* Checkbox / Radio / Switch: the native input sits invisibly over a 24px+ target (2.5.8). */
+.ui-choice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--ui-space-3);
+  row-gap: var(--ui-space-1);
+  align-items: start;
+}
+
+.ui-choice__control {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+}
+
+.ui-choice__input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ui-choice__input:disabled {
+  cursor: not-allowed;
+}
+
+.ui-choice__box {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ui-line-strong);
+  border-radius: 6px;
+  background: var(--ui-surface);
+  color: var(--ui-on-accent);
+}
+
+.ui-choice--radio .ui-choice__box {
+  border-radius: 50%;
+}
+
+.ui-choice__mark,
+.ui-choice__dot {
+  opacity: 0;
+  transition: opacity var(--ui-dur-fast) var(--ui-ease);
+}
+
+.ui-choice__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.ui-choice__input:checked + .ui-choice__box {
+  border-color: var(--ui-accent-1);
+  background: var(--ui-accent-1);
+}
+
+.ui-choice__input:checked + .ui-choice__box > * {
+  opacity: 1;
+}
+
+.ui-choice__input[aria-invalid='true'] + .ui-choice__box,
+.ui-choice__input[aria-invalid='true'] + .ui-switch__track {
+  border-color: var(--ui-danger);
+}
+
+.ui-choice__input:focus-visible + .ui-choice__box,
+.ui-choice__input:focus-visible + .ui-switch__track {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: var(--ui-focus-offset);
+}
+
+.ui-choice__input:disabled + .ui-choice__box,
+.ui-choice__input:disabled + .ui-switch__track,
+.ui-choice:has(.ui-choice__input:disabled) .ui-choice__label {
+  opacity: 0.55;
+}
+
+.ui-choice__label {
+  grid-column: 2;
+  padding-block: 2px;
+  color: var(--ui-ink);
+  font-size: var(--ui-text-base);
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.ui-choice__hint,
+.ui-choice__error {
+  grid-column: 2;
+}
+
+/* Switch: 40 x 24 track, thumb position carries the state (not colour alone). */
+.ui-switch {
+  width: 40px;
+}
+
+.ui-switch__track {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ui-line-strong);
+  border-radius: var(--ui-r-pill);
+  background: var(--ui-surface);
+}
+
+.ui-switch__thumb {
+  --_ui-dir: 1;
+  position: absolute;
+  top: 2px;
+  inset-inline-start: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ui-ink-2);
+  transition: transform var(--ui-dur) var(--ui-spring);
+}
+
+.ui-switch__thumb:dir(rtl) {
+  --_ui-dir: -1;
+}
+
+.ui-choice__input:checked + .ui-switch__track {
+  border-color: var(--ui-accent-1);
+  background: var(--ui-accent-1);
+}
+
+.ui-choice__input:checked + .ui-switch__track > .ui-switch__thumb {
+  background: var(--ui-on-accent);
+  transform: translateX(calc(16px * var(--_ui-dir)));
+}
+
+/* Form-level error and error summary: ink text on surface; danger carried by border + icon. */
+.ui-form-error,
+.ui-error-summary {
+  border: 1px solid var(--ui-danger);
+  border-inline-start-width: 4px;
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+}
+
+.ui-form-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-3);
+  padding: var(--ui-space-3) var(--ui-space-4);
+}
+
+.ui-form-error__icon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--ui-danger);
+}
+
+.ui-form-error__title {
+  margin: 0 0 var(--ui-space-1);
+  font-weight: var(--ui-weight-bold);
+}
+
+.ui-form-error__message > :first-child {
+  margin-top: 0;
+}
+
+.ui-form-error__message > :last-child {
+  margin-bottom: 0;
+}
+
+.ui-error-summary {
+  padding: var(--ui-space-4) var(--ui-space-5);
+}
+
+.ui-error-summary__title {
+  margin: 0 0 var(--ui-space-2);
+  color: var(--ui-ink);
+  font-size: var(--ui-text-lg);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-error-summary__description {
+  margin: 0 0 var(--ui-space-2);
+  color: var(--ui-ink-2);
+}
+
+.ui-error-summary__list {
+  display: grid;
+  gap: var(--ui-space-1);
+  margin: 0;
+  padding-inline-start: var(--ui-space-5);
+}
+
+.ui-error-summary__list a {
+  color: var(--ui-danger);
+  font-weight: var(--ui-weight-medium);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (forced-colors: active) {
+  .ui-choice__box,
+  .ui-switch__track {
+    forced-color-adjust: none;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .ui-switch__thumb {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+
+  .ui-choice__input:checked + .ui-choice__box,
+  .ui-choice__input:checked + .ui-switch__track {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .ui-choice__input:checked + .ui-switch__track > .ui-switch__thumb {
+    background: HighlightText;
+  }
+
+  .ui-choice__input:focus-visible + .ui-choice__box,
+  .ui-choice__input:focus-visible + .ui-switch__track {
+    outline-color: Highlight;
+  }
+
+  .ui-error-summary__list a {
+    color: LinkText;
+  }
+}
