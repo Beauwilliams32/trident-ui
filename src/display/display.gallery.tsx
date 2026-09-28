@@ -69,7 +69,7 @@ export const examples: GalleryExample[] = [
     component: 'Avatar',
     name: 'Initials, sizes and shapes',
     render: () => (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
         <Avatar name="Beau Williams" size="xs" />
         <Avatar name="Old Aggie Open" size="sm" shape="circle" />
         <Avatar name="Trident Studio" size="md" />

@@ -54,7 +54,27 @@ npm run lint
 npm run typecheck
 npm run check:dist   # dist-matches-source
 npm run fonts:sync   # after bumping an @fontsource-variable/* package
+npm run size         # size-limit budgets (spec §1, §9); run after build
 ```
+
+### Gallery (spec §10.6)
+
+`gallery/` renders every `src/<group>/*.gallery.tsx` example in every theme (each in its native
+scheme), under reduced motion and the Pause-motion control, at 360px and 1280px. It reads the built
+CSS, so build first.
+
+```bash
+npm run build && npm run gallery:build
+npm run gallery:dev      # browse: ?theme=<name>&motion=reduced|paused&group=<group>
+npm run gallery:e2e      # Playwright: screenshots (macOS baselines) + axe, local Chromium
+npm run gallery:axe      # axe only (also runs in CI)
+npm run gallery:update   # re-record screenshots after an intended visual change
+```
+
+Screenshots use `toHaveScreenshot` (fonts self-hosted, animations disabled, maxDiffPixelRatio
+0.001); baselines live in `gallery/tests/__screenshots__/<platform>/`. 3D appears only through
+`PosterFallback`: the suite asserts no `<canvas>` exists. Visual finals still go through the
+owner's creative review gate.
 
 `tokens.json` is the single source. Never edit `dist/`.
 

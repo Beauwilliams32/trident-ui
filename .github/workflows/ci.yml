@@ -12,7 +12,7 @@ permissions:
 jobs:
   gate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       # Actions are pinned by commit SHA (tag in the trailing comment).
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -29,3 +29,10 @@ jobs:
       - run: npm run build
       # Tags carry a committed dist/ that must equal a fresh build; on main/PRs the build must be deterministic.
       - run: npm run check:dist
+      # Bundle budgets (spec §1, §9): styles, themes, islands, motion-lite, the lazy 3D chunk, root.
+      - run: npm run size
+      # Gallery axe over every theme × reduced/paused × 360/1280 (spec §10.7). Visual baselines
+      # are macOS-recorded and run locally (npm run gallery:e2e).
+      - run: npx playwright install --with-deps chromium
+      - run: npm run gallery:build
+      - run: npm run gallery:axe
