@@ -1,0 +1,12 @@
+# Build output. dist/ is committed ONLY on release tags (spec §1): the release job force-adds it
+# (git add -f dist) on a detached release commit, so main never carries a stale build.
+dist/
+node_modules/
+coverage/
+*.tsbuildinfo
+.DS_Store
+.vite/
+.vitest/
+*.log
+.env
+.env.*

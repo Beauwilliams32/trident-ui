@@ -1,0 +1,122 @@
+/* ------------------------------------------------------------------
+   @trident/ui base layer (foundation-owned). Reads only --ui-* tokens.
+   Group CSS (src/<group>/styles.css) is appended after this file.
+   Class prefix: .ui-  |  State attributes: data-*  |  No CSS-in-JS.
+   ------------------------------------------------------------------ */
+
+@layer ui-base, ui-components, ui-utilities;
+
+@layer ui-base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* 2.4.11: focus is never hidden by the sticky nav. */
+    scroll-padding-top: calc(var(--ui-nav-h) + var(--ui-space-4));
+  }
+
+  body {
+    margin: 0;
+    background: var(--ui-bg);
+    color: var(--ui-ink);
+    font-family: var(--ui-font-body);
+    font-size: var(--ui-text-base);
+    line-height: var(--ui-leading-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus ring (spec §7 FocusRing): 2px --ui-focus + 2px offset, never animated away. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: var(--ui-focus-width) solid var(--ui-focus);
+    outline-offset: var(--ui-focus-offset);
+  }
+
+  @media (forced-colors: active) {
+    :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--ui-accent-1) 35%, transparent);
+    color: var(--ui-ink);
+  }
+}
+
+@layer ui-utilities {
+  /* VisuallyHidden: present for assistive tech, invisible on screen. */
+  .ui-visually-hidden:not(:focus):not(:active) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .ui-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Reveal (spec §0.2, §6.3 rule 10): content hides ONLY when all of
+   html.ui-motion, scripting enabled, no reduced-motion preference, and
+   motion not paused. A 2.5s CSS failsafe reveals it if JS never arrives.
+   ------------------------------------------------------------------ */
+@keyframes ui-reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  html.ui-motion:not([data-motion='paused']) [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(var(--ui-reveal-distance));
+    animation: ui-reveal-failsafe 0s 2.5s forwards;
+  }
+
+  html.ui-motion:not([data-motion='paused']) [data-reveal] {
+    transition:
+      opacity var(--ui-dur-reveal) var(--ui-ease-emph),
+      transform var(--ui-dur-reveal) var(--ui-ease-emph);
+    transition-delay: calc(min(var(--i, 0), var(--ui-stagger-max)) * var(--ui-stagger));
+  }
+}
+
+/* ------------------------------------------------------------------
+   Global motion kill switch (spec §6.4). The ONLY place !important is
+   allowed in this package. Reduced motion or html[data-motion=paused]:
+   durations collapse, loops stop, reveals show immediately.
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-motion='paused'] *,
+html[data-motion='paused'] *::before,
+html[data-motion='paused'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

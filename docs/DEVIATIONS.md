@@ -1,0 +1,16 @@
+# Deviations from docs/SPEC.md
+
+Every place the package differs from the spec, or fills a gap the spec leaves open. Newest first.
+
+| Date | Area | Spec | What we did | Why |
+|---|---|---|---|---|
+| 2026-09-28 | Licence / visibility | §0.3-1, §1: public MIT repo | Repo was **private** when this was decided; `package.json` had `"private": true` and `"license": "UNLICENSED"` | Owner decision at the time: private for now, with public visibility as a later, separate decision. |
+| 2026-09-28 | dist/ on main | §1: `dist/` committed on each tag | `dist/` is gitignored on `main` and force-added only on release commits/tags. `npm run check:dist` compares a committed dist/ to a fresh build on tags, and checks the build is byte-deterministic elsewhere | Keeps main free of stale builds while meeting the tag contract. |
+| 2026-09-28 | Root entry | Task: root index re-exports every group | `@trident/ui` re-exports a11y, layout, type, actions, forms, display, feedback, utils. `server`, `islands`, `motion-lite`, `motion`, `app`, `three` are **subpath entries only** | Their optional peers (three, R3F, motion, Radix, cmdk, sonner) or server-only code must never enter a client bundle that imports the root. Enforced by `no-restricted-imports` in eslint.config.js. |
+| 2026-09-28 | Toolchain | TypeScript (latest) + tsup | TypeScript 6.0.3; `tsconfig.build.json` sets `"ignoreDeprecations": "6.0"` | tsup 8.5.1's DTS build injects `baseUrl`, which TS 6 rejects (TS5101) without it. Remove when tsup drops `baseUrl`. |
+| 2026-09-28 | Versions | React 19.3, Vite 8, Vitest 4, three 0.180.0, R3F 9.8, drei 10, motion 13 | Installed exactly: react/react-dom 19.3.0, vite 8.3.1, vitest 4.1.11, tsup 8.5.1, three 0.180.0, @react-three/fiber 9.8.1, @react-three/drei 10.7.9, motion 13.4.4, vitest-axe 0.1.0, jsdom 30.1.1 | All exist; no substitution needed. |
+| 2026-09-28 | ensureContrast | §2.3: pick on-accent, derive accent-text, clamp fills < 3:1 | Also nudges the fill (never below 3:1 on bg) until `on-accent` reaches 4.5:1 | §9 requires on-accent on accent >= 4.5:1. Ops' default `#6366f1` reaches only 4.47:1 with white otherwise. |
+| 2026-09-28 | Roles the spec leaves open | §3 gives no `line-strong`, `surface-raised`, `bg-2` for some themes, or status colours for light themes | Chosen values in tokens.json (e.g. fleet `line-strong #5a7591`, wmh-portal status `#047857/#b54708/#b91c1c/#1d4ed8`), each passing the §9 matrix | Needed for the contrast matrix; no spec value was changed. **No spec colour failed the matrix**, so no `accent-text` adjustment was required. |
+| 2026-09-28 | Contrast matrix scope | §9 pairs | Also tests ink-2 and each status colour (ok/warn/danger/info) on bg, bg-2 and surface, and every `data-portal-palette` variant | Stricter than the spec. |
+| 2026-09-28 | `trident-ui poster` | §1, §6.5: local Playwright + SwiftShader render | Command exists but exits 2 ("not available in v0.1") | Lands with the `@trident/ui/three` group. |
+| 2026-09-28 | Test env | §10.1 jsdom | `test/setup.ts` stubs `HTMLCanvasElement.getContext` to return `null` | jsdom has no canvas; `null` is what a browser without the context returns, and it lets WebGL-gating tests spy on context creation. |

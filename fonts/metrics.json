@@ -1,0 +1,42 @@
+{
+  "Space Grotesk": {
+    "source": "@fontsource-variable/space-grotesk@5.3.0",
+    "fallback": "Arial",
+    "sizeAdjust": "110.87%",
+    "ascentOverride": "88.76%",
+    "descentOverride": "26.34%",
+    "lineGapOverride": "0.00%"
+  },
+  "Inter": {
+    "source": "@fontsource-variable/inter@5.3.0",
+    "fallback": "Arial",
+    "sizeAdjust": "107.27%",
+    "ascentOverride": "90.31%",
+    "descentOverride": "22.49%",
+    "lineGapOverride": "0.00%"
+  },
+  "JetBrains Mono": {
+    "source": "@fontsource-variable/jetbrains-mono@5.3.0",
+    "fallback": "Courier New",
+    "sizeAdjust": "99.98%",
+    "ascentOverride": "102.02%",
+    "descentOverride": "30.00%",
+    "lineGapOverride": "0.00%"
+  },
+  "Manrope": {
+    "source": "@fontsource-variable/manrope@5.3.0",
+    "fallback": "Arial",
+    "sizeAdjust": "99.89%",
+    "ascentOverride": "106.71%",
+    "descentOverride": "30.03%",
+    "lineGapOverride": "0.00%"
+  },
+  "Oswald": {
+    "source": "@fontsource-variable/oswald@5.3.0",
+    "fallback": "Arial",
+    "sizeAdjust": "81.92%",
+    "ascentOverride": "145.63%",
+    "descentOverride": "35.28%",
+    "lineGapOverride": "0.00%"
+  }
+}
