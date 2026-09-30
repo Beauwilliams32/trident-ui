@@ -13,8 +13,10 @@ Trident Studio fleet, Williams Media, the portfolio and Quorum. The contract is
 "@trident/ui": "github:Beauwilliams32/trident-ui#v0.x.y"
 ```
 
-`dist/` is committed on release tags only, and there is no `prepare` script, so an install is a
-tarball fetch. Keep a `DESIGN-VERSION` file in sync with the pin ([convention](docs/DESIGN-VERSION.md)).
+`dist/` is committed on release tags only, and no script is named `prepare`, `prepack`, `build`,
+`install`, `preinstall` or `postinstall` (npm prepares a git dependency that has any of them, which
+means a full dev install in a temp clone), so an install is a plain fetch. The library build is
+`npm run build:lib`. `v0.1.0` predates that rename and does not install; pin `v0.1.1` or later. Keep a `DESIGN-VERSION` file in sync with the pin ([convention](docs/DESIGN-VERSION.md)).
 
 ## Use
 
@@ -48,7 +50,7 @@ CLI: `npx trident-ui copy-assets <dir> [--fonts inter,space-grotesk]`,
 
 ```bash
 npm ci
-npm run build        # tokens -> vite lib -> tsup .d.ts -> styles.css -> export check
+npm run build:lib    # tokens -> vite lib -> tsup .d.ts -> styles.css -> export check
 npm test             # vitest + jsdom + axe; includes the contrast matrix
 npm run lint
 npm run typecheck
@@ -68,7 +70,7 @@ scheme), under reduced motion and the Pause-motion control, at 360px and 1280px.
 CSS, so build first.
 
 ```bash
-npm run build && npm run gallery:build
+npm run build:lib && npm run gallery:build
 npm run gallery:dev      # browse: ?theme=<name>&motion=reduced|paused&group=<group>
 npm run gallery:e2e      # Playwright: screenshots (macOS baselines) + axe, local Chromium
 npm run gallery:axe      # axe only (also runs in CI)

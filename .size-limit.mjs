@@ -1,5 +1,5 @@
 // Bundle budgets (spec §1, §9). All sizes gzip. JS is bundled + minified with esbuild; React is
-// the consumer's (a peer), so it is ignored. Run after `npm run build`: `npm run size`.
+// the consumer's (a peer), so it is ignored. Run after `npm run build:lib`: `npm run size`.
 import { readdirSync } from 'node:fs'
 
 const PEERS = ['react', 'react-dom', 'react/*', 'react-dom/*']
