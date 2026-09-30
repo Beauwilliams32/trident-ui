@@ -55,7 +55,11 @@ npm run typecheck
 npm run check:dist   # dist-matches-source
 npm run fonts:sync   # after bumping an @fontsource-variable/* package
 npm run size         # size-limit budgets (spec §1, §9); run after build
+npm run gate         # the merge gate: check + check:dist + gallery build + Playwright visual and axe
 ```
+
+`npm run check` alone does not run the gallery's Playwright suites. Merge on `npm run gate`, run on
+macOS so the visual spec compares against the committed baselines (it skips elsewhere).
 
 ### Gallery (spec §10.6)
 

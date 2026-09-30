@@ -86,6 +86,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run typecheck && npm run lint && npm test && npm run build && npm run size",
+    "gate": "npm run check && npm run check:dist && npm run gallery:build && npm run gallery:e2e",
     "check:dist": "node scripts/dist-matches-source.mjs",
     "fonts:sync": "node scripts/sync-fonts.mjs",
     "changeset": "changeset",
