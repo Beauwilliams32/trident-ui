@@ -31,7 +31,7 @@ function hashTree(dir) {
 }
 
 const tracked = git(['ls-files', '--', 'dist']).trim()
-run('npm', ['run', 'build'])
+run('npm', ['run', 'build:lib'])
 
 if (tracked) {
   const status = git(['status', '--porcelain', '--untracked-files=all', '--ignored=matching', '--', 'dist'])
@@ -43,7 +43,7 @@ if (tracked) {
   console.log('dist-matches-source: committed dist/ matches a fresh build')
 } else {
   const first = hashTree(join(ROOT, 'dist'))
-  run('npm', ['run', 'build'])
+  run('npm', ['run', 'build:lib'])
   const second = hashTree(join(ROOT, 'dist'))
   const keys = new Set([...Object.keys(first), ...Object.keys(second)])
   const diff = [...keys].filter((k) => first[k] !== second[k])

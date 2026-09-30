@@ -80,7 +80,7 @@ export function copyAssets(dir, { fonts, posters } = {}) {
 export function syncTokens(dir, { themes } = {}) {
   const out = resolve(dir)
   const dist = join(PKG_ROOT, 'dist')
-  if (!existsSync(join(dist, 'tokens.css'))) throw new Error('dist/tokens.css missing: run npm run build in @trident/ui first')
+  if (!existsSync(join(dist, 'tokens.css'))) throw new Error('dist/tokens.css missing: run npm run build:lib in @trident/ui first')
   const available = readdirSync(join(dist, 'themes')).map((f) => f.replace(/\.css$/, ''))
   const chosen = themes || available
   for (const t of chosen) if (!available.includes(t)) throw new Error(`unknown theme ${t} (have: ${available.join(', ')})`)

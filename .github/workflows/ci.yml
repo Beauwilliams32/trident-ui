@@ -26,7 +26,8 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test
-      - run: npm run build
+      # Not named `build`: npm treats a git dependency with a `build` script as needing preparation.
+      - run: npm run build:lib
       # Tags carry a committed dist/ that must equal a fresh build; on main/PRs the build must be deterministic.
       - run: npm run check:dist
       # Bundle budgets (spec §1, §9): styles, themes, islands, motion-lite, the lazy 3D chunk, root.

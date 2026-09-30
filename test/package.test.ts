@@ -7,13 +7,24 @@ import { ROOT } from '../scripts/lib/tokens.mjs'
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
 
 describe('package.json', () => {
-  it('is @trident/ui, ESM, CSS-only side effects, no prepare script', () => {
+  it('is @trident/ui, ESM, CSS-only side effects', () => {
     expect(pkg.name).toBe('@trident/ui')
     expect(pkg.type).toBe('module')
     expect(pkg.sideEffects).toEqual(['*.css'])
-    expect(pkg.scripts.prepare).toBeUndefined()
     expect(pkg.scripts.prepublish).toBeUndefined()
-    expect(pkg.scripts.postinstall).toBeUndefined()
+  })
+
+  // Consumers install `github:Beauwilliams32/trident-ui#vX.Y.Z` with dist/ committed on the tag.
+  // npm (pacote lib/git.js, #prepareDir) "prepares" a git dependency when its package.json has
+  // workspaces or any of these scripts: it runs a full `npm install --force --include=dev` in a temp
+  // clone before packing. v0.1.0 had a `build` script, so its install either pulled every
+  // devDependency or (npm 11.12) failed outright with "git dep preparation failed".
+  it('has no script that makes npm prepare the git dependency, so an install is a plain fetch', () => {
+    for (const name of ['postinstall', 'build', 'preinstall', 'install', 'prepack', 'prepare'])
+      expect(pkg.scripts[name], `scripts.${name} triggers git dep preparation`).toBeUndefined()
+    expect(pkg.workspaces).toBeUndefined()
+    expect(pkg.scripts['build:lib']).toMatch(/vite build/)
+    expect(pkg.scripts.check).toContain('npm run build:lib')
   })
 
   it('exposes the full subpath export map', () => {
