@@ -1,0 +1,73 @@
+/* @trident/ui/three — the Lazy3D slot (spec §6.5). Fixed aspect ratio (CLS 0), poster painted
+   first, canvas stacked on top and inert unless the scene is interactive. */
+.ui-lazy3d {
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  contain: layout paint;
+  isolation: isolate;
+}
+
+.ui-lazy3d__poster,
+.ui-lazy3d__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.ui-lazy3d__stage {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ui-lazy3d[data-interactive] .ui-lazy3d__stage {
+  pointer-events: auto;
+}
+
+.ui-lazy3d__stage canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.ui-poster {
+  position: absolute;
+  inset: 0;
+}
+
+.ui-poster picture,
+.ui-poster__img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.ui-poster__img {
+  object-fit: cover;
+}
+
+/* No image: a procedural token gradient, never an empty box. */
+.ui-poster--procedural {
+  background:
+    radial-gradient(circle at 60% 50%, color-mix(in srgb, var(--ui-accent-1) 55%, transparent) 0, transparent 38%),
+    radial-gradient(circle at 60% 50%, color-mix(in srgb, var(--ui-accent-2) 30%, transparent) 0, transparent 62%),
+    var(--ui-bg-2, var(--ui-bg));
+}
+
+.ui-status-orbit__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (forced-colors: active) {
+  .ui-lazy3d__stage {
+    display: none;
+  }
+}
+
+@media print {
+  .ui-lazy3d__stage {
+    display: none;
+  }
+}

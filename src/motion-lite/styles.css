@@ -1,0 +1,48 @@
+/* motion-lite: Tilt and the Pause-motion button. Only transform and opacity animate (spec §6.3.1).
+   The reveal hiding rule, its 2.5s failsafe and the reduced-motion/Pause kill switch live in
+   src/styles/base.css (spec §0.2, §6.3.10, §6.4); nothing here overrides with important. */
+
+[data-tilt] {
+  transform: perspective(900px) rotateX(var(--ui-tilt-x, 0deg)) rotateY(var(--ui-tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform var(--ui-dur-med) var(--ui-ease);
+}
+
+[data-tilt][data-tilting] {
+  transition-duration: var(--ui-dur-instant);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tilt] {
+    transform: none;
+  }
+}
+
+html[data-motion='paused'] [data-tilt] {
+  transform: none;
+}
+
+.ui-motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-2);
+  min-height: 24px;
+  min-width: 24px;
+  padding: var(--ui-space-1) var(--ui-space-3);
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-r-pill);
+  background: transparent;
+  color: var(--ui-ink-2);
+  font: inherit;
+  font-size: var(--ui-text-sm);
+  cursor: pointer;
+}
+
+.ui-motion-toggle:hover {
+  color: var(--ui-ink);
+}
+
+.ui-motion-toggle[aria-pressed='true'] {
+  border-color: var(--ui-focus);
+  color: var(--ui-ink);
+}

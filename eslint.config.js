@@ -8,7 +8,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist/**', 'node_modules/**', 'coverage/**', 'fonts/**'] },
+  { ignores: ['dist/**', 'node_modules/**', 'coverage/**', 'fonts/**', 'gallery/dist/**', 'test-results/**', 'playwright-report/**'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

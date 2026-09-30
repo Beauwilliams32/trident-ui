@@ -23,7 +23,7 @@ export const STYLE_GROUPS = [
   'three',
 ]
 
-const parts = [HEADER.replace('tokens.json by scripts/build-tokens.mjs', 'src/**/styles.css by scripts/build-styles.mjs')]
+const parts = [HEADER.replace('tokens.json by scripts/build-tokens.mjs', 'src/<group>/styles.css by scripts/build-styles.mjs')]
 parts.push(`/* --- src/styles/base.css --- */\n${readFileSync(join(ROOT, 'src/styles/base.css'), 'utf8')}`)
 let groups = 0
 for (const g of STYLE_GROUPS) {

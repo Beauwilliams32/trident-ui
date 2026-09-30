@@ -85,10 +85,16 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build && npm run size",
     "check:dist": "node scripts/dist-matches-source.mjs",
     "fonts:sync": "node scripts/sync-fonts.mjs",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "gallery:build": "vite build --config gallery/vite.config.ts",
+    "gallery:dev": "vite --config gallery/vite.config.ts",
+    "gallery:e2e": "playwright test",
+    "gallery:axe": "playwright test gallery/tests/axe.spec.ts",
+    "gallery:update": "playwright test gallery/tests/visual.spec.ts --update-snapshots",
+    "size": "size-limit"
   },
   "dependencies": {
     "lucide-react": "^1.48.0"
@@ -172,6 +178,7 @@
     }
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@changesets/cli": "^3.0.3",
     "@eslint/js": "^10.0.1",
     "@fontsource-variable/inter": "^5.3.0",
@@ -179,6 +186,7 @@
     "@fontsource-variable/manrope": "^5.3.0",
     "@fontsource-variable/oswald": "^5.3.0",
     "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@playwright/test": "^1.63.0",
     "@radix-ui/react-alert-dialog": "^1.1.23",
     "@radix-ui/react-checkbox": "^1.3.11",
     "@radix-ui/react-context-menu": "^2.3.7",
@@ -193,6 +201,8 @@
     "@radix-ui/react-tooltip": "^1.2.16",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.1",
+    "@size-limit/esbuild": "^14.1.0",
+    "@size-limit/file": "^14.1.0",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",
     "@types/node": "^26.6.3",
@@ -209,6 +219,7 @@
     "motion": "^13.4.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "size-limit": "^14.1.0",
     "sonner": "^2.0.8",
     "three": "0.180.0",
     "tsup": "^8.5.1",
