@@ -1,0 +1,85 @@
+/* @trident/ui — GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* theme: wmh-portal — Williams Media portal, light. Field #f7f9fd, cards #ffffff, ink #0b1220. */
+[data-theme="wmh-portal"] {
+  color-scheme: light;
+  --ui-bg: #f7f9fd;
+  --ui-bg-2: #f1f5fb;
+  --ui-surface: #ffffff;
+  --ui-surface-raised: #ffffff;
+  --ui-glass: color-mix(in srgb, #ffffff 82%, transparent);
+  --ui-glass-strong: color-mix(in srgb, #ffffff 90%, transparent);
+  --ui-glass-edge: rgba(15,23,42,.12);
+  --ui-specular: rgba(255,255,255,.64);
+  --ui-line: rgba(15,23,42,.12);
+  --ui-line-strong: #7b8799;
+  --ui-ink: #0b1220;
+  --ui-ink-2: #334155;
+  --ui-muted: #475569;
+  --ui-accent-1: #7c3aed;
+  --ui-accent-2: #2563eb;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(124,58,237,.18);
+  --ui-on-accent: #ffffff;
+  --ui-accent-text: var(--ui-accent-1);
+  --ui-focus: var(--ui-accent-1);
+  --ui-ok: #047857;
+  --ui-warn: #b54708;
+  --ui-danger: #b91c1c;
+  --ui-info: #1d4ed8;
+  --ui-status-live: var(--ui-accent-text);
+  --ui-status-attention: var(--ui-warn);
+  --ui-status-ok: var(--ui-ok);
+  --ui-status-error: var(--ui-danger);
+  --ui-status-reasoning: #6d28d9;
+  --ui-font-display: Futura, 'Futura PT', 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-body: 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ui-r-xs: 6px;
+  --ui-r-sm: 10px;
+  --ui-r: 16px;
+  --ui-r-lg: 22px;
+  --ui-r-pill: 999px;
+  --ui-blur: 18px;
+  --ui-blur-heavy: 28px;
+  --ui-e0: none;
+  --ui-e1: 0 1px 2px rgba(15,23,42,.06), 0 0 0 1px var(--ui-line);
+  --ui-e2: 0 18px 48px rgba(15,23,42,.09), 0 2px 10px rgba(15,23,42,.05);
+  --ui-e3: 0 24px 64px rgba(15,23,42,.14), 0 4px 14px rgba(15,23,42,.07);
+  --ui-e4: 0 32px 80px rgba(15,23,42,.20), 0 8px 24px rgba(15,23,42,.10);
+  --ui-eyebrow: #a17f30;
+  --ui-logo-grad: linear-gradient(135deg, #5d0045, #210018);
+  --ui-link: #1d4ed8;
+}
+[data-theme="wmh-portal"][data-portal-palette="violet"],
+[data-theme="wmh-portal"] [data-portal-palette="violet"] {
+  --ui-accent-1: #7c3aed;
+  --ui-accent-2: #2563eb;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(124,58,237,.16);
+  --ui-on-accent: #ffffff;
+  --ui-accent-text: #7c3aed;
+  --ui-focus: #7c3aed;
+  --ui-status-live: var(--ui-accent-text);
+}
+[data-theme="wmh-portal"][data-portal-palette="ocean"],
+[data-theme="wmh-portal"] [data-portal-palette="ocean"] {
+  --ui-accent-1: #2563eb;
+  --ui-accent-2: #7c3aed;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(37,99,235,.16);
+  --ui-on-accent: #ffffff;
+  --ui-accent-text: #1d4ed8;
+  --ui-focus: #1d4ed8;
+  --ui-status-live: var(--ui-accent-text);
+}
+[data-theme="wmh-portal"][data-portal-palette="forest"],
+[data-theme="wmh-portal"] [data-portal-palette="forest"] {
+  --ui-accent-1: #10b981;
+  --ui-accent-2: #2563eb;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(16,185,129,.18);
+  --ui-on-accent: #0b1220;
+  --ui-accent-text: #047857;
+  --ui-focus: #047857;
+  --ui-status-live: var(--ui-accent-text);
+}

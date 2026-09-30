@@ -1,0 +1,49 @@
+/* @trident/ui — GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* theme: trident-studio — Studio hub (and the default :root values). Identity uses these tokens with no accent. */
+[data-theme="trident-studio"] {
+  color-scheme: dark;
+  --ui-bg: #070d16;
+  --ui-bg-2: #0b1422;
+  --ui-surface: #0e1a2b;
+  --ui-surface-raised: #132238;
+  --ui-glass: color-mix(in srgb, #0e1a2b 62%, transparent);
+  --ui-glass-strong: color-mix(in srgb, #0e1a2b 82%, transparent);
+  --ui-glass-edge: rgba(255,255,255,.08);
+  --ui-specular: rgba(255,255,255,.13);
+  --ui-line: rgba(148,199,255,.12);
+  --ui-line-strong: #5a7591;
+  --ui-ink: #e9f2fb;
+  --ui-ink-2: #b7c7d8;
+  --ui-muted: #8fa5bc;
+  --ui-accent-1: #2dd4bf;
+  --ui-accent-2: #38bdf8;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: color-mix(in srgb, var(--ui-accent-1) 22%, transparent);
+  --ui-on-accent: #06121d;
+  --ui-accent-text: var(--ui-accent-1);
+  --ui-focus: var(--ui-accent-text);
+  --ui-ok: #34d399;
+  --ui-warn: #fbbf24;
+  --ui-danger: #f87171;
+  --ui-info: #7dd3fc;
+  --ui-status-live: var(--ui-accent-text);
+  --ui-status-attention: var(--ui-warn);
+  --ui-status-ok: var(--ui-ok);
+  --ui-status-error: var(--ui-danger);
+  --ui-status-reasoning: #b69bff;
+  --ui-font-display: 'Space Grotesk', 'Space Grotesk Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-body: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ui-r-xs: 6px;
+  --ui-r-sm: 10px;
+  --ui-r: 16px;
+  --ui-r-lg: 22px;
+  --ui-r-pill: 999px;
+  --ui-blur: 14px;
+  --ui-blur-heavy: 24px;
+  --ui-e0: none;
+  --ui-e1: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge);
+  --ui-e2: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge), 0 16px 40px -16px rgba(0,0,0,.55);
+  --ui-e3: 0 0 0 1px var(--ui-line-strong), 0 24px 64px -12px rgba(0,0,0,.65);
+  --ui-e4: 0 0 0 1px var(--ui-line-strong), 0 32px 80px -12px rgba(0,0,0,.7);
+}

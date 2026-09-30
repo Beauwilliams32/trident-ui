@@ -1,0 +1,51 @@
+/* @trident/ui — GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* theme: portfolio — beau-portfolio. Accent as text only at >=15px semibold. Runtime site.accent goes through ensureContrast(). */
+[data-theme="portfolio"] {
+  color-scheme: dark;
+  --ui-bg: #0d0a0a;
+  --ui-bg-2: #151010;
+  --ui-surface: #191313;
+  --ui-surface-raised: #221a1a;
+  --ui-glass: color-mix(in srgb, #191313 72%, transparent);
+  --ui-glass-strong: color-mix(in srgb, #191313 88%, transparent);
+  --ui-glass-edge: rgba(255,255,255,.08);
+  --ui-specular: rgba(255,255,255,.10);
+  --ui-line: rgba(244,238,233,.10);
+  --ui-line-strong: #75655f;
+  --ui-ink: #f4eee9;
+  --ui-ink-2: #d6cbc4;
+  --ui-muted: #a89a93;
+  --ui-accent-1: #e34c4c;
+  --ui-accent-2: #b93a3a;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(227,76,76,.32);
+  --ui-on-accent: #0b1220;
+  --ui-accent-text: var(--ui-accent-1);
+  --ui-focus: var(--ui-accent-1);
+  --ui-ok: #34d399;
+  --ui-warn: #fbbf24;
+  --ui-danger: #f87171;
+  --ui-info: #7dd3fc;
+  --ui-status-live: var(--ui-accent-text);
+  --ui-status-attention: var(--ui-warn);
+  --ui-status-ok: var(--ui-ok);
+  --ui-status-error: var(--ui-danger);
+  --ui-status-reasoning: #b69bff;
+  --ui-font-display: 'Oswald', 'Oswald Fallback', 'Arial Narrow', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-body: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  --ui-r-xs: 6px;
+  --ui-r-sm: 10px;
+  --ui-r: 14px;
+  --ui-r-lg: 22px;
+  --ui-r-pill: 999px;
+  --ui-blur: 14px;
+  --ui-blur-heavy: 24px;
+  --ui-e0: none;
+  --ui-e1: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge);
+  --ui-e2: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge), 0 16px 40px -16px rgba(0,0,0,.55);
+  --ui-e3: 0 0 0 1px var(--ui-line-strong), 0 24px 64px -12px rgba(0,0,0,.65);
+  --ui-e4: 0 0 0 1px var(--ui-line-strong), 0 32px 80px -12px rgba(0,0,0,.7);
+  --ui-accent-text-min-size: 15px;
+  --ui-accent-text-min-weight: 600;
+}
