@@ -14,4 +14,8 @@ and any rendered-colour change needs an entry here.
 - Self-hosted variable fonts (Space Grotesk, Inter, JetBrains Mono, Manrope, Oswald; OFL) with
   metric-matched fallbacks; `trident-ui copy-assets` and `sync-tokens`.
 - `@trident/ui/eslint` consumer rule for restricted surfaces.
-- Empty component groups ready for the builders.
+- Component groups (a11y, layout, type, actions, forms, display, feedback) and the `server`,
+  `islands`, `motion-lite`, `motion` and `three` entries; `app` is still an empty placeholder.
+- Static gallery with Playwright visual regression (576 macOS baselines) and axe, plus size-limit
+  budgets. `npm run gate` runs all of it; `FEATURE-MAP.md` has a row per group, guarded by
+  `test/feature-map.test.ts`.

@@ -15,3 +15,23 @@
 | Consumer ESLint rule for restricted surfaces | `eslint/restricted-surfaces.js` | yes | `test/eslint-convention.test.ts` |
 | Toolchain: React 19 + Testing Library + axe | `test/setup.ts` | yes | `test/axe-smoke.test.tsx` |
 | dist-matches-source | `scripts/dist-matches-source.mjs` | CI | `.github/workflows/ci.yml` |
+| a11y group: SkipLink, VisuallyHidden, LiveAnnouncer, FocusRing | `src/a11y/` | yes | `test/a11y/a11y.test.tsx`, `test/a11y/ssr.test.tsx` |
+| layout group: Container, Stack, Cluster, Grid, Section | `src/layout/` | yes | `test/layout/layout.test.tsx` |
+| type group: Heading (+ outline check), Text, Kicker, GradText, Mono, Code, Kbd, Prose | `src/type/` | yes | `test/type/type.test.tsx` |
+| actions group: Button, LinkButton, IconButton | `src/actions/` | yes | `src/actions/actions.test.tsx` |
+| forms group: Form + CSRF, Field, controls, FormError, ErrorSummary, SubmitButton | `src/forms/` | yes | `src/forms/forms.test.tsx` |
+| display group: Badge, StatusPill, Chip, Avatar, Card, StatCard | `src/display/` | yes | `src/display/display.test.tsx`, `src/display/ssr.test.tsx`, `src/display/theme-smoke.test.tsx`, `src/display/tone.test.ts` |
+| feedback group: Alert, FlashBanner, Toast | `src/feedback/` | yes | `src/feedback/feedback.test.tsx`, `src/feedback/ssr.test.tsx`, `src/feedback/theme-smoke.test.tsx`, `src/feedback/feedback-contrast.test.ts` |
+| server entry: SeoHead, JSON-LD, renderPage, Island markup, theme schemes | `src/server/` | yes | `src/server/SeoHead.test.tsx`, `src/server/jsonld.test.ts`, `src/server/renderPage.test.tsx`, `src/server/Island.test.tsx`, `src/server/themes.test.ts` |
+| islands entry: `hydrateIslands()` + 2 kB budget | `src/islands/` | yes | `src/islands/hydrate.test.tsx`, `src/islands/budget.test.ts`, `src/islands/gallery.test.tsx` |
+| motion-lite entry: reveal, count-up, tilt, Pause store, view transitions | `src/motion-lite/` | yes | `src/motion-lite/motion-lite.test.ts`, `src/motion-lite/size.test.ts`, `src/motion-lite/ssr.test.ts` |
+| motion entry: MotionRoot, Reveal, CountUp, Tilt, ViewTransitionLink, AmbientGlow, MotionToggle | `src/motion/` | yes | `src/motion/motion.test.tsx` |
+| three entry: Lazy3D gating, PosterFallback, StatusOrbit, quality tier, FPS guard, token colours | `src/three/` | yes | `src/three/__tests__/Lazy3D.test.tsx`, `src/three/__tests__/SceneCanvas.test.tsx`, `src/three/__tests__/guards.test.ts`, `src/three/__tests__/a11y-hooks.test.tsx`, `src/three/__tests__/ssr.test.tsx`, `src/three/__tests__/units.test.ts` |
+| app entry (Radix, cmdk, sonner compositions) | `src/app/` | no: the entry is an empty placeholder in v0.1 | none |
+| Root entry never reaches three / R3F or a subpath-only group | `src/index.ts` | yes | `test/root-entry.test.ts` |
+| Static gallery: every `*.gallery.tsx` example × 12 themes × reduced/paused × 360/1280 | `gallery/` | yes | `gallery/tests/visual.spec.ts`, `gallery/tests/axe.spec.ts` |
+| Visual regression: 576 macOS baselines, maxDiffPixelRatio 0.001, posters only (no canvas) | `gallery/tests/__screenshots__/darwin/` | yes (macOS, `npm run gate`) | `gallery/tests/visual.spec.ts` |
+| Gallery axe, WCAG 2.2 AA, zero violations on 48 pages | `gallery/tests/axe.spec.ts` | yes (CI + `npm run gate`) | `gallery/tests/axe.spec.ts` |
+| Bundle budgets (styles, tokens, themes, islands, motion-lite, lazy 3D chunk, root) | `.size-limit.mjs` | yes (`npm run size`) | `.size-limit.mjs` |
+| Full local gate: check + check:dist + gallery build + Playwright visual and axe | `package.json#scripts.gate` | yes | `test/feature-map.test.ts` |
+| FEATURE-MAP covers every source group and cites only files that exist | `FEATURE-MAP.md` | yes | `test/feature-map.test.ts` |
