@@ -20,6 +20,12 @@ export async function openGallery(page: Page, theme: ThemeName, motion: Motion, 
   await page.goto(`./?theme=${theme}&motion=${motion}`)
   await page.locator('html[data-gallery-ready]').waitFor({ state: 'attached' })
   await page.evaluate(() => document.fonts.ready)
+  // The motion kill switch gives every element `transition-duration: 0.01ms` with the default
+  // `transition-property: all`, so a late theme-dependent style change eases colour over one frame,
+  // and axe can sample inside that frame (seen 2026-10-02: wmh-portal paused, ink #e9f2fb on
+  // #f1f5fb, about 1 run in 100). Wait two frames, then until no CSS transition is running.
+  await page.evaluate(() => new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))))
+  await page.waitForFunction(() => !document.getAnimations().some((a) => a instanceof CSSTransition && a.playState === 'running'))
   // Guard against cascade-order regressions: the theme file's own values must be the ones in effect.
   const expected = themeVars(theme)
   const actual = await page.evaluate(

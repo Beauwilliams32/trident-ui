@@ -300,6 +300,34 @@ export function threeColors(tokens) {
   return out
 }
 
+/**
+ * Every (theme, palette) variant's hex roles as 0xRRGGBB ints: the data src/three/generated.ts
+ * ships in the lazy 3D payload. Precomputed so that payload carries only these ints, not all of
+ * tokens.json (spec §6.6 ≤250KB gz). Palette maps are complete (theme roles + palette overrides).
+ */
+export function threeColorTable(tokens) {
+  const ints = (roles) => {
+    const out = {}
+    for (const [role, value] of Object.entries(roles)) if (HEX_RE.test(value)) out[role] = hexToInt(value)
+    return out
+  }
+  const themes = {}
+  const palettes = {}
+  for (const { theme, palette } of themeVariants(tokens)) {
+    if (palette) (palettes[theme] ??= {})[palette] = ints(resolveTheme(tokens, theme, palette))
+    else themes[theme] = ints(resolveTheme(tokens, theme))
+  }
+  return { themes, palettes }
+}
+
+export const THREE_COLOR_TABLE_FILE = 'src/three/generated-colors.json'
+
+/** src/three/generated-colors.json, written by scripts/build-tokens.mjs. */
+export function buildThreeColorTableJson(tokens) {
+  const note = 'GENERATED from tokens.json by scripts/build-tokens.mjs (npm run build:tokens). Do not edit.'
+  return JSON.stringify({ $comment: note, ...threeColorTable(tokens) }, null, 2) + '\n'
+}
+
 export function quorumFallback(tokens) {
   const out = {}
   for (const [k, v] of Object.entries(tokens.themes.quorum.legacy)) out[k] = expandHex(v)

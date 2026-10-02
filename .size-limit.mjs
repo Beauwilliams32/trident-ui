@@ -23,6 +23,8 @@ export default [
   // The lazy 3D chunk with three + R3F + drei: never in the initial graph, ≤250KB gz (spec §6.6, §9).
   // size-limit treats every peer as external; three, R3F and drei are optional peers but ship in
   // this chunk, so only React stays external here.
+  // CI (official Node 24, Chromium zlib) measures about 0.5% above macOS Homebrew Node (system zlib):
+  // judge headroom by the CI number (docs/DEVIATIONS.md, 2026-10-02).
   js('@trident/ui/three lazy scene chunk (with three, R3F, drei)', 'dist/chunks/scene-*.js', '250 kB', {
     modifyEsbuildConfig: (config) => ({ ...config, external: PEERS }),
   }),

@@ -1,6 +1,6 @@
 /**
  * Colour helpers for the light @trident/ui/three entry. The generated per-theme map (which carries
- * tokens.json) is a separate chunk: loadGeneratedColors() fetches it, and <Lazy3D> loads it
+ * the precomputed token colour table) is a separate chunk: loadGeneratedColors() fetches it, and <Lazy3D> loads it
  * together with the scene kit, so it is always present by the time a scene renders.
  */
 import type * as Generated from './generated'

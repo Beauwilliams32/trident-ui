@@ -27,11 +27,12 @@
 | motion-lite entry: reveal, count-up, tilt, Pause store, view transitions | `src/motion-lite/` | yes | `src/motion-lite/motion-lite.test.ts`, `src/motion-lite/size.test.ts`, `src/motion-lite/ssr.test.ts` |
 | motion entry: MotionRoot, Reveal, CountUp, Tilt, ViewTransitionLink, AmbientGlow, MotionToggle | `src/motion/` | yes | `src/motion/motion.test.tsx` |
 | three entry: Lazy3D gating, PosterFallback, StatusOrbit, quality tier, FPS guard, token colours | `src/three/` | yes | `src/three/__tests__/Lazy3D.test.tsx`, `src/three/__tests__/SceneCanvas.test.tsx`, `src/three/__tests__/guards.test.ts`, `src/three/__tests__/a11y-hooks.test.tsx`, `src/three/__tests__/ssr.test.tsx`, `src/three/__tests__/units.test.ts` |
+| three entry: lazy colour table precomputed from tokens.json (`generated-colors.json`, written by `npm run build:tokens`, sync-tested) so the 3D payload never carries tokens.json | `src/three/generated.ts`, `src/three/generated-colors.json`, `scripts/build-tokens.mjs` | yes | `src/three/__tests__/units.test.ts` |
 | app entry (Radix, cmdk, sonner compositions) | `src/app/` | no: the entry is an empty placeholder in v0.1 | none |
 | Root entry never reaches three / R3F or a subpath-only group | `src/index.ts` | yes | `test/root-entry.test.ts` |
 | Static gallery: every `*.gallery.tsx` example × 12 themes × reduced/paused × 360/1280 | `gallery/` | yes | `gallery/tests/visual.spec.ts`, `gallery/tests/axe.spec.ts` |
 | Visual regression: 576 macOS baselines, maxDiffPixelRatio 0.001, posters only (no canvas) | `gallery/tests/__screenshots__/darwin/` | yes (macOS, `npm run gate`) | `gallery/tests/visual.spec.ts` |
-| Gallery axe, WCAG 2.2 AA, zero violations on 48 pages | `gallery/tests/axe.spec.ts` | yes (CI + `npm run gate`) | `gallery/tests/axe.spec.ts` |
+| Gallery axe, WCAG 2.2 AA, zero violations on 48 pages, sampled only once CSS transitions settle (`openGallery`) | `gallery/tests/axe.spec.ts` | yes (CI + `npm run gate`) | `gallery/tests/axe.spec.ts` |
 | Bundle budgets (styles, tokens, themes, islands, motion-lite, lazy 3D chunk, root) | `.size-limit.mjs` | yes (`npm run size`) | `.size-limit.mjs` |
 | Full local gate: check + check:dist + gallery build + Playwright visual and axe | `package.json#scripts.gate` | yes | `test/feature-map.test.ts` |
 | FEATURE-MAP covers every source group and cites only files that exist | `FEATURE-MAP.md` | yes | `test/feature-map.test.ts` |
