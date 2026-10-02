@@ -1,6 +1,18 @@
 /** Pure units of @trident/ui/three: tiers, probes, honesty, colours, frame guard. */
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { loadTokens, threeColors } from '../../../scripts/lib/tokens.mjs'
+import {
+  buildThreeColorTableJson,
+  HEX_RE,
+  loadTokens,
+  resolveTheme,
+  ROOT,
+  THREE_COLOR_TABLE_FILE,
+  themeVariants,
+  threeColors,
+  hexToInt as tokenHexToInt,
+} from '../../../scripts/lib/tokens.mjs'
 import { generatedColorsIfLoaded, hexToInt, intToRgb, loadGeneratedColors, parseCssColor } from '../colors'
 import { computeQualityTier, forbiddenSurface, isFormField, lowPower, type QualityInputs } from '../env'
 import { FpsGuard } from '../fpsGuard'
@@ -183,6 +195,29 @@ describe('generated three.js colours', () => {
 
   it('unknown themes fall back to trident-studio', () => {
     expect(generatedColors('nope')).toBe(generatedColors('trident-studio'))
+    expect(generatedColors('constructor')).toBe(generatedColors('trident-studio'))
+    expect(generatedColors('wmh-portal', 'toString')).toBe(generatedColors('wmh-portal'))
+  })
+
+  it('every theme and palette variant equals scripts/lib/tokens.mjs resolveTheme() as ints', () => {
+    const variants = themeVariants(tokens)
+    expect(variants.some((v) => v.palette)).toBe(true)
+    for (const v of variants) {
+      const ints: Record<string, number> = {}
+      for (const [role, value] of Object.entries(resolveTheme(tokens, v.theme, v.palette))) if (HEX_RE.test(value)) ints[role] = tokenHexToInt(value)
+      expect({ ...generatedColors(v.theme, v.palette) }, v.id).toEqual(ints)
+    }
+  })
+
+  it('generated-colors.json is in sync with tokens.json (run `npm run build:tokens` after editing tokens.json)', () => {
+    const committed = readFileSync(join(ROOT, THREE_COLOR_TABLE_FILE), 'utf8')
+    expect(committed).toBe(buildThreeColorTableJson(tokens))
+  })
+
+  it('the lazy colour module carries the precomputed table, never tokens.json (3D budget, spec §6.6)', () => {
+    const source = readFileSync(join(ROOT, 'src/three/generated.ts'), 'utf8')
+    expect(source).not.toMatch(/from\s+['"][^'"]*tokens\.json['"]/)
+    expect(source).toMatch(/from\s+'\.\/generated-colors\.json'/)
   })
 
   it('applies data-portal-palette variants when a theme has them', () => {

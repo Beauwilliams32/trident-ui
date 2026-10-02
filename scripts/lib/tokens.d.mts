@@ -26,6 +26,12 @@ export declare function buildThemeCss(tokens: Tokens, name: string): string
 export declare function buildFleetCss(tokens: Tokens): string
 export declare function buildLegacyAliasesCss(tokens: Tokens): string
 export declare function threeColors(tokens: Tokens): Record<string, Record<string, number>>
+export declare function threeColorTable(tokens: Tokens): {
+  themes: Record<string, Record<string, number>>
+  palettes: Record<string, Record<string, Record<string, number>>>
+}
+export declare const THREE_COLOR_TABLE_FILE: string
+export declare function buildThreeColorTableJson(tokens: Tokens): string
 export declare function quorumFallback(tokens: Tokens): Record<string, string>
 export declare function jsTokens(tokens: Tokens): Record<string, unknown>
 export declare function tsType(value: unknown, indent?: string): string
