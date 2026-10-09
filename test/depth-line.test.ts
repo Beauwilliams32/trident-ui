@@ -19,4 +19,15 @@ describe('Depth Line mark', () => {
     expect(depthLineMark({ title: 'Trident & Co' })).toContain('aria-label="Trident &amp; Co"')
     expect(() => depthLineMark({ accent1: 'url(https://example.com)' })).toThrow()
   })
+
+  it('keeps accent gradients independent when two products share a page', () => {
+    const studio = depthLineMark()
+    const nil = depthLineMark({ accent1: '#fbbf24', accent2: '#f97316' })
+    const studioId = studio.match(/<linearGradient id="([^"]+)"/)?.[1]
+    const nilId = nil.match(/<linearGradient id="([^"]+)"/)?.[1]
+    expect(studioId).toBeTruthy()
+    expect(nilId).not.toBe(studioId)
+    expect(studio).toContain(`fill="url(#${studioId})"`)
+    expect(nil).toContain(`fill="url(#${nilId})"`)
+  })
 })
