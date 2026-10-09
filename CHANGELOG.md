@@ -4,6 +4,12 @@ Managed with [Changesets](https://github.com/changesets/changesets) (`npx change
 are in `.changeset/README.md`: a contrast-affecting change is **major**, a new theme is **minor**,
 and any rendered-colour change needs an entry here.
 
+## Unreleased
+
+- Add the opt-in Depth Line three-rail vector mark, per-product accent support, and static
+  decorative contour art for public marketing pages. Existing token colours, components,
+  checkout/auth/legal flows and contrast roles are unchanged.
+
 ## 0.1.1
 
 - Make the git-tag install a plain fetch. The library build script is now `build:lib`: npm prepares

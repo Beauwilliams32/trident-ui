@@ -41,6 +41,7 @@ import { durations, springs } from '@trident/ui/tokens.mjs'
 | `.` | React components (a11y, layout, type, actions, forms, display, feedback) + utils |
 | `server`, `islands`, `motion-lite`, `motion`, `app`, `three` | Separate entries; `motion`, `app` and `three` need their optional peers |
 | `fonts/*` | Variable woff2 (latin + latin-ext), per-family CSS, OFL licences |
+| `brand/*` | Depth Line vector mark and decorative contour treatment (product accent pairs stay in `tokens.json`) |
 | `eslint` | `restrictedSurfaces()` for money/auth/legal/admin directories ([docs](docs/ESLINT.md)) |
 
 CLI: `npx trident-ui copy-assets <dir> [--fonts inter,space-grotesk]`,

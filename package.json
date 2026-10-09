@@ -18,6 +18,7 @@
   "files": [
     "dist",
     "fonts",
+    "brand",
     "bin",
     "eslint",
     "tokens.json",
@@ -72,6 +73,7 @@
       "import": "./dist/three-tokens.mjs"
     },
     "./fonts/*": "./fonts/*",
+    "./brand/*": "./brand/*",
     "./eslint": {
       "types": "./eslint/restricted-surfaces.d.ts",
       "import": "./eslint/restricted-surfaces.js"

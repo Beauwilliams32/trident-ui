@@ -1,0 +1,22 @@
+/* Depth Line: editorial contour layer for public Trident fleet marketing pages.
+   Decorative only. Keep the text, focus ring, and controls above this layer. */
+.trident-depth-line {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.trident-depth-line::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url("./depth-line-contours.svg") right center / auto 100% no-repeat;
+  opacity: .5;
+  pointer-events: none;
+}
+@media (max-width: 720px) {
+  .trident-depth-line::before { background-position: 35% center; opacity: .27; }
+}
+@media (forced-colors: active) {
+  .trident-depth-line::before { display: none; }
+}

@@ -10,6 +10,7 @@
 | Legacy aliases (`--tg-*`, `--violet-*`, `--glass-*`, `--dur-*`, Ops, `--q-*`) | `scripts/lib/tokens.mjs#LEGACY_ALIASES` | yes | `test/tokens.test.ts` |
 | Base CSS: focus ring, reveal gating + 2.5s failsafe, motion kill switch | `src/styles/base.css` | yes | `test/base-css.test.ts` |
 | Self-hosted fonts + metric-matched fallbacks | `fonts/`, `scripts/sync-fonts.mjs` | yes | `test/fonts.test.ts` |
+| Depth Line fleet mark and optional public-page contour motif | `brand/depth-line.mjs`, `brand/depth-line.css`, `brand/depth-line-contours.svg` | yes | `test/depth-line.test.ts` |
 | `trident-ui copy-assets` / `sync-tokens` | `bin/trident-ui.mjs` | yes | `test/cli.test.ts` |
 | Package contract (exports, peers, no script that makes npm prepare the git dependency) | `package.json` | yes | `test/package.test.ts` |
 | Consumer ESLint rule for restricted surfaces | `eslint/restricted-surfaces.js` | yes | `test/eslint-convention.test.ts` |
