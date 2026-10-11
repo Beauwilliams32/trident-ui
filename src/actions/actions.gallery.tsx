@@ -9,12 +9,15 @@ import { Button, IconButton, LinkButton, type ButtonSize, type ButtonVariant } f
 export interface GalleryExample {
   id: string
   title: string
+  /** One line: when to use it. Required: the gallery test fails without it. */
+  description: string
   render: () => ReactElement
 }
 
 const VARIANTS: ButtonVariant[] = ['primary', 'secondary', 'ghost', 'danger', 'link']
 const SIZES: ButtonSize[] = ['sm', 'md', 'lg']
-const row = { display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' } as const
+// 16px between rows: on touch every button's hit region grows to 44px (G5) and must not overlap.
+const row = { display: 'flex', flexWrap: 'wrap', gap: '16px 12px', alignItems: 'center' } as const
 
 export const group = 'actions'
 
@@ -22,6 +25,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'button-variants',
     title: 'Button variants',
+    description: 'One primary per view for the likeliest action; secondary (glass) for the rest; ghost in toolbars; link inline.',
     render: () => (
       <div style={row}>
         {VARIANTS.map((v) => (
@@ -35,6 +39,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'button-sizes',
     title: 'Button sizes (32 / 36 / 44)',
+    description: 'sm for dense tables, md by default, lg for the main call to action. On touch every size answers taps across 44px.',
     render: () => (
       <div style={row}>
         {SIZES.map((s) => (
@@ -48,6 +53,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'button-states',
     title: 'Loading keeps the width; disabled',
+    description: 'Loading shows a spinner inside the button, keeps its width and can swap the accessible name (“Saving…”).',
     render: () => (
       <div style={row}>
         <Button>Save changes</Button>
@@ -66,6 +72,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'native-submit',
     title: 'Native submit (works without JavaScript)',
+    description: 'type="submit" posts the surrounding form natively, so the action works before or without hydration.',
     render: () => (
       <form method="post" action="#" style={row}>
         <Button type="submit" iconEnd={ArrowRight}>
@@ -77,6 +84,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'link-button',
     title: 'LinkButton',
+    description: 'A real link styled as a button: use it for navigation, and Button for actions.',
     render: () => (
       <div style={row}>
         <LinkButton href="#pricing">See pricing</LinkButton>
@@ -92,6 +100,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'icon-button',
     title: 'IconButton (aria-label required)',
+    description: 'Square, icon-only. The aria-label is required by the type; pair it with a Tooltip in apps.',
     render: () => (
       <div style={row}>
         {SIZES.map((s) => (

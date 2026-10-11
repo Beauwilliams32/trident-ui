@@ -11,6 +11,11 @@ export interface ViewTransitionLinkProps extends AnchorHTMLAttributes<HTMLAnchor
   onNavigate?: (href: string) => void
   /** Written to html[data-vt] during the transition. */
   transitionName?: string
+  /**
+   * Drop the default `.ui-link` look (accent text, underline) when the link is styled by its
+   * container, e.g. a tab or a nav item. Default false.
+   */
+  unstyled?: boolean
   children?: ReactNode
 }
 
@@ -18,7 +23,7 @@ export interface ViewTransitionLinkProps extends AnchorHTMLAttributes<HTMLAnchor
  * A real `<a href>` (works without JS, opens in new tabs) that animates SPA route and tab changes
  * with document.startViewTransition. Skipped under reduced motion, Pause, or no browser support.
  */
-export function ViewTransitionLink({ href, onNavigate, transitionName, onClick, children, ...rest }: ViewTransitionLinkProps) {
+export function ViewTransitionLink({ href, onNavigate, transitionName, unstyled = false, className, onClick, children, ...rest }: ViewTransitionLinkProps) {
   const handle = (e: MouseEvent<HTMLAnchorElement>) => {
     onClick?.(e)
     if (!onNavigate || e.defaultPrevented) return
@@ -29,7 +34,7 @@ export function ViewTransitionLink({ href, onNavigate, transitionName, onClick, 
     transition(() => onNavigate(href), { ...(transitionName ? { name: transitionName } : {}), flush: flushSync })
   }
   return (
-    <a href={href} onClick={handle} {...rest}>
+    <a href={href} onClick={handle} {...rest} className={[unstyled ? null : 'ui-link', className].filter(Boolean).join(' ') || undefined}>
       {children}
     </a>
   )

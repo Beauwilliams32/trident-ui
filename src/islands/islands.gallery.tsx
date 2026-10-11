@@ -3,13 +3,16 @@
  * <Island>, then its client entry calls `hydrateIslands(registry)` with the exported registry.
  */
 import { type ReactNode, useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+import { Button } from '../actions/Button'
 import { Island } from '../server/Island'
 import type { IslandRegistry } from './index'
 
 export interface GalleryExample {
   id: string
   title: string
-  description?: string
+  /** One line: when to use it. Required: the gallery test fails without it. */
+  description: string
   render: () => ReactNode
 }
 
@@ -18,9 +21,9 @@ export function DemoDisclosure({ summary, items }: { summary: string; items: str
   const [open, setOpen] = useState(false)
   return (
     <div>
-      <button type="button" aria-expanded={open} aria-controls="gallery-disclosure" onClick={() => setOpen(!open)}>
+      <Button variant="secondary" iconEnd={ChevronDown} aria-expanded={open} aria-controls="gallery-disclosure" onClick={() => setOpen(!open)}>
         {summary}
-      </button>
+      </Button>
       <ul id="gallery-disclosure" hidden={!open}>
         {items.map((item) => (
           <li key={item}>{item}</li>
@@ -34,9 +37,9 @@ export function DemoDisclosure({ summary, items }: { summary: string; items: str
 export function DemoCounter({ label, start }: { label: string; start: number }) {
   const [n, setN] = useState(start)
   return (
-    <button type="button" onClick={() => setN(n + 1)}>
+    <Button variant="secondary" onClick={() => setN(n + 1)}>
       {label}: {n}
-    </button>
+    </Button>
   )
 }
 
@@ -47,6 +50,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'island-load',
     title: 'Island, hydrate="load"',
+    description: 'Hydrates as soon as the page loads, for controls needed straight away. The server-rendered state shows first.',
     render: () => <Island name="DemoCounter" component={DemoCounter} props={{ label: 'Saved', start: 3 }} hydrate="load" />,
   },
   {
@@ -60,6 +64,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'island-visible',
     title: 'Island, hydrate="visible"',
+    description: 'Hydrates when scrolled into view, for below-the-fold widgets. Costs nothing until then.',
     render: () => <Island name="DemoCounter" component={DemoCounter} props={{ label: 'Seen', start: 0 }} hydrate="visible" />,
   },
 ]

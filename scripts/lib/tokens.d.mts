@@ -37,3 +37,8 @@ export declare function jsTokens(tokens: Tokens): Record<string, unknown>
 export declare function tsType(value: unknown, indent?: string): string
 export declare function buildTokensModule(tokens: Tokens): { js: string; dts: string }
 export declare function buildThreeModule(tokens: Tokens): { js: string; dts: string }
+export declare function luminance(hex: string): number
+export declare function contrast(a: string, b: string): number
+export declare function mixHex(a: string, b: string, t: number): string
+export declare function highContrastRoles(tokens: Tokens, name: string): Record<string, string>
+export declare function resolveHighContrast(tokens: Tokens, name: string): Record<string, string>

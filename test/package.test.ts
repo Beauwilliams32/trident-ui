@@ -35,6 +35,7 @@ describe('package.json', () => {
       './motion-lite',
       './motion',
       './app',
+      './marketing',
       './three',
       './tokens.css',
       './styles.css',

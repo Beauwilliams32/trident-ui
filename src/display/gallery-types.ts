@@ -6,5 +6,7 @@ export interface GalleryExample {
   component: string
   /** Short variant title, e.g. "Tones". */
   name: string
+  /** One line: when to use it. Required: the gallery test fails without it. */
+  description: string
   render: () => ReactElement
 }

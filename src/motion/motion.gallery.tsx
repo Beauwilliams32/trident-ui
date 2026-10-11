@@ -7,7 +7,8 @@ import { AmbientGlow, CountUp, MotionRoot, MotionToggle, Reveal, Tilt, ViewTrans
 
 export interface GalleryExample {
   name: string
-  description?: string
+  /** One line: when to use it. Required: the gallery test fails without it. */
+  description: string
   render: () => ReactElement
 }
 

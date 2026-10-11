@@ -6,6 +6,7 @@ export const ENTRIES = {
   'motion-lite': 'src/motion-lite/index.ts',
   motion: 'src/motion/index.ts',
   app: 'src/app/index.ts',
+  marketing: 'src/marketing/index.ts',
   three: 'src/three/index.ts',
 }
 

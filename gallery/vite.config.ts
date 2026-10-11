@@ -1,12 +1,14 @@
+import { resolve } from 'node:path'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import { galleryDataPlugin } from './data/plugin.ts'
 
 // The static gallery (spec §10.6): every src/<group>/*.gallery.tsx example, per theme and motion
 // state. It reads the built CSS from dist/, so `npm run build` runs first (see gallery:build).
 export default defineConfig({
   root: import.meta.dirname,
   base: './',
-  plugins: [react()],
+  plugins: [react(), galleryDataPlugin(resolve(import.meta.dirname, '..'))],
   logLevel: 'warn',
   build: {
     outDir: 'dist',

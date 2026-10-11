@@ -14,6 +14,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'container',
     title: 'Container sizes',
+    description: 'Centres content at a fixed maximum width: prose (68ch) for reading, marketing (1080px) and app (1280px).',
     render: () => (
       <Stack gap={2}>
         <Container size="prose">
@@ -31,6 +32,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'stack',
     title: 'Stack',
+    description: 'Vertical rhythm with one gap token between children. Renders any element, here a list.',
     render: () => (
       <Stack gap={3} as="ul" aria-label="Stack example">
         <li>One</li>
@@ -42,6 +44,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'cluster',
     title: 'Cluster',
+    description: 'A wrapping row for toolbars, tags and button groups, with justify and align options.',
     render: () => (
       <Cluster gap={2} justify="between">
         <Box>Left</Box>
@@ -56,6 +59,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'grid',
     title: 'Grid: 3 columns and auto-fit',
+    description: 'Fixed columns that collapse on phones, or auto-fit tracks with a minimum width.',
     render: () => (
       <Stack gap={6}>
         <Grid columns={3}>
@@ -75,10 +79,13 @@ export const examples: GalleryExample[] = [
   {
     id: 'section',
     title: 'Section tones',
+    description: 'Page bands with vertical padding and a background tone: the page bg, the alternate bg-2, or the solid surface.',
     render: () => (
-      <div>
+      // A neutral frame in the page colour, so each band reads against the same backdrop (G16:
+      // inside the bg-2 example card, "default" and "alt" looked identical).
+      <div className="g-tone-frame">
         <Section space="sm" aria-label="Default band">
-          <Box>default</Box>
+          <Box>default (bg)</Box>
         </Section>
         <Section space="sm" tone="alt" aria-label="Alt band">
           <Box>alt (bg-2)</Box>

@@ -46,11 +46,14 @@
   object-fit: cover;
 }
 
-/* No image: a procedural token gradient, never an empty box. */
+/* No image: a procedural token glow, never an empty box. Both ellipses are sized in percent of the
+   slot and end inside it (the outer one reaches 3% from the top, bottom and right edges), so the
+   glow always fades to the base colour before any edge whatever the slot's ratio (G11: the old
+   farthest-corner circles were cut off by the slot and left a hard-edged rectangle). */
 .ui-poster--procedural {
   background:
-    radial-gradient(circle at 60% 50%, color-mix(in srgb, var(--ui-accent-1) 55%, transparent) 0, transparent 38%),
-    radial-gradient(circle at 60% 50%, color-mix(in srgb, var(--ui-accent-2) 30%, transparent) 0, transparent 62%),
+    radial-gradient(ellipse 24% 38% at 60% 50%, color-mix(in srgb, var(--ui-accent-1) 50%, transparent), transparent),
+    radial-gradient(ellipse 37% 47% at 60% 50%, color-mix(in srgb, var(--ui-accent-2) 26%, transparent), transparent),
     var(--ui-bg-2, var(--ui-bg));
 }
 
@@ -58,6 +61,30 @@
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* The on-screen copy of the orbit (visible): one row per card, the state as a StatusPill (G21). */
+.ui-status-orbit__list[data-visible] {
+  display: grid;
+  margin-block-start: var(--ui-space-3);
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface);
+}
+
+.ui-status-orbit__list[data-visible] > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-2);
+  padding: var(--ui-space-2) var(--ui-space-3);
+  color: var(--ui-ink);
+  font-size: var(--ui-text-sm);
+}
+
+.ui-status-orbit__list[data-visible] > li + li {
+  border-block-start: 1px solid var(--ui-line);
 }
 
 @media (forced-colors: active) {

@@ -15,6 +15,7 @@ export const examples: GalleryExample[] = [
   {
     component: 'Alert',
     name: 'Tones',
+    description: 'Inline messages: errors are role=alert, the rest role=status. A visible title, or a hidden “Error:” prefix, carries the tone in text.',
     render: () => (
       <div style={{ display: 'grid', gap: 12 }}>
         <Alert tone="info" title="Heads up">
@@ -38,6 +39,7 @@ export const examples: GalleryExample[] = [
   {
     component: 'FlashBanner',
     name: 'nil_flash and portal shapes',
+    description: 'The page-level result of a POST-redirect, rendered on the server from the flash cookie. Errors take focus so they are heard.',
     render: () => (
       <div style={{ display: 'grid', gap: 12 }}>
         <FlashBanner flash={{ type: 'success', message: 'Profile saved.' }} />
@@ -49,6 +51,7 @@ export const examples: GalleryExample[] = [
   {
     component: 'Toast',
     name: 'Tones in a static stack',
+    description: 'Transient confirmations. Auto-dismiss pauses on hover and focus and never applies to errors, which stay until dismissed.',
     render: () => (
       <ToastRegion label="Notifications (gallery)" style={{ position: 'static', width: '100%' }}>
         <Toast tone="success" title="Published" message="Posted to Instagram and Facebook." onClose={noop} />
@@ -56,6 +59,21 @@ export const examples: GalleryExample[] = [
         <Toast tone="warning" message="Two posts are waiting for review." onClose={noop} />
         <Toast tone="error" title="Upload failed" message="The file is larger than 500 MB." onClose={noop} />
       </ToastRegion>
+    ),
+  },
+  {
+    component: 'Alert',
+    name: 'Right to left, with a Toast (dir="rtl")',
+    description: 'The tone edge, icon and dismiss button move to the other side; nothing is hard-coded to left or right.',
+    render: () => (
+      <div dir="rtl" lang="ar" style={{ display: 'grid', gap: 12 }}>
+        <Alert tone="success" title="تم الحفظ" onDismiss={noop} dismissLabel="إغلاق">
+          تم تحديث ملفك الشخصي.
+        </Alert>
+        <ToastRegion label="الإشعارات" style={{ position: 'static', width: '100%' }}>
+          <Toast tone="info" title="تم النشر" message="تم نشر المنشور على إنستغرام." onClose={noop} closeLabel="إغلاق" />
+        </ToastRegion>
+      </div>
     ),
   },
 ]
