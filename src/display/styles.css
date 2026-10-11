@@ -159,6 +159,29 @@
   }
 }
 
+/* Touch (spec §9; Material's chip touch target): on a coarse pointer the toggle and remove buttons
+   get an invisible 44x44 hit region, and interactive chips take 8px more room around them so the
+   regions of neighbouring chips never overlap. The drawn chip is unchanged. */
+@media (pointer: coarse) {
+  .ui-chip:has(.ui-chip__toggle, .ui-chip__remove) {
+    margin-block: var(--ui-space-2);
+  }
+  .ui-chip:has(.ui-chip__remove) {
+    margin-inline-end: var(--ui-space-3);
+  }
+  .ui-chip__toggle,
+  .ui-chip__remove {
+    position: relative;
+  }
+  .ui-chip__toggle::after,
+  .ui-chip__remove::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}
+
 /* Avatar ----------------------------------------------------------- */
 .ui-avatar {
   --ui-avatar-size: 58px;

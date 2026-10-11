@@ -85,6 +85,20 @@
     color: var(--ui-ink);
   }
 }
+/* Touch (spec §9): a 44x44 invisible hit region around the 28px dismiss control. */
+@media (pointer: coarse) {
+  .ui-alert__dismiss,
+  .ui-toast__close {
+    position: relative;
+  }
+  .ui-alert__dismiss::after,
+  .ui-toast__close::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}
 .ui-flash {
   width: 100%;
   font-size: var(--ui-text-base);

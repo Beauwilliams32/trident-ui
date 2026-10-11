@@ -178,6 +178,74 @@ export function semanticDecls(tokens, name, { palette } = {}) {
   return lines
 }
 
+/* ---- Contrast helpers (mirror src/utils/contrast.ts; scripts cannot import TypeScript). ---- */
+const rgbOf = (hex) => {
+  const n = hexToInt(hex)
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+}
+const hexOf = (rgb) => `#${rgb.map((v) => Math.round(Math.min(255, Math.max(0, v))).toString(16).padStart(2, '0')).join('')}`
+const lin = (v) => {
+  const c = v / 255
+  return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+}
+export function luminance(hex) {
+  const [r, g, b] = rgbOf(hex)
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+}
+export function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x)
+  return (hi + 0.05) / (lo + 0.05)
+}
+/** srgb mix, the same arithmetic as color-mix(in srgb, b t, a). t=0 is a, t=1 is b. */
+export function mixHex(a, b, t) {
+  const ca = rgbOf(a)
+  const cb = rgbOf(b)
+  return hexOf(ca.map((v, i) => v + (cb[i] - v) * t))
+}
+
+/**
+ * Increase Contrast overrides for one theme (tokens.json "high-contrast"; spec §9, Apple HIG).
+ * Returns { role: value } for every role that changes: raised roles as hex, aliases as the old
+ * resolved hex of their source, solid roles as var(--ui-<role>). Raising never lowers a role that
+ * already passes; it picks the smallest mix toward the target in 1% steps.
+ */
+export function highContrastRoles(tokens, name) {
+  const spec = tokens['high-contrast']
+  const roles = resolveTheme(tokens, name)
+  const bgs = spec.on.map((r) => roles[r])
+  const worst = (hex) => Math.min(...bgs.map((bg) => contrast(hex, bg)))
+  const extreme = themeScheme(tokens, name) === 'light' ? '#000000' : '#ffffff'
+  const out = {}
+  const now = { ...roles }
+  for (const { role, min, toward } of spec.raise) {
+    const from = now[role]
+    if (!HEX_RE.test(from)) throw new Error(`high-contrast: ${name} ${role} must be a hex colour`)
+    const target = toward === 'extreme' ? extreme : now[toward]
+    let value = expandHex(from)
+    for (let step = 0; step <= 100 && worst(value) < min; step++) value = mixHex(from, target, step / 100)
+    if (worst(value) < min) throw new Error(`high-contrast: ${name} ${role} cannot reach ${min}:1`)
+    if (value !== expandHex(from)) out[role] = value
+    now[role] = value
+  }
+  for (const [role, source] of Object.entries(spec.alias)) out[role] = expandHex(roles[source])
+  for (const [role, source] of Object.entries(spec.solid)) out[role] = `var(--ui-${source})`
+  return out
+}
+
+/** The same overrides as fully resolved values (solid roles resolved too), for tests and docs. */
+export function resolveHighContrast(tokens, name) {
+  const roles = resolveTheme(tokens, name)
+  const hc = highContrastRoles(tokens, name)
+  const out = { ...roles }
+  for (const [role, value] of Object.entries(hc)) out[role] = String(value).replace(/^var\(--ui-(.+)\)$/, (_, r) => roles[r])
+  return out
+}
+
+function highContrastBlock(tokens, name, selectors) {
+  const hc = highContrastRoles(tokens, name)
+  return ['@media (prefers-contrast: more) {', `  ${selectors.join(',\n  ')} {`, ...Object.entries(hc).map(([k, v]) => `  ${decl(`--ui-${k}`, v)}`), '  }', '}']
+}
+
 export const DEFAULT_THEME = 'trident-studio'
 
 export function buildTokensCss(tokens) {
@@ -189,6 +257,7 @@ export function buildTokensCss(tokens) {
     `  /* semantic defaults = ${DEFAULT_THEME} */`,
     ...semanticDecls(tokens, DEFAULT_THEME),
     '}',
+    ...highContrastBlock(tokens, DEFAULT_THEME, [':root']),
     '',
   ].join('\n')
 }
@@ -211,13 +280,14 @@ export function buildThemeCss(tokens, name) {
       '}',
     )
   }
+  out.push(...highContrastBlock(tokens, name, selectors))
   return out.join('\n') + '\n'
 }
 
 /** fleet.css: the shared fleet base under data-theme="fleet" (identical to trident-studio). */
 export function buildFleetCss(tokens) {
   return buildThemeCss(tokens, DEFAULT_THEME)
-    .replace(`[data-theme="${DEFAULT_THEME}"]`, '[data-theme="fleet"]')
+    .replaceAll(`[data-theme="${DEFAULT_THEME}"]`, '[data-theme="fleet"]')
     .replace(`/* theme: ${DEFAULT_THEME}`, '/* theme: fleet (base; same values as trident-studio)')
 }
 

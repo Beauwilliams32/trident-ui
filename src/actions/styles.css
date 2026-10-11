@@ -203,3 +203,16 @@
     opacity: 1;
   }
 }
+
+/* Touch (spec §9: 44px for actions on touch; Apple HIG 44pt; Material's touch-target pattern).
+   On a coarse pointer the hit region grows to at least --ui-target-touch with an invisible ::after,
+   centred on the button, so the drawn size and the layout stay exactly as on desktop. Keep 12px or
+   more between small buttons so neighbouring regions do not overlap. */
+@media (pointer: coarse) {
+  .ui-btn::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}

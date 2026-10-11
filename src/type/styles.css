@@ -246,6 +246,34 @@
   color: var(--ui-muted);
 }
 
+/* TextLink (.ui-link): the one link style. Underlined by default, never colour alone (WCAG 1.4.1).
+   Package components with links inside (Alert, Toast, FlashBanner, ViewTransitionLink) reuse it. */
+.ui-link {
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-accent-text);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.ui-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.ui-link[data-underline='hover']:not(:hover):not(:focus-visible) {
+  text-decoration-line: none;
+}
+
+.ui-link[data-tone='inherit'] {
+  color: inherit;
+}
+
+@media (forced-colors: active) {
+  .ui-link {
+    color: LinkText;
+  }
+}
+
 /* Prose: long-form HTML. */
 .ui-prose {
   max-inline-size: var(--ui-measure);

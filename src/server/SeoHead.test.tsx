@@ -51,3 +51,17 @@ describe('SeoHead', () => {
     expect(out).not.toContain('<img')
   })
 })
+
+describe('SeoHead errorCount (GOV.UK "Error:" title prefix)', () => {
+  it('prefixes the document title only, never the share titles', () => {
+    const out = html(<SeoHead title="Profile | Trident NIL" errorCount={2} />)
+    expect(out).toContain('<title>Error: Profile | Trident NIL</title>')
+    expect(out).toContain('<meta property="og:title" content="Profile | Trident NIL"/>')
+    expect(out).toContain('<meta name="twitter:title" content="Profile | Trident NIL"/>')
+  })
+
+  it('leaves the title alone with no errors', () => {
+    expect(html(<SeoHead title="Profile" errorCount={0} />)).toContain('<title>Profile</title>')
+    expect(html(<SeoHead title="Profile" />)).toContain('<title>Profile</title>')
+  })
+})

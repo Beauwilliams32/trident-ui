@@ -7,6 +7,7 @@
  * so a `script-src 'self'` CSP needs no hash or nonce for it. The text is escaped with safeJson().
  */
 import type { ReactElement } from 'react'
+import { errorTitle } from '../forms/errorTitle'
 import { type JsonLdThing, serializeJsonLd, type jsonLdGraph } from './jsonld'
 
 export interface SeoImage {
@@ -21,6 +22,11 @@ export interface SeoImage {
 export interface SeoHeadProps {
   /** The full document title. */
   title: string
+  /**
+   * Errors on the page after a failed form POST. When it is above 0 the `<title>` gains the GOV.UK
+   * "Error: " prefix (errorTitle()); share and Open Graph titles stay clean.
+   */
+  errorCount?: number
   description?: string
   /** Absolute canonical URL. Also used for og:url. */
   canonical?: string
@@ -54,7 +60,7 @@ export function SeoHead(props: SeoHeadProps): ReactElement {
 
   return (
     <>
-      <title>{title}</title>
+      <title>{errorTitle(title, props.errorCount)}</title>
       {description && <meta name="description" content={description} />}
       {canonical && <link rel="canonical" href={canonical} />}
       {robots && <meta name="robots" content={robots} />}

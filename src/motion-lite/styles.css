@@ -46,3 +46,16 @@ html[data-motion='paused'] [data-tilt] {
   border-color: var(--ui-focus);
   color: var(--ui-ink);
 }
+
+/* Touch (spec §9): the Pause-motion control keeps its drawn size; its hit region reaches 44px. */
+@media (pointer: coarse) {
+  .ui-motion-toggle {
+    position: relative;
+  }
+  .ui-motion-toggle::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}

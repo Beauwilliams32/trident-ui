@@ -292,6 +292,29 @@
   transform: translateX(calc(16px * var(--_ui-dir)));
 }
 
+/* Touch (spec §9; Apple HIG 44pt). On a coarse pointer the invisible native input grows to a
+   44x44 hit region around the drawn box, and text inputs reach 44px. Option rows get 20px apart so
+   neighbouring regions never overlap. Desktop (fine pointer) is unchanged. */
+@media (pointer: coarse) {
+  .ui-choice__input {
+    inset: min(0px, calc((24px - var(--ui-target-touch)) / 2));
+    width: auto;
+    height: auto;
+  }
+
+  .ui-switch .ui-choice__input {
+    inset-inline: min(0px, calc((40px - var(--ui-target-touch)) / 2));
+  }
+
+  .ui-fieldset__options {
+    row-gap: var(--ui-space-5);
+  }
+
+  .ui-input:not(.ui-textarea):not([multiple]) {
+    min-height: max(var(--ui-input-h), var(--ui-target-touch));
+  }
+}
+
 /* Form-level error and error summary: ink text on surface; danger carried by border + icon. */
 .ui-form-error,
 .ui-error-summary {
