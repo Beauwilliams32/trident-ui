@@ -39,10 +39,50 @@ import { durations, springs } from '@trident/ui/tokens.mjs'
 | `tokens.css`, `themes/<name>.css`, `styles.css` | Zero-JS CSS. Themes: `fleet`, `trident-studio`, `trident-nil`, `trident-ops`, `trident-playbook`, `trident-tools`, `trident-agents`, `wmh-portal`, `wmh-marketing`, `wmh-dark`, `portfolio`, `quorum`, `legacy-aliases` |
 | `tokens.json`, `tokens.mjs`, `three.mjs` | JS tokens; generated three.js hex ints and Quorum's FALLBACK map |
 | `.` | React components (a11y, layout, type, actions, forms, display, feedback) + utils |
-| `server`, `islands`, `motion-lite`, `motion`, `app`, `three` | Separate entries; `motion`, `app` and `three` need their optional peers |
+| `app` | Radix overlays (Dialog, Sheet, ConfirmDialog, Popover, Tooltip, DropdownMenu, ContextMenu), Tabs, CommandPalette (cmdk), DataTable, Pagination, EmptyState, Skeleton. Install the Radix/cmdk peers you use |
+| `marketing` | Hero, FeatureGrid, PricingTable, Faq, CtaBand, SiteHeader, SiteFooter and a MotionToggle that needs no `motion` peer. Copy and prices only ever come from props |
+| `server`, `islands`, `motion-lite`, `motion`, `three` | Separate entries; `motion` and `three` need their optional peers |
 | `fonts/*` | Variable woff2 (latin + latin-ext), per-family CSS, OFL licences |
 | `brand/*` | Depth Line vector mark and decorative contour treatment (product accent pairs stay in `tokens.json`) |
 | `eslint` | `restrictedSurfaces()` for money/auth/legal/admin directories ([docs](docs/ESLINT.md)) |
+
+### Cascade layers: keep legacy resets below the components
+
+`styles.css` puts everything in `@layer ui-base, ui-components, ui-utilities`. **Any unlayered rule
+beats every layered rule, whatever its specificity**, so an old global reset such as
+`* { margin: 0; padding: 0 }` silently zeroes every Button, Card and Container padding. Ops hit this
+and patched it with `margin: revert-layer; padding: revert-layer` under `.ops-landing`. The clean fix
+is to put the legacy reset in a layer that is named first:
+
+```css
+/* The very first rule of your first stylesheet (before @trident/ui/styles.css):
+   name the layers, lowest priority first. */
+@layer legacy, ui-base, ui-components, ui-utilities;
+
+/* Then move old global resets into the lowest layer, so component styles win. */
+@layer legacy {
+  * { margin: 0; padding: 0; }
+  a { color: inherit; }
+}
+```
+
+The order statement must come first: a layer first named later ranks higher, so declaring `legacy`
+after importing `styles.css` would put the reset above the components again. Theme and token files
+only set custom properties and are unaffected.
+
+### Built in, nothing to wire
+
+- **Touch targets.** On a coarse pointer every button, chip toggle and remove, dismiss button,
+  checkbox, radio, switch, tab and sortable header answers taps across at least 44x44 through an
+  invisible hit region; the drawn size and the desktop rendering do not change. Leave at least 12px
+  between small buttons (20px beside a 24px link button) so neighbouring regions do not overlap.
+- **Increase Contrast.** Each theme ships `@media (prefers-contrast: more)` overrides generated from
+  `tokens.json#high-contrast`: ink and muted at 7:1 or more, line-strong at 4.5:1, hairlines and
+  glass solid.
+- **Links.** Use `TextLink` for links in text. Links inside Alert, Toast and FlashBanner take the
+  tone ink and an underline; `ViewTransitionLink` renders `.ui-link` (pass `unstyled` to opt out).
+- **Error titles.** `errorTitle(title, errors)` (or `SeoHead errorCount`) gives the GOV.UK
+  "Error: " page-title prefix after a failed POST.
 
 CLI: `npx trident-ui copy-assets <dir> [--fonts inter,space-grotesk]`,
 `npx trident-ui sync-tokens <dir> [--themes trident-ops]`.
@@ -67,13 +107,18 @@ macOS so the visual spec compares against the committed baselines (it skips else
 ### Gallery (spec §10.6)
 
 `gallery/` renders every `src/<group>/*.gallery.tsx` example in every theme (each in its native
-scheme), under reduced motion and the Pause-motion control, at 360px and 1280px. It reads the built
-CSS, so build first.
+scheme), under reduced motion and the Pause-motion control, at 360px and 1280px, after three
+documentation sections from `gallery/docs/` (Getting started, Design tokens, Brand). Every example
+has a "when to use it" line, a Code disclosure with its own source (extracted at build time) and a
+copy button; every component group ends with props tables generated from `dist/*.d.ts`. A sticky
+section list (1024px and up) or a "Jump to" menu (phones) navigates it, and the theme and motion
+links keep `?group=` and the `#hash`. It reads the built CSS and types, so build first.
 
 ```bash
 npm run build:lib && npm run gallery:build
 npm run gallery:dev      # browse: ?theme=<name>&motion=reduced|paused&group=<group>
-npm run gallery:e2e      # Playwright: screenshots (macOS baselines) + axe, local Chromium
+npm run gallery:e2e      # Playwright: screenshots (macOS baselines), axe, keyboard journeys,
+                         # touch targets and the measured checks in measure.spec.ts, local Chromium
 npm run gallery:axe      # axe only (also runs in CI)
 npm run gallery:update   # re-record screenshots after an intended visual change
 ```

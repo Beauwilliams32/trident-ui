@@ -18,6 +18,15 @@ const CONTROLS: Array<[string, string | null]> = [
   ['.ui-motion-toggle', null],
   ['.ui-choice__input', '.ui-choice__control'],
   ['.ui-input:not(.ui-textarea)', null],
+  ['.ui-tabs__tab', null],
+  ['.ui-table__sort', null],
+  // Gallery chrome (G18): theme and motion links, section links, disclosures.
+  ['.g-switch a', null],
+  ['.g-version', null],
+  ['.g-changelog', null],
+  ['.g-jump > summary', null],
+  ['.g-code > summary', null],
+  ['.g-api > summary', null],
 ]
 const SELECTOR = CONTROLS.map(([s]) => s).join(', ')
 
@@ -37,7 +46,10 @@ async function probe(page: Page): Promise<Probe[]> {
       }
       const all = [...document.querySelectorAll<HTMLElement>(selector)].filter((el) => {
         const r = el.getBoundingClientRect()
-        return r.width > 0 && r.height > 0 && !el.closest('[hidden], .ui-visually-hidden') && getComputedStyle(el).visibility !== 'hidden'
+        // Content of a closed <details> is still laid out in Chrome but cannot be tapped.
+        const closed = el.closest('details:not([open])')
+        const inClosed = closed !== null && !closed.querySelector(':scope > summary')!.contains(el)
+        return r.width > 0 && r.height > 0 && !inClosed && !el.closest('[hidden], .ui-visually-hidden') && getComputedStyle(el).visibility !== 'hidden'
       })
       const owner = (hit: Element | null) => (hit ? all.find((c) => c === hit || c.contains(hit)) : undefined)
       const out: Array<{ label: string; w: number; h: number; misses: string[] }> = []
@@ -93,7 +105,7 @@ test('every interactive .ui-* control has a 44x44 hit region on a coarse pointer
   const touch = await openWith(browser, true)
   expect(await touch.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true)
   const coarse = await probe(touch)
-  expect(coarse.length).toBeGreaterThan(40)
+  expect(coarse.length).toBeGreaterThan(80)
   const holes = coarse.filter((p) => p.misses.length > 0).map((p) => `${p.label}: ${p.misses.join(', ')}`)
   expect(holes, holes.join('\n')).toEqual([])
 
@@ -103,9 +115,12 @@ test('every interactive .ui-* control has a 44x44 hit region on a coarse pointer
   expect(fine.map((p) => p.label)).toEqual(coarse.map((p) => p.label))
   // Text inputs deliberately grow from 40 to 44px on touch (iOS text-field height); everything else
   // keeps its drawn size.
+  // Text inputs, tabs and the gallery's own chrome deliberately grow to 44px rows on touch;
+  // every other control keeps its drawn size.
+  const grows = /^(input|select)\.ui-input|ui-tabs__tab|\.g-|^summary| in \?$/
   const resized = coarse
     .map((p, i) => ({ p, f: fine[i]! }))
-    .filter(({ p, f }) => !p.label.startsWith('input.ui-input') && !p.label.startsWith('select.ui-input') && (p.w !== f.w || p.h !== f.h))
+    .filter(({ p, f }) => !grows.test(p.label) && (p.w !== f.w || p.h !== f.h))
     .map(({ p, f }) => `${p.label}: ${f.w}x${f.h} -> ${p.w}x${p.h}`)
   expect(resized, resized.join('\n')).toEqual([])
 })

@@ -28,6 +28,13 @@ export default [
   js('@trident/ui/three lazy scene chunk (with three, R3F, drei)', 'dist/chunks/scene-*.js', '250 kB', {
     modifyEsbuildConfig: (config) => ({ ...config, external: PEERS }),
   }),
+  // App compositions with their Radix + cmdk peers bundled (what an app shell actually ships; spec
+  // §9: app-shell initial JS <= 180 kB gz including react-vendor). Set at the first measurement + ~5%.
+  js('@trident/ui/app (with Radix and cmdk)', 'dist/app.js', '51 kB', {
+    modifyEsbuildConfig: (config) => ({ ...config, external: PEERS }),
+  }),
+  // Marketing compositions (root components + motion-lite + JSON-LD builders), no optional peers.
+  js('@trident/ui/marketing (entry)', 'dist/marketing.js', '6.2 kB'),
   // Root entry (no spec budget): guards the §9 "no bundle regression above 5%" rule. Set to the
   // v0.1 measurement + 5%; raise it deliberately in review, never silently.
   js('@trident/ui (root entry)', 'dist/index.js', '11.9 kB'),

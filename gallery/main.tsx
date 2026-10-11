@@ -8,16 +8,15 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { initMotion, setMotionPaused } from '../src/motion-lite'
 import { isThemeName, THEME_SCHEMES } from '../src/server/themes'
-import { Gallery, type MotionState } from './Gallery'
+import { Gallery } from './Gallery'
 import { groups } from './registry'
+import { readLocation } from './url'
 
 if (Object.keys(themeStyles).length < 12) throw new Error('gallery: theme stylesheets missing')
 
-const params = new URLSearchParams(window.location.search)
-const themeParam = params.get('theme') ?? 'fleet'
-const theme = isThemeName(themeParam) ? themeParam : 'fleet'
-const motionParam = params.get('motion')
-const motion: MotionState = motionParam === 'reduced' || motionParam === 'paused' ? motionParam : 'on'
+const at = readLocation(window.location.search, window.location.hash)
+const theme = isThemeName(at.theme) ? at.theme : 'fleet'
+const motion = at.motion
 
 // The server sets these in production (spec §2.1); the gallery does it before first paint.
 const root = document.documentElement
@@ -28,7 +27,7 @@ setMotionPaused(motion === 'paused')
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Gallery groups={groups} theme={theme} motion={motion} only={params.get('group')} />
+    <Gallery groups={groups} theme={theme} motion={motion} only={at.group} />
   </StrictMode>,
 )
 

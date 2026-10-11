@@ -36,7 +36,7 @@ export default tseslint.config(
           patterns: [
             { regex: '^(three|@react-three/.*|motion(/.*)?|@radix-ui/.*|cmdk|sonner)$', message: 'Optional peers belong in the /three, /motion or /app subpath entries only (spec §1).' },
             { regex: '^react-dom/server', message: 'Server rendering belongs in src/server (the /server entry).' },
-            { regex: '^\\.\\./(server|islands|motion-lite|motion|app|three)(/|$)', message: 'Root-entry groups must not import subpath-entry groups.' },
+            { regex: '^\\.\\./(server|islands|motion-lite|motion|app|marketing|three)(/|$)', message: 'Root-entry groups must not import subpath-entry groups.' },
           ],
         },
       ],

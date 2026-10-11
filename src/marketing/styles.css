@@ -1,0 +1,358 @@
+/* ------------------------------------------------------------------
+   marketing (@trident/ui/marketing): Hero, FeatureGrid, PricingTable,
+   Faq, CtaBand, SiteHeader, SiteFooter (spec §7 P1). Ported from the
+   Ops landing (landing/landing.css), the first page built on the
+   package. Reads only --ui-* tokens; no animation of its own.
+   ------------------------------------------------------------------ */
+
+.ui-marketing__head {
+  display: grid;
+  gap: var(--ui-space-2);
+  margin-block-end: var(--ui-space-8);
+}
+.ui-marketing__head[data-align='center'] {
+  justify-items: center;
+  text-align: center;
+}
+.ui-marketing__head:has(> .ui-visually-hidden:only-child) {
+  margin-block-end: 0;
+}
+
+/* SiteHeader ------------------------------------------------------- */
+.ui-site-header {
+  position: relative;
+  z-index: 3;
+  border-block-end: 1px solid var(--ui-line);
+}
+.ui-site-header[data-overlay] {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  border-block-end: 0;
+}
+.ui-site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-2) var(--ui-space-4);
+  min-block-size: var(--ui-nav-h);
+  padding-block: var(--ui-space-2);
+}
+.ui-site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-2-5, 10px);
+  min-block-size: var(--ui-target-min);
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-lg);
+  font-weight: var(--ui-weight-bold);
+  letter-spacing: var(--ui-tracking-display);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ui-site-header__brand :is(img, svg) {
+  flex: none;
+  inline-size: 28px;
+  block-size: 28px;
+}
+.ui-site-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ui-space-2) var(--ui-space-4);
+}
+
+/* Hero ------------------------------------------------------------- */
+.ui-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  padding-block: var(--ui-space-16);
+  overflow: hidden;
+}
+.ui-hero[data-full] {
+  min-block-size: 100vh;
+  min-block-size: 100svh;
+}
+.ui-hero[data-under-nav] {
+  padding-block-start: calc(var(--ui-nav-h) + var(--ui-space-8));
+}
+.ui-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.ui-hero__backdrop > :is(.ui-lazy3d, .ui-poster) {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  aspect-ratio: auto;
+}
+/* Scrim: the copy sits on the page colour; the backdrop shows below it on phones and to the right
+   from 980px (the 3D gate). Above the canvas, below the copy. */
+.ui-hero__backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, var(--ui-bg) 0%, var(--ui-bg) 56%, color-mix(in srgb, var(--ui-bg) 45%, transparent) 72%, transparent 90%),
+    linear-gradient(0deg, var(--ui-bg) 0%, transparent 10%);
+}
+.ui-hero__inner {
+  position: relative;
+  display: grid;
+  gap: var(--ui-space-10);
+  align-items: center;
+}
+.ui-hero__copy {
+  display: grid;
+  gap: var(--ui-space-5);
+  max-inline-size: 640px;
+}
+.ui-hero__title em {
+  display: block;
+  color: var(--ui-accent-text);
+  font-style: normal;
+}
+.ui-hero__lede {
+  max-inline-size: 46ch;
+}
+.ui-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ui-space-3);
+  margin-block-start: var(--ui-space-1);
+}
+.ui-hero__actions > .ui-btn {
+  flex: 1 1 auto;
+}
+.ui-hero__media :is(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-radius: var(--ui-r-lg);
+}
+@media (min-width: 640px) {
+  .ui-hero__actions > .ui-btn {
+    flex: 0 0 auto;
+  }
+}
+@media (min-width: 980px) {
+  .ui-hero[data-media] .ui-hero__inner {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  }
+  .ui-hero__backdrop::after {
+    background:
+      linear-gradient(90deg, var(--ui-bg) 0%, color-mix(in srgb, var(--ui-bg) 90%, transparent) 38%, color-mix(in srgb, var(--ui-bg) 20%, transparent) 64%, transparent 100%),
+      linear-gradient(0deg, var(--ui-bg) 0%, transparent 16%);
+  }
+}
+
+/* FeatureGrid ------------------------------------------------------ */
+.ui-features__list,
+.ui-pricing__plans,
+.ui-plan__features {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ui-features__list {
+  display: grid;
+  gap: var(--ui-space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+.ui-features__list > li > .ui-card,
+.ui-pricing__plans > li > .ui-card {
+  block-size: 100%;
+}
+.ui-feature {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-space-3);
+}
+.ui-feature__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border: 1px solid color-mix(in srgb, var(--ui-accent-1) 30%, var(--ui-line));
+  border-radius: var(--ui-r-sm);
+  background: color-mix(in srgb, var(--ui-accent-1) 10%, transparent);
+  color: var(--ui-accent-text);
+}
+
+/* PricingTable (money surface: no motion) -------------------------- */
+.ui-pricing__plans {
+  display: grid;
+  gap: var(--ui-space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  align-items: stretch;
+}
+.ui-plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-space-4);
+}
+.ui-plan__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-2);
+}
+.ui-plan__price {
+  margin: 0;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-4xl);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1;
+  letter-spacing: var(--ui-tracking-display);
+}
+.ui-plan__period {
+  margin-inline-start: 2px;
+  color: var(--ui-muted);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-body);
+  letter-spacing: 0;
+}
+.ui-plan__features {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ui-space-3);
+  color: var(--ui-ink-2);
+  font-size: var(--ui-text-sm);
+}
+.ui-plan__features > li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-2);
+}
+.ui-plan__features svg {
+  flex: none;
+  margin-block-start: 3px;
+  color: var(--ui-accent-text);
+}
+.ui-plan__cta {
+  display: grid;
+}
+.ui-pricing__note {
+  margin-block-start: var(--ui-space-6);
+  text-align: center;
+}
+
+/* Faq (<details>, works without JS) -------------------------------- */
+.ui-faq__list {
+  border-block-start: 1px solid var(--ui-line);
+}
+.ui-faq__item {
+  border-block-end: 1px solid var(--ui-line);
+}
+.ui-faq__item > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-4);
+  min-block-size: 56px;
+  padding-block: var(--ui-space-3);
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-md);
+  font-weight: var(--ui-weight-display);
+  cursor: pointer;
+  list-style: none;
+}
+.ui-faq__item > summary::-webkit-details-marker {
+  display: none;
+}
+.ui-faq__item > summary::after {
+  content: '+';
+  flex: none;
+  color: var(--ui-accent-text);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-xl);
+  font-weight: var(--ui-weight-body);
+  line-height: 1;
+}
+.ui-faq__item[open] > summary::after {
+  content: '\2212';
+}
+.ui-faq__answer {
+  padding-block-end: var(--ui-space-5);
+  max-inline-size: var(--ui-measure);
+  color: var(--ui-ink-2);
+}
+.ui-faq__answer > p {
+  margin: 0;
+}
+
+/* CtaBand ---------------------------------------------------------- */
+.ui-cta-band__panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-6);
+  padding: var(--ui-space-8);
+  border: 1px solid color-mix(in srgb, var(--ui-accent-1) 30%, var(--ui-line));
+  border-radius: var(--ui-r-lg);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--ui-accent-1) 12%, transparent), transparent 60%),
+    var(--ui-surface);
+}
+.ui-cta-band__copy {
+  display: grid;
+  gap: var(--ui-space-2);
+  max-inline-size: 52ch;
+}
+
+/* SiteFooter ------------------------------------------------------- */
+.ui-site-footer {
+  padding-block: var(--ui-space-8);
+  border-block-start: 1px solid var(--ui-line);
+}
+.ui-site-footer__inner,
+.ui-site-footer__end,
+.ui-site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ui-space-3) var(--ui-space-5);
+}
+.ui-site-footer__inner {
+  justify-content: space-between;
+  gap: var(--ui-space-4);
+}
+.ui-site-footer__note {
+  margin: 0;
+  color: var(--ui-muted);
+  font-size: var(--ui-text-sm);
+}
+.ui-site-footer__links a:not(.ui-btn) {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--ui-target-min);
+  font-size: var(--ui-text-sm);
+}
+
+@media (pointer: coarse) {
+  .ui-site-footer__links a:not(.ui-btn),
+  .ui-site-header__nav a:not(.ui-btn),
+  .ui-site-header__brand {
+    min-block-size: var(--ui-target-touch);
+  }
+  .ui-faq__item > summary {
+    min-block-size: max(56px, var(--ui-target-touch));
+  }
+}

@@ -10,7 +10,7 @@ import { describe, expect, it } from 'vitest'
 import { ROOT } from '../scripts/lib/tokens.mjs'
 
 const THREE = /^(three|@react-three\/[^/]+)(\/.*)?$/
-const SUBPATH_ONLY = /^src\/(three|motion|motion-lite|app|server|islands)\//
+const SUBPATH_ONLY = /^src\/(three|motion|motion-lite|app|marketing|server|islands)\//
 
 // esbuild refuses to run inside jsdom (TextEncoder realm check), so bundle in a child process.
 const GRAPH = `

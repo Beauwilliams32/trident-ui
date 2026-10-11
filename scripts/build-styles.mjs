@@ -20,6 +20,7 @@ export const STYLE_GROUPS = [
   'motion-lite',
   'motion',
   'app',
+  'marketing',
   'three',
 ]
 

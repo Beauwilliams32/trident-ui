@@ -5,6 +5,7 @@
  */
 import type { ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { CodeSample } from '../../gallery/CodeSample'
 import { Island } from './Island'
 import { breadcrumbList, faqPage, jsonLdGraph, offer, organization, product, serializeJsonLd, webSite } from './jsonld'
 import { SeoHead } from './SeoHead'
@@ -12,20 +13,23 @@ import { SeoHead } from './SeoHead'
 export interface GalleryExample {
   id: string
   title: string
-  description?: string
+  /** One line: when to use it. Required: the gallery test fails without it. */
+  description: string
   render: () => ReactNode
 }
 
+/** Emitted markup in a code block with a copy button (G12: these were bare, minified <pre>s). */
 function Output({ label, code }: { label: string; code: string }) {
   return (
-    <figure>
+    <figure className="g-figure">
       <figcaption>{label}</figcaption>
-      <pre tabIndex={0}>
-        <code>{code}</code>
-      </pre>
+      <CodeSample label={label} code={code} language={label.includes('json') ? 'json' : 'html'} />
     </figure>
   )
 }
+
+/** JSON-LD as a reader wants it: the serialised (script-safe) text, parsed and indented. */
+const pretty = (json: string) => JSON.stringify(JSON.parse(json), null, 2)
 
 function StaticGreeting({ who }: { who: string }) {
   return <p>Server-rendered for {who}. Hydrates when idle.</p>
@@ -55,6 +59,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'jsonld-graph',
     title: 'JSON-LD: Organization + WebSite',
+    description: 'One @graph for the site: the organisation and the website that names it as publisher, linked by @id.',
     render: () => (
       <Output
         label="application/ld+json"
@@ -73,7 +78,7 @@ export const examples: GalleryExample[] = [
     id: 'jsonld-faq',
     title: 'JSON-LD: FAQPage',
     description: 'Questions and answers must match the visible FAQ.',
-    render: () => <Output label="application/ld+json" code={serializeJsonLd(faqPage([{ question: 'Do I need an agent?', answer: 'No.' }]))} />,
+    render: () => <Output label="application/ld+json" code={pretty(serializeJsonLd(faqPage([{ question: 'Do I need an agent?', answer: 'No.' }])))} />,
   },
   {
     id: 'jsonld-product',

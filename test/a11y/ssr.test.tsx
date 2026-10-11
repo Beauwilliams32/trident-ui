@@ -33,7 +33,8 @@ afterAll(() => {
 })
 
 const ROOT = join(import.meta.dirname, '..', '..')
-const css = ['src/styles/base.css', 'src/a11y/styles.css', 'src/layout/styles.css', 'src/type/styles.css']
+// The a11y and type examples use Button and the gallery's copyable code block (.ui-btn).
+const css = ['src/styles/base.css', 'src/a11y/styles.css', 'src/layout/styles.css', 'src/type/styles.css', 'src/actions/styles.css']
   .map((f) => readFileSync(join(ROOT, f), 'utf8'))
   .join('\n')
 

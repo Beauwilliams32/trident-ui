@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Lazy3D, type Lazy3DProps } from './Lazy3D'
-import { stateText, statusCards, type StatusOrbitItem } from './statusCards'
+import { stateText, statusCards, type StatusCardState, type StatusOrbitItem } from './statusCards'
 import type { SceneLoader, StatusOrbitSceneProps } from './types'
 
 export interface StatusOrbitListProps {
@@ -17,16 +17,37 @@ export interface StatusOrbitListProps {
  */
 export function StatusOrbitList({ items, label = 'Publishing status by platform', visible = false }: StatusOrbitListProps) {
   const cards = statusCards(items)
+  if (!visible) {
+    return (
+      <ul className="ui-status-orbit__list ui-visually-hidden" aria-label={label}>
+        {cards.map((c) => (
+          <li key={c.key} data-state={c.state}>
+            {`${c.label}: ${stateText(c.state)}`}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  // On screen: the same text per row (label, then the state as a StatusPill), so each row's text
+  // content is still exactly "<label>: <state>" and the 3D cards and the DOM cannot disagree.
   return (
-    <ul className={visible ? 'ui-status-orbit__list' : 'ui-status-orbit__list ui-visually-hidden'} aria-label={label}>
+    <ul className="ui-status-orbit__list" data-visible="" aria-label={label}>
       {cards.map((c) => (
         <li key={c.key} data-state={c.state}>
-          {`${c.label}: ${stateText(c.state)}`}
+          <span className="ui-status-orbit__label">{c.label}</span>
+          <span className="ui-visually-hidden">: </span>
+          <span className="ui-status ui-tone" data-tone={STATE_TONE[c.state]}>
+            <span className="ui-status__dot" aria-hidden="true" />
+            {stateText(c.state)}
+          </span>
         </li>
       ))}
     </ul>
   )
 }
+
+/** Tone of each state's pill. Only a live platform is green; unknown stays neutral, never "ok". */
+const STATE_TONE: Record<StatusCardState, string> = { live: 'ok', pending: 'warn', workflow: 'info', unknown: 'neutral' }
 
 const loadStatusOrbitScene: SceneLoader<StatusOrbitSceneProps> = () =>
   import('./scene/index').then((m) => ({ default: m.StatusOrbitScene }))

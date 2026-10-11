@@ -56,6 +56,10 @@
       "types": "./dist/app.d.ts",
       "import": "./dist/app.js"
     },
+    "./marketing": {
+      "types": "./dist/marketing.d.ts",
+      "import": "./dist/marketing.js"
+    },
     "./three": {
       "types": "./dist/three.d.ts",
       "import": "./dist/three.js"

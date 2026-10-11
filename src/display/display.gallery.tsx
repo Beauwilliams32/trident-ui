@@ -20,6 +20,7 @@ export const examples: GalleryExample[] = [
   {
     component: 'Badge',
     name: 'Tones and sizes',
+    description: 'Short labels and counts. Every tone pairs text with colour, so meaning never rests on colour alone.',
     render: () => (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         {TONES.map((t) => (
@@ -37,6 +38,7 @@ export const examples: GalleryExample[] = [
   {
     component: 'StatusPill',
     name: 'Every status',
+    description: 'Publishing and workflow states with a dot and an uppercase label; a custom label keeps the status tone.',
     render: () => (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         {(Object.keys(STATUS_MAP) as Status[]).map((s) => (
@@ -49,6 +51,7 @@ export const examples: GalleryExample[] = [
   {
     component: 'Chip',
     name: 'Static, toggle and removable',
+    description: 'Filters and selections. A toggle chip is a pressed button; the remove button is separate, so each control has one job.',
     render: () => (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         <Chip>Austin</Chip>
@@ -68,6 +71,7 @@ export const examples: GalleryExample[] = [
   {
     component: 'Avatar',
     name: 'Initials, sizes and shapes',
+    description: 'Photo or initials on the accent fill (on-accent contrast is tested). Decorative avatars are hidden from screen readers.',
     render: () => (
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
         <Avatar name="Beau Williams" size="xs" />
@@ -81,6 +85,7 @@ export const examples: GalleryExample[] = [
   {
     component: 'Card',
     name: 'Solid, glass, interactive, accent, tilt',
+    description: 'Solid by default; glass only over imagery; interactive cards lift and sweep behind the motion gate.',
     render: () => (
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
         <Card>Solid card</Card>
@@ -99,12 +104,29 @@ export const examples: GalleryExample[] = [
   {
     component: 'StatCard',
     name: 'Values, trends and empty',
+    description: 'Real values only, rendered final on the server. With no data it says so and shows a dash, never a fake zero.',
     render: () => (
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
         <StatCard label="Posts published" value={1284} trend={{ dir: 'up', value: '+12%', note: 'vs last week' }} />
         <StatCard label="Churn" value="2.1%" trend={{ dir: 'down', value: '-0.4 pts', tone: 'ok' }} />
         <StatCard label="MRR" value={4200} formatOptions={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }} sub="Sample data" />
         <StatCard label="Failed payments" value={null} sub="No data yet" />
+      </div>
+    ),
+  },
+  {
+    component: 'Chip',
+    name: 'Right to left (dir="rtl")',
+    description: 'In a right-to-left page the chips mirror: label padding, the remove button and the selected ring follow the text direction.',
+    render: () => (
+      <div dir="rtl" lang="ar" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 8px' }}>
+        <Chip>القاهرة</Chip>
+        <Chip tone="accent" onClick={noop} selected>
+          دبي
+        </Chip>
+        <Chip tone="info" onRemove={noop} removeLabel="إزالة الرياض">
+          الرياض
+        </Chip>
       </div>
     ),
   },

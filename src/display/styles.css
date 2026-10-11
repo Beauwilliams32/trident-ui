@@ -144,8 +144,11 @@
   padding: 0;
   margin-inline-start: -0.35rem;
 }
-.ui-chip:not(:has(.ui-chip__toggle)) > .ui-chip__label:first-child,
-.ui-chip:not(:has(.ui-chip__toggle)) > .ui-chip__icon:first-child {
+/* Only a removable chip without a toggle drops its own padding (the remove button sits flush at the
+   end), so only that chip's first label or icon needs the start inset back. A static chip keeps the
+   chip's symmetric 0.6rem padding (G10: it used to get both, 19px start vs 10px end). */
+.ui-chip:has(.ui-chip__remove):not(:has(.ui-chip__toggle)) > .ui-chip__label:first-child,
+.ui-chip:has(.ui-chip__remove):not(:has(.ui-chip__toggle)) > .ui-chip__icon:first-child {
   padding-inline-start: 0.6rem;
 }
 .ui-chip__toggle:disabled,

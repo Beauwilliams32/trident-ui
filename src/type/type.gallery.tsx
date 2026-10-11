@@ -1,4 +1,6 @@
 /** Gallery examples for the type group (see src/a11y/a11y.gallery.tsx for the contract). */
+import pkg from '../../package.json'
+import { CodeSample } from '../../gallery/CodeSample'
 import type { GalleryExample } from '../a11y/a11y.gallery'
 import { Code } from './Code'
 import { GradText } from './GradText'
@@ -8,6 +10,7 @@ import { Kicker } from './Kicker'
 import { Mono } from './Mono'
 import { Prose } from './Prose'
 import { Text } from './Text'
+import { TextLink } from './TextLink'
 import { TEXT_SIZES } from './scale'
 
 export const group = 'type'
@@ -16,6 +19,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'hero-heading',
     title: 'Kicker + Heading + GradText',
+    description: 'A display heading with its level set by the outline, not the look. GradText is for one or two words only.',
     render: () => (
       <div>
         <Kicker>Trident Studio</Kicker>
@@ -31,6 +35,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'scale',
     title: 'Type scale',
+    description: 'The fluid scale (ratio 1.25 on phones, 1.333 on desktop). Body text never goes below 16px.',
     render: () => (
       <div>
         {TEXT_SIZES.map((s) => (
@@ -44,6 +49,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'tones',
     title: 'Text tones',
+    description: 'ink for primary text, ink-2 for secondary, muted for hints. Each is at least 4.5:1 on every background.',
     render: () => (
       <div>
         <Text>ink</Text>
@@ -58,6 +64,7 @@ export const examples: GalleryExample[] = [
   {
     id: 'mono-code-kbd',
     title: 'Mono, Code, Kbd',
+    description: 'Tabular figures for IDs and money, inline code, key caps, and a scrollable code block that never breaks a word.',
     render: () => (
       <div>
         <Text>
@@ -66,15 +73,39 @@ export const examples: GalleryExample[] = [
         <Text>
           Run <Code>npm run check</Code>, then press <Kbd keys={['Ctrl', 'K']} /> or <Kbd>Esc</Kbd>.
         </Text>
-        <Code block label="Install command">
-          npm install github:Beauwilliams32/trident-ui#v0.1.0
-        </Code>
+        <CodeSample label="Install command" language="shell" code={`npm install github:Beauwilliams32/trident-ui#v${pkg.version}`} />
+      </div>
+    ),
+  },
+  {
+    id: 'text-link',
+    title: 'TextLink',
+    description: 'The themed link: accent text and an underline in running text; underline on hover only in navigation. New tabs are announced.',
+    render: () => (
+      <div className="g-stack">
+        <Text>
+          Read the <TextLink href="#terms">terms of service</TextLink> before you publish.
+        </Text>
+        <Text size="sm">
+          <TextLink href="#pricing" underline="hover">
+            Pricing
+          </TextLink>{' '}
+          ·{' '}
+          <TextLink href="#docs" underline="hover">
+            Docs
+          </TextLink>{' '}
+          ·{' '}
+          <TextLink href="https://example.com/status" target="_blank">
+            Status page
+          </TextLink>
+        </Text>
       </div>
     ),
   },
   {
     id: 'prose',
     title: 'Prose',
+    description: 'Long-form HTML from a CMS or Markdown: headings, lists, quotes and links styled without classes.',
     render: () => (
       <Prose>
         <h2>Terms of service</h2>
