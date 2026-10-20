@@ -15,12 +15,18 @@ supplied Adobe Illustrator export; copy it, never redraw it.
 | `apple-touch-icon.png` | 180 | iOS home screen, opaque |
 | `app-icon-1024.png` | 1024 | iOS and macOS app icon catalog source, opaque square |
 | `favicon.ico` | 16, 32 and 48 | Legacy favicon |
+| `lockup-dark.svg`, `lockup-light.svg` | 640 x 160 vector | Tile plus "Trident UI" and the "By Trident Studio" credit with the text outlined, for dark and light surfaces: README headers, docs banners, decks. The art sits on the left of the canvas, so left-align it |
+| `og-card.png` | 1200 x 630 | Link-preview (Open Graph and Twitter) card, opaque, under 1 MB |
+| `og-card.svg` | 1200 x 630 vector | Vector source of the card |
 | `trident-ui.tokens.json` | | The brand's own token file, verbatim; `test/brand.test.ts` pins the `trident-ui` themes to it |
 
 Consumers read them as `@trident/ui/brand/tile.svg` (the `brand/*` export). `test/brand.test.ts`
-pins every file's checksum and pixel size, so a changed tile fails the gate until the change is
-deliberate. Never rotate, recolour or add text inside the tile; keep a quarter of the tile free on
+pins every file's checksum and pixel size (the lockups and card included), so a changed or missing
+file fails the gate until the change is deliberate. Never rotate, recolour or add text inside the tile; keep a quarter of the tile free on
 every side; 16px is the smallest size.
+
+No page in this repo carries `og:image`: the gallery is a test fixture and is not hosted. A product page
+copies `og-card.png` and adds the six meta tags listed in [`docs/BRAND.md`](../docs/BRAND.md).
 
 ## Depth Line (superseded)
 

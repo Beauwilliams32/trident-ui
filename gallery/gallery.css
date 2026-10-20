@@ -577,6 +577,54 @@ body {
   border-radius: 10px;
   background: #0b1927;
 }
+/* Supplied lockups and the link-preview card on the brand's own navy and mint, whatever the theme. */
+.g-brand-art {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+.g-brand-art__item {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  margin: 0;
+  min-inline-size: 0;
+}
+.g-brand-art__item--card {
+  grid-column: 1 / -1;
+}
+.g-brand-art__item figcaption {
+  color: var(--ui-muted);
+  font-size: var(--ui-text-xs);
+}
+.g-brand-art__stage {
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-lg);
+  overflow: hidden;
+}
+.g-brand-art__stage img {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+.g-brand-art__stage--dark {
+  background: #0b1927;
+}
+.g-brand-art__stage--light {
+  background: #e8f3f3;
+}
+.g-brand-art__stage--card {
+  background: #0b1927;
+  padding: 0;
+  justify-self: start;
+  inline-size: min(100%, 600px);
+}
+.g-brand-art__stage--card img {
+  inline-size: 100%;
+}
 .g-lockup {
   display: flex;
   align-items: center;

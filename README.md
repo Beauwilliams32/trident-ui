@@ -1,4 +1,9 @@
-<p align="center"><img src="brand/tile.svg" alt="Trident UI" width="72" height="72"></p>
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="brand/lockup-dark.svg">
+    <img src="brand/lockup-light.svg" alt="Trident UI, by Trident Studio" width="360" height="90">
+  </picture>
+</p>
 
 # @trident/ui
 

@@ -13,7 +13,7 @@ its `--tg-*` names stay in `themes/legacy-aliases.css`, so nothing that uses the
 starts from the two themes below.
 
 Where the design lives (outside this repo): `build/brand-systems/ui/` holds the 7-page `brand-book.pdf`
-(the picture to match), `DESIGN.md`, `tokens.css`, `tokens.json` and `assets/`. This repo carries a
+(the picture to match), `DESIGN.md`, `tokens.css`, `tokens.json` and `assets/` (tile, icons, lockups and the link-preview card). This repo carries a
 copy of the artwork (`brand/`), the brand's own token file (`brand/trident-ui.tokens.json`) and the
 themes built from it. `test/brand.test.ts` fails if any of them drift.
 
@@ -63,8 +63,42 @@ except the glyph. The artwork was drawn in Adobe Illustrator and is copied, neve
 
 Rules: keep a quarter of the tile free on every side; 16px is the smallest size; never rotate, recolour
 or add text inside the tile; the product name next to it is live text in the display face, with
-"By Trident Studio" as the credit. The gallery's **Brand** section shows the tile at 16 to 128px, the
-lockup and every file.
+"By Trident Studio" as the credit. Where words cannot be live text, use the supplied lockups below. The
+gallery's **Brand** section shows the tile at 16 to 128px, the live-text lockup, the supplied lockups and
+link-preview card, and every icon file.
+
+## Lockups and the link-preview card
+
+Four more supplied files sit beside the tile in `brand/`. They were drawn in Adobe Illustrator with the
+text outlined, so they need no font, and they are copied, never redrawn or retyped.
+
+| File | Size | Use |
+|---|---|---|
+| `brand/lockup-dark.svg` | 640 x 160 vector, transparent | The tile, "Trident UI" in white and "By Trident Studio" in teal (`#19C3B1`), for dark surfaces |
+| `brand/lockup-light.svg` | 640 x 160 vector, transparent | The same lockup in near-black (`#0B0B0D`) and dark teal (`#0F756A`), for light surfaces |
+| `brand/og-card.png` | 1200 x 630, opaque, under 1 MB | The link-preview card: the tile on the brand navy, "Trident UI", "One system, every screen." and "A Trident Studio product" |
+| `brand/og-card.svg` | 1200 x 630 vector | The vector source of the card, for other sizes |
+
+The lockups are for static surfaces where the name cannot be live text: README headers, docs banners,
+decks, store art. This repo's README header is a `<picture>` that swaps the two files by colour scheme.
+In a product's UI the name stays live text in the display face beside the tile (gallery Brand, "Lockup").
+The credit line is small by design; below about 200px wide use the tile alone. The art sits on the left of
+its 640px canvas, so left-align it.
+
+**This repo has no public page to carry the card.** The gallery is a test fixture that is built for the
+screenshot tests and not hosted, so no `og:image` tag points at the card here. A product page that wants
+a link preview copies `og-card.png` to its own public folder and serves it from its own absolute URL
+(crawlers do not follow a package path). The card says "Trident UI", so only use it for Trident UI's own
+pages; other products use their own card from their own brand system.
+
+```html
+<meta property="og:image" content="https://YOUR-HOST/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Trident UI. One system, every screen. A Trident Studio product.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://YOUR-HOST/og-card.png">
+```
 
 The Depth Line three-rail mark (`brand/depth-line.*`, approved 2026-10-07) is superseded by the tile.
 Its files stay unchanged so existing imports keep resolving; removing them is a major-version change.

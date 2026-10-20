@@ -1,8 +1,9 @@
 /**
  * Brand (G13): the Trident Studio tile and glyph shipped in brand/ at the sizes products use them,
- * the "Trident UI by Trident Studio" lockup (tile plus live text), the icon files with their pixel
- * sizes, and the legacy Depth Line contour backdrop. The artwork is the supplied Illustrator export
- * (brand/*.svg, brand/*.png); nothing here redraws it. docs/BRAND.md has the rules. Shown for the
+ * the "Trident UI by Trident Studio" lockup (tile plus live text), the supplied outlined lockups and
+ * 1200 x 630 link-preview card, the icon files with their pixel sizes, and the legacy Depth Line
+ * contour backdrop. The artwork is the supplied Illustrator export (brand/*.svg, brand/*.png);
+ * nothing here redraws it. docs/BRAND.md has the rules. Shown for the
  * owner's creative review; the brand ships in a release only after that review.
  */
 import '../../brand/depth-line.css'
@@ -12,6 +13,9 @@ import glyphWhite from '../../brand/glyph-white.svg'
 import icon192 from '../../brand/icon-192.png'
 import icon512 from '../../brand/icon-512.png'
 import iconMaskable512 from '../../brand/icon-maskable-512.png'
+import lockupDark from '../../brand/lockup-dark.svg'
+import lockupLight from '../../brand/lockup-light.svg'
+import ogCard from '../../brand/og-card.png'
 import tile from '../../brand/tile.svg'
 import tileBleed from '../../brand/tile-bleed.svg'
 import tileMaskable from '../../brand/tile-maskable.svg'
@@ -34,6 +38,13 @@ export const ICON_FILES: Array<{ file: string; src: string; size: string; use: s
   { file: 'icon-maskable-512.png', src: iconMaskable512, size: '512 x 512', use: 'Web app manifest icon with purpose "maskable"' },
   { file: 'apple-touch-icon.png', src: appleTouchIcon, size: '180 x 180', use: 'iOS home screen (apple-touch-icon), opaque' },
   { file: 'app-icon-1024.png', src: appIcon1024, size: '1024 x 1024', use: 'iOS and macOS app icon catalog source, opaque square' },
+]
+
+/** The supplied lockups and link-preview card in brand/, with where each one is used. */
+export const LOCKUP_FILES: Array<{ file: string; src: string; alt: string; size: string; use: string; stage: 'dark' | 'light' | 'card' }> = [
+  { file: 'lockup-dark.svg', src: lockupDark, alt: 'Trident UI, by Trident Studio (dark surface lockup)', size: '640 x 160 vector', use: 'For dark surfaces: README headers, docs banners, decks', stage: 'dark' },
+  { file: 'lockup-light.svg', src: lockupLight, alt: 'Trident UI, by Trident Studio (light surface lockup)', size: '640 x 160 vector', use: 'For light surfaces: the same lockup with dark ink', stage: 'light' },
+  { file: 'og-card.png', src: ogCard, alt: 'Link-preview card: the Trident UI tile, "Trident UI", "One system, every screen." and "A Trident Studio product"', size: '1200 x 630', use: 'Link-preview (Open Graph and Twitter) card. og-card.svg is its vector source', stage: 'card' },
 ]
 
 export const examples: RawExample[] = [
@@ -89,6 +100,27 @@ export const examples: RawExample[] = [
           </Heading>
           <Kicker>By Trident Studio</Kicker>
         </div>
+      </div>
+    ),
+  },
+  {
+    id: 'lockup-files',
+    title: 'Supplied lockups and link-preview card',
+    description: 'The outlined lockups for dark and light surfaces and the 1200 x 630 link-preview card, copied from brand/. Use the lockups where the name cannot be live text (README headers, decks, banners); in the UI the name stays live text beside the tile, as above.',
+    wide: true,
+    showCode: false,
+    render: () => (
+      <div className="g-brand-art">
+        {LOCKUP_FILES.map((f) => (
+          <figure key={f.file} data-brand-file={f.file} className={f.stage === 'card' ? 'g-brand-art__item g-brand-art__item--card' : 'g-brand-art__item'}>
+            <div className={`g-brand-art__stage g-brand-art__stage--${f.stage}`}>
+              {f.stage === 'card' ? <img src={f.src} alt={f.alt} width={600} height={315} /> : <img src={f.src} alt={f.alt} width={320} height={80} />}
+            </div>
+            <figcaption>
+              <code>{f.file}</code>, {f.size}. {f.use}.
+            </figcaption>
+          </figure>
+        ))}
       </div>
     ),
   },
