@@ -28,13 +28,17 @@ export const FAMILIES = [
   { id: 'jetbrains-mono', family: 'JetBrains Mono', fallback: 'courier', role: 'mono (fleet, WMH)' },
   { id: 'manrope', family: 'Manrope', fallback: 'arial', role: 'display + body (WMH)' },
   { id: 'oswald', family: 'Oswald', fallback: 'arial', role: 'display (portfolio)' },
+  { id: 'playfair-display', family: 'Playfair Display', fallback: 'times', role: 'display (Trident Studio brand, trident-ui themes)' },
 ]
 
 /* System fallback metrics (hhea/OS2, units per em). Arial and Courier New are present on
- * macOS, Windows and most Linux desktops via Liberation, so they are the capsize-style targets. */
+ * macOS, Windows and most Linux desktops via Liberation, so they are the capsize-style targets.
+ * Times New Roman is the serif target (Liberation Serif is metric-compatible); xAvgCharWidth is read from
+ * the system file's OS/2 table, the same way as Arial and Courier New. */
 const SYSTEM = {
   arial: { local: ['Arial', 'Liberation Sans', 'Helvetica Neue', 'Helvetica'], unitsPerEm: 2048, xAvgCharWidth: 904 },
   courier: { local: ['Courier New', 'Liberation Mono', 'Menlo'], unitsPerEm: 2048, xAvgCharWidth: 1229 },
+  times: { local: ['Times New Roman', 'Liberation Serif', 'Times'], unitsPerEm: 2048, xAvgCharWidth: 821 },
 }
 
 const pct = (n) => `${(n * 100).toFixed(2)}%`

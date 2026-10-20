@@ -38,5 +38,13 @@
     "ascentOverride": "145.63%",
     "descentOverride": "35.28%",
     "lineGapOverride": "0.00%"
+  },
+  "Playfair Display": {
+    "source": "@fontsource-variable/playfair-display@5.3.0",
+    "fallback": "Times New Roman",
+    "sizeAdjust": "112.04%",
+    "ascentOverride": "96.57%",
+    "descentOverride": "22.40%",
+    "lineGapOverride": "0.00%"
   }
 }

@@ -1,15 +1,30 @@
-# Depth Line
+# Brand
 
-Approved fleet direction, 2026-10-07. The generated concept board is a visual reference;
-`depth-line.mjs` is the vector source of the three-rail mark. Use its `depthLineMark()` function
-with the product's existing `accent-1` and `accent-2` theme colors. The studio defaults are
-teal and cyan. The app name stays as live text in Space Grotesk; do not bake words into an icon.
+The Trident Studio brand system (approved 2026-10-20), as shipped for Trident UI. The rules,
+colour table, token mapping and voice are in [`docs/BRAND.md`](../docs/BRAND.md). The artwork is the
+supplied Adobe Illustrator export; copy it, never redraw it.
 
-The contour illustration is a quiet background for public marketing heroes and link previews.
-It carries no information. Do not put it on auth, money, legal, admin, or client surfaces.
-The foreground text and controls must remain legible without it. On mobile, keep the contour
-low contrast and outside the text's reading path. There is no animation.
+| File | Size | Use |
+|---|---|---|
+| `tile.svg` | 512 vector | App icon, avatar, favicon source: rounded tile, teal to indigo at 135 degrees, 22% corners, the layers glyph at 62% |
+| `tile-bleed.svg` | 512 vector | Full-bleed square for stores that round the corners themselves |
+| `tile-maskable.svg` | 512 vector | Maskable PWA source, glyph inside the safe zone |
+| `glyph-white.svg` | 512 vector | The white glyph alone |
+| `icon-192.png`, `icon-512.png` | 192, 512 | Web app manifest icons |
+| `icon-maskable-512.png` | 512 | Manifest icon with `purpose: "maskable"` |
+| `apple-touch-icon.png` | 180 | iOS home screen, opaque |
+| `app-icon-1024.png` | 1024 | iOS and macOS app icon catalog source, opaque square |
+| `favicon.ico` | 16, 32 and 48 | Legacy favicon |
+| `trident-ui.tokens.json` | | The brand's own token file, verbatim; `test/brand.test.ts` pins the `trident-ui` themes to it |
 
-The mark's 64x64 viewBox has a 6px minimum rail width and deliberate spacing. Raster favicons
-come from the SVG at 16, 32 and 48px; inspect those sizes before release. Every product keeps
-its own accent pair from `tokens.json`, so adopting Depth Line does not re-palette the fleet.
+Consumers read them as `@trident/ui/brand/tile.svg` (the `brand/*` export). `test/brand.test.ts`
+pins every file's checksum and pixel size, so a changed tile fails the gate until the change is
+deliberate. Never rotate, recolour or add text inside the tile; keep a quarter of the tile free on
+every side; 16px is the smallest size.
+
+## Depth Line (superseded)
+
+`depth-line.mjs`, `depth-line.css` and `depth-line-contours.svg` are the three-rail mark and
+contour backdrop approved 2026-10-07. The tile replaces them as the Trident mark. They stay
+byte-for-byte (apart from a note in each header) so nothing that imports them breaks; no repo in the
+workspace imports them any more. Removing them is a major-version change.

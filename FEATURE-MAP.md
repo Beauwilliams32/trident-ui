@@ -3,14 +3,16 @@
 | Feature | Where | Tested | Test file |
 |---|---|---|---|
 | tokens.json single source -> tokens.css / themes / tokens.mjs / three.mjs | `tokens.json`, `scripts/lib/tokens.mjs`, `scripts/build-tokens.mjs` | yes | `test/tokens.test.ts` |
-| Spec §3 theme values (fleet + 6 accents, wmh-*, portfolio, quorum) | `tokens.json` | yes | `test/tokens.test.ts` |
+| Spec §3 theme values (fleet + 6 accents, wmh-*, portfolio, quorum, trident-ui and trident-ui-light) | `tokens.json` | yes | `test/tokens.test.ts`, `test/contrast-matrix.test.ts` |
 | Contrast matrix, every theme and palette x §9 pairs | `tokens.json#contrast` | yes | `test/contrast-matrix.test.ts` |
 | `ensureContrast` / `accentVars` runtime accents | `src/utils/contrast.ts` | yes | `test/ensure-contrast.test.ts` |
 | Quorum FALLBACK generated from tokens | `scripts/lib/tokens.mjs#quorumFallback` | yes | `test/quorum-fallback.test.ts` |
 | Legacy aliases (`--tg-*`, `--violet-*`, `--glass-*`, `--dur-*`, Ops, `--q-*`) | `scripts/lib/tokens.mjs#LEGACY_ALIASES` | yes | `test/tokens.test.ts` |
 | Base CSS: focus ring, reveal gating + 2.5s failsafe, motion kill switch | `src/styles/base.css` | yes | `test/base-css.test.ts` |
-| Self-hosted fonts + metric-matched fallbacks | `fonts/`, `scripts/sync-fonts.mjs` | yes | `test/fonts.test.ts` |
-| Depth Line fleet mark and optional public-page contour motif | `brand/depth-line.mjs`, `brand/depth-line.css`, `brand/depth-line-contours.svg` | yes | `test/depth-line.test.ts` |
+| Self-hosted fonts (Space Grotesk, Inter, JetBrains Mono, Manrope, Oswald, Playfair Display) + metric-matched fallbacks | `fonts/`, `scripts/sync-fonts.mjs` | yes | `test/fonts.test.ts` |
+| Trident Studio tile and icon files (tile, bleed, maskable, glyph, manifest, apple-touch, app-icon, favicon), pinned by checksum, pixel size and colour type; brand token file | `brand/tile.svg`, `brand/glyph-white.svg`, `brand/icon-512.png`, `brand/favicon.ico`, `brand/trident-ui.tokens.json`, `brand/README.md` | yes | `test/brand.test.ts` |
+| Trident Studio brand themes `trident-ui` (dark) and `trident-ui-light`: the brand's colour, type, radius, motion and shadows mapped onto the existing `--ui-*` names, via a `studio` base with inherited `extra` and `elevation`; text 4.5:1, borders 3:1 | `tokens.json`, `scripts/lib/tokens.mjs`, `docs/BRAND.md` | yes | `test/brand.test.ts`, `test/contrast-matrix.test.ts`, `test/tokens.test.ts` |
+| Depth Line fleet mark and optional public-page contour motif (superseded 2026-10-20 by the tile; kept so imports keep resolving) | `brand/depth-line.mjs`, `brand/depth-line.css`, `brand/depth-line-contours.svg` | yes | `test/depth-line.test.ts` |
 | `trident-ui copy-assets` / `sync-tokens` | `bin/trident-ui.mjs` | yes | `test/cli.test.ts` |
 | Package contract (exports, peers, no script that makes npm prepare the git dependency) | `package.json` | yes | `test/package.test.ts` |
 | Consumer ESLint rule for restricted surfaces | `eslint/restricted-surfaces.js` | yes | `test/eslint-convention.test.ts` |
@@ -42,14 +44,14 @@
 | Procedural poster glow ends inside the slot (outer 2px ring within ΔE 2 of the base) | `src/three/styles.css` | yes | `src/three/__tests__/review-fixes.test.tsx`, `gallery/tests/measure.spec.ts` |
 | Visible StatusOrbit list renders each state as a StatusPill, text still exactly "<label>: <state>" | `src/three/StatusOrbit.tsx`, `src/three/styles.css` | yes | `src/three/__tests__/review-fixes.test.tsx` |
 | Root entry never reaches three / R3F or a subpath-only group | `src/index.ts` | yes | `test/root-entry.test.ts` |
-| Static gallery: every `*.gallery.tsx` example × 12 themes × reduced/paused × 360/1280 | `gallery/` | yes | `gallery/tests/visual.spec.ts`, `gallery/tests/axe.spec.ts` |
+| Static gallery: every `*.gallery.tsx` example × 14 themes × reduced/paused × 360/1280 | `gallery/` | yes | `gallery/tests/visual.spec.ts`, `gallery/tests/axe.spec.ts` |
 | Gallery docs layer: a "when to use" line on every example, a Code disclosure with the example's own source and a copy button, props tables generated from `dist/*.d.ts` | `gallery/data/sources.ts`, `gallery/data/props.ts`, `gallery/CodeSample.tsx`, `gallery/PropsTable.tsx` | yes | `test/gallery/gallery-content.test.tsx`, `test/gallery/gallery-data.test.tsx`, `gallery/tests/measure.spec.ts` |
 | Gallery navigation: readable section titles, sticky section list from 1024px, "Jump to" menu on phones, theme and motion links keep `?group=` and `#hash` | `gallery/Gallery.tsx`, `gallery/url.ts`, `gallery/gallery.css` | yes | `test/gallery/gallery-data.test.tsx`, `gallery/tests/measure.spec.ts` |
 | Gallery Getting started (pinned install from package.json, import order, cascade-layer fix, What's new from CHANGELOG.md), version chip, inline favicon | `gallery/docs/getting-started.gallery.tsx`, `gallery/data/meta.ts`, `gallery/data/plugin.ts`, `README.md` | yes | `test/gallery/gallery-data.test.tsx`, `test/gallery/gallery-content.test.tsx`, `gallery/tests/measure.spec.ts` |
 | Gallery Design tokens: every semantic role per theme with its value, Increase Contrast value and measured contrast, plus space, radius, elevation, motion and component scales, read from tokens.json at build time | `gallery/data/tokens.ts`, `gallery/docs/TokenDocs.tsx`, `gallery/docs/tokens.gallery.tsx` | yes | `test/gallery/gallery-data.test.tsx`, `gallery/tests/measure.spec.ts` |
-| Gallery Brand: Depth Line mark in six product accent pairs at 16/32/48/64px and the contour hero (for owner creative review) | `gallery/docs/brand.gallery.tsx` | yes | `gallery/tests/measure.spec.ts` |
+| Gallery Brand: the tile at 16 to 128px, the lockup, every icon file loaded, and the legacy contour hero (for owner creative review) | `gallery/docs/brand.gallery.tsx` | yes | `gallery/tests/measure.spec.ts` |
 | Right-to-left examples (forms, chips, alerts, toasts) with logical CSS throughout | `src/forms/forms.gallery.tsx`, `src/display/display.gallery.tsx`, `src/feedback/feedback.gallery.tsx`, `src/feedback/styles.css` | yes (macOS, `npm run gate`) | `gallery/tests/visual.spec.ts`, `gallery/tests/measure.spec.ts` |
-| Visual regression: 576 macOS baselines, maxDiffPixelRatio 0.001, posters only (no canvas) | `gallery/tests/__screenshots__/darwin/` | yes (macOS, `npm run gate`) | `gallery/tests/visual.spec.ts` |
+| Visual regression: 840 macOS baselines (15 sections × 14 themes × reduced/paused × 360/1280), maxDiffPixelRatio 0.001, posters only (no canvas) | `gallery/tests/__screenshots__/darwin/` | yes (macOS, `npm run gate`) | `gallery/tests/visual.spec.ts` |
 | Gallery axe, WCAG 2.2 AA, zero violations on 48 pages, sampled only once CSS transitions settle (`openGallery`) | `gallery/tests/axe.spec.ts` | yes (CI + `npm run gate`) | `gallery/tests/axe.spec.ts` |
 | Bundle budgets (styles, tokens, themes, islands, motion-lite, lazy 3D chunk, root) | `.size-limit.mjs` | yes (`npm run size`) | `.size-limit.mjs` |
 | Full local gate: check + check:dist + gallery build + Playwright visual and axe | `package.json#scripts.gate` | yes | `test/feature-map.test.ts` |

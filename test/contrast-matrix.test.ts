@@ -12,6 +12,8 @@ const variants = themeVariants(tokens)
 const pairs: { fg: string; bg: string[]; min: number }[] = tokens.contrast.pairs
 
 const REQUIRED_THEMES = [
+  'trident-ui',
+  'trident-ui-light',
   'trident-studio',
   'trident-nil',
   'trident-ops',

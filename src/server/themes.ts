@@ -5,6 +5,8 @@
  */
 export const THEME_SCHEMES = {
   fleet: 'dark',
+  'trident-ui': 'dark',
+  'trident-ui-light': 'light',
   'trident-studio': 'dark',
   'trident-nil': 'dark',
   'trident-ops': 'dark',

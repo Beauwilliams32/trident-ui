@@ -1,8 +1,11 @@
+<p align="center"><img src="brand/tile.svg" alt="Trident UI" width="72" height="72"></p>
+
 # @trident/ui
 
 The Trident design system: tokens, themes, self-hosted fonts and React 19 components for the
 Trident Studio fleet, Williams Media, the portfolio and Quorum. The contract is
-[`docs/SPEC.md`](docs/SPEC.md); differences are in [`docs/DEVIATIONS.md`](docs/DEVIATIONS.md).
+[`docs/SPEC.md`](docs/SPEC.md); differences are in [`docs/DEVIATIONS.md`](docs/DEVIATIONS.md). The
+brand (tile, colour, type, voice) is the Trident Studio brand system: [`docs/BRAND.md`](docs/BRAND.md).
 
 > Public repo. Client themes (Kula, Corner Bar, Filippa) live in the
 > client repos and build on the token contract; they are not here.
@@ -21,13 +24,13 @@ means a full dev install in a temp clone), so an install is a plain fetch. The l
 ## Use
 
 ```html
-<html data-theme="trident-ops" data-scheme="dark">
+<html data-theme="trident-ui" data-scheme="dark">   <!-- Trident Studio brand, dark; trident-ui-light for light -->
 ```
 
 ```js
 import '@trident/ui/fonts/fonts.css'          // or one family: fonts/inter.css
 import '@trident/ui/tokens.css'
-import '@trident/ui/themes/trident-ops.css'
+import '@trident/ui/themes/trident-ui.css'
 import '@trident/ui/styles.css'
 import { ensureContrast, accentVars } from '@trident/ui'
 import { THREE_COLORS } from '@trident/ui/three.mjs'
@@ -36,14 +39,14 @@ import { durations, springs } from '@trident/ui/tokens.mjs'
 
 | Export | Contents |
 |---|---|
-| `tokens.css`, `themes/<name>.css`, `styles.css` | Zero-JS CSS. Themes: `fleet`, `trident-studio`, `trident-nil`, `trident-ops`, `trident-playbook`, `trident-tools`, `trident-agents`, `wmh-portal`, `wmh-marketing`, `wmh-dark`, `portfolio`, `quorum`, `legacy-aliases` |
+| `tokens.css`, `themes/<name>.css`, `styles.css` | Zero-JS CSS. Themes: `trident-ui`, `trident-ui-light` (the Trident Studio brand), `fleet`, `trident-studio`, `trident-nil`, `trident-ops`, `trident-playbook`, `trident-tools`, `trident-agents`, `wmh-portal`, `wmh-marketing`, `wmh-dark`, `portfolio`, `quorum`, `legacy-aliases` |
 | `tokens.json`, `tokens.mjs`, `three.mjs` | JS tokens; generated three.js hex ints and Quorum's FALLBACK map |
 | `.` | React components (a11y, layout, type, actions, forms, display, feedback) + utils |
 | `app` | Radix overlays (Dialog, Sheet, ConfirmDialog, Popover, Tooltip, DropdownMenu, ContextMenu), Tabs, CommandPalette (cmdk), DataTable, Pagination, EmptyState, Skeleton. Install the Radix/cmdk peers you use |
 | `marketing` | Hero, FeatureGrid, PricingTable, Faq, CtaBand, SiteHeader, SiteFooter and a MotionToggle that needs no `motion` peer. Copy and prices only ever come from props |
 | `server`, `islands`, `motion-lite`, `motion`, `three` | Separate entries; `motion` and `three` need their optional peers |
 | `fonts/*` | Variable woff2 (latin + latin-ext), per-family CSS, OFL licences |
-| `brand/*` | Depth Line vector mark and decorative contour treatment (product accent pairs stay in `tokens.json`) |
+| `brand/*` | The Trident Studio tile and icon files (`tile.svg`, `glyph-white.svg`, manifest, apple-touch, app-icon and favicon files; [`brand/README.md`](brand/README.md)) and the brand's own `trident-ui.tokens.json`. The superseded Depth Line mark and contour stay for compatibility |
 | `eslint` | `restrictedSurfaces()` for money/auth/legal/admin directories ([docs](docs/ESLINT.md)) |
 
 ### Cascade layers: keep legacy resets below the components

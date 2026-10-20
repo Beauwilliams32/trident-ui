@@ -22,9 +22,9 @@ describe('trident-ui copy-assets', () => {
     const out = tmp()
     execFileSync(process.execPath, [BIN, 'copy-assets', out])
     const files = readdirSync(join(out, 'fonts'))
-    expect(files.filter((f) => f.endsWith('.woff2'))).toHaveLength(10)
+    expect(files.filter((f) => f.endsWith('.woff2'))).toHaveLength(12)
     expect(files).toContain('fonts.css')
-    expect(readdirSync(join(out, 'fonts', 'licenses'))).toHaveLength(5)
+    expect(readdirSync(join(out, 'fonts', 'licenses'))).toHaveLength(6)
   })
 
   it('--fonts limits the families', () => {

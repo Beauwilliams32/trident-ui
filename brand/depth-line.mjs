@@ -1,4 +1,9 @@
-/** Depth Line — the Trident fleet mark. The three filled rails survive at 16px. */
+/**
+ * Depth Line — the Trident fleet mark. The three filled rails survive at 16px.
+ *
+ * Superseded 2026-10-20 by the Trident Studio tile (brand/tile.svg, docs/BRAND.md). Kept, unchanged,
+ * so existing imports keep resolving; new work uses the tile. Removal is a major-version change.
+ */
 export const DEPTH_LINE_LEFT = 'M20 16 24 12v16c0 7-4 11-10 15l-5 4v-7l3-2c5-4 8-7 8-12z'
 export const DEPTH_LINE_CENTER = 'M29 13 32 8l3 5v38h-6z'
 let gradientSequence = 0

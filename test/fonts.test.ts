@@ -4,7 +4,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { ROOT } from '../scripts/lib/tokens.mjs'
 
-const FAMILIES = ['space-grotesk', 'inter', 'jetbrains-mono', 'manrope', 'oswald']
+const FAMILIES = ['space-grotesk', 'inter', 'jetbrains-mono', 'manrope', 'oswald', 'playfair-display']
 const fonts = join(ROOT, 'fonts')
 const css = readFileSync(join(fonts, 'fonts.css'), 'utf8')
 
@@ -27,7 +27,7 @@ describe('fonts/', () => {
 
   it('declares a metric-matched fallback face for every family', () => {
     const metrics = JSON.parse(readFileSync(join(fonts, 'metrics.json'), 'utf8'))
-    for (const family of ['Space Grotesk', 'Inter', 'JetBrains Mono', 'Manrope', 'Oswald']) {
+    for (const family of ['Space Grotesk', 'Inter', 'JetBrains Mono', 'Manrope', 'Oswald', 'Playfair Display']) {
       expect(css).toContain(`font-family: '${family} Fallback';`)
       expect(metrics[family].sizeAdjust).toMatch(/^\d+\.\d+%$/)
     }

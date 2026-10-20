@@ -73,6 +73,24 @@ export function themeScheme(tokens, name) {
   return theme.scheme || tokens.base[theme.extends]?.scheme || 'dark'
 }
 
+/**
+ * Extra variables a theme sets on top of its roles (`--ui-<key>`), inherited from its base like
+ * roles are. A key that names a global token (for example `dur` or `text-base`) overrides it while
+ * the theme is active, so a brand can re-point existing names instead of adding new ones.
+ */
+export function themeExtra(tokens, name) {
+  const theme = tokens.themes[name]
+  const base = theme.extends ? tokens.base[theme.extends] : null
+  return { ...(base?.extra || {}), ...(theme.extra || {}) }
+}
+
+/** The scheme's elevation scale (e0 to e4) with any per-base or per-theme overrides applied. */
+export function themeElevation(tokens, name) {
+  const theme = tokens.themes[name]
+  const base = theme.extends ? tokens.base[theme.extends] : null
+  return { ...tokens.elevation[themeScheme(tokens, name)], ...(base?.elevation || {}), ...(theme.elevation || {}) }
+}
+
 /** Fully resolved semantic roles for a theme (+ optional data-portal-palette variant). */
 export function resolveTheme(tokens, name, palette) {
   const roles = resolveRoles(tokens, rawThemeRoles(tokens, name, palette))
@@ -170,9 +188,8 @@ export function semanticDecls(tokens, name, { palette } = {}) {
   const emit = palette ? dependents(raw, Object.keys(theme.palettes[palette])) : new Set(tokens.roles)
   for (const role of tokens.roles) if (emit.has(role)) lines.push(decl(`--ui-${role}`, cssRoleValue(tokens, raw[role])))
   if (!palette) {
-    const elev = tokens.elevation[themeScheme(tokens, name)]
-    for (const [k, v] of Object.entries(elev)) lines.push(decl(`--ui-${k}`, v))
-    for (const [k, v] of Object.entries(theme.extra || {})) lines.push(decl(`--ui-${k}`, v))
+    for (const [k, v] of Object.entries(themeElevation(tokens, name))) lines.push(decl(`--ui-${k}`, v))
+    for (const [k, v] of Object.entries(themeExtra(tokens, name))) lines.push(decl(`--ui-${k}`, v))
     for (const [k, v] of Object.entries(theme.legacy || {})) lines.push(decl(`--q-${k.slice(2)}`, v))
   }
   return lines
@@ -410,7 +427,7 @@ export function jsTokens(tokens) {
     const t = tokens.themes[name]
     const palettes = {}
     for (const p of Object.keys(t.palettes || {})) palettes[p] = resolveTheme(tokens, name, p)
-    themes[name] = { scheme: themeScheme(tokens, name), roles: resolveTheme(tokens, name), extra: t.extra || {}, palettes }
+    themes[name] = { scheme: themeScheme(tokens, name), roles: resolveTheme(tokens, name), extra: themeExtra(tokens, name), palettes }
   }
   const m = tokens.motion
   return {

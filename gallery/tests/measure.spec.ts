@@ -113,9 +113,15 @@ for (const theme of THEMES) {
       const roles = await page.locator('section[data-group="tokens"] [data-role]').evaluateAll((els) => els.map((e) => e.getAttribute('data-role')))
       expect(new Set(roles)).toEqual(new Set(tokens.roles))
 
-      // G13: the mark for six products at 16, 32, 48 and 64px, and the contour hero.
-      expect(await page.locator('section[data-group="brand"] tr[data-product] .g-mark svg').count()).toBe(24)
-      expect(await page.locator('section[data-group="brand"] .trident-depth-line').count()).toBe(1)
+      // G13: the tile at six sizes, the lockup, every icon file loaded, and the legacy contour hero.
+      const brand = page.locator('section[data-group="brand"]')
+      expect(await brand.locator('.g-tiles .g-mark img').count()).toBe(6)
+      expect(await brand.locator('.g-lockup .g-mark img').count()).toBe(1)
+      expect(await brand.locator('tr[data-icon-file]').count()).toBe(10)
+      await expect
+        .poll(() => brand.locator('img').evaluateAll((els) => els.filter((el) => !(el as HTMLImageElement).complete || (el as HTMLImageElement).naturalWidth === 0).length), { message: 'brand images that failed to load' })
+        .toBe(0)
+      expect(await brand.locator('.trident-depth-line').count()).toBe(1)
 
       // G19: right-to-left examples for forms, chips, alerts and toasts.
       for (const g of ['forms', 'display', 'feedback']) expect(await page.locator(`section[data-group="${g}"] [dir="rtl"]`).count(), g).toBeGreaterThanOrEqual(1)

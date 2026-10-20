@@ -41,11 +41,14 @@ export interface Group {
   examples: Example[]
 }
 
-/** Readable titles (G9), one-line summaries and import paths, in page order. */
+/**
+ * Readable titles (G9), one-line summaries and import paths, in page order. `brand` is last on purpose:
+ * every snapshot is positioned by what sits above it, so a Brand section above the component groups
+ * would move (and force a re-record of) every baseline whenever it changes.
+ */
 export const GROUP_INFO: Record<string, { title: string; summary: string; entry?: string }> = {
   'getting-started': { title: 'Getting started', summary: 'Install the pinned tag, import the CSS in order, and keep legacy resets below the component layer.' },
   tokens: { title: 'Design tokens', summary: 'Every semantic role in this theme with its measured contrast, plus the spacing, radius, elevation and motion scales. Read from tokens.json at build time.' },
-  brand: { title: 'Brand', summary: 'The Depth Line mark in each product’s accent pair and the contour backdrop. Shown for owner creative review; not released yet.' },
   a11y: { title: 'Accessibility', summary: 'Skip link, screen-reader-only text, polite announcements and the focus ring every control shares.', entry: '@trident/ui' },
   layout: { title: 'Layout', summary: 'Container widths, stacks, clusters, grids and page bands. Every variant is a class, so a strict CSP works.', entry: '@trident/ui' },
   type: { title: 'Typography', summary: 'Headings with required levels, text tones, links, code and long-form prose on the fluid type scale.', entry: '@trident/ui' },
@@ -60,6 +63,7 @@ export const GROUP_INFO: Record<string, { title: string; summary: string; entry?
   app: { title: 'App overlays and data', summary: 'Radix overlays, menus, tabs, the command palette, and the data table, empty state and skeleton.', entry: '@trident/ui/app' },
   marketing: { title: 'Marketing compositions', summary: 'Hero, features, pricing, FAQ, call-to-action, header and footer. Copy and prices always arrive as props.', entry: '@trident/ui/marketing' },
   three: { title: '3D', summary: 'Lazy3D slots, posters and the status orbit. 3D only ever appears as its poster in these screenshots.', entry: '@trident/ui/three' },
+  brand: { title: 'Brand', summary: 'The Trident Studio tile, lockup and icon files shipped in brand/, plus the legacy Depth Line contour. Shown for owner creative review; not released yet.' },
 }
 
 /** Page order; the component groups follow dist/styles.css (scripts/build-styles.mjs). */

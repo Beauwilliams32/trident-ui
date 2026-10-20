@@ -1,4 +1,5 @@
 /* Depth Line: editorial contour layer for public Trident fleet marketing pages.
+   Superseded 2026-10-20 by the Trident Studio brand system (docs/BRAND.md); kept so imports keep working.
    Decorative only. Keep the text, focus ring, and controls above this layer. */
 .trident-depth-line {
   position: relative;

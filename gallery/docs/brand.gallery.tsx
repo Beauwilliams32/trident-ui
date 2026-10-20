@@ -1,53 +1,55 @@
 /**
- * Brand (G13): the Depth Line mark (brand/depth-line.mjs) in every product's accent pair from
- * tokens.json, at 16, 32, 48 and 64px, and the contour backdrop on a hero mock. Shown for the
+ * Brand (G13): the Trident Studio tile and glyph shipped in brand/ at the sizes products use them,
+ * the "Trident UI by Trident Studio" lockup (tile plus live text), the icon files with their pixel
+ * sizes, and the legacy Depth Line contour backdrop. The artwork is the supplied Illustrator export
+ * (brand/*.svg, brand/*.png); nothing here redraws it. docs/BRAND.md has the rules. Shown for the
  * owner's creative review; the brand ships in a release only after that review.
  */
-import data from '../galleryData'
 import '../../brand/depth-line.css'
-import { depthLineMark } from '../../brand/depth-line.mjs'
+import appIcon1024 from '../../brand/app-icon-1024.png'
+import appleTouchIcon from '../../brand/apple-touch-icon.png'
+import glyphWhite from '../../brand/glyph-white.svg'
+import icon192 from '../../brand/icon-192.png'
+import icon512 from '../../brand/icon-512.png'
+import iconMaskable512 from '../../brand/icon-maskable-512.png'
+import tile from '../../brand/tile.svg'
+import tileBleed from '../../brand/tile-bleed.svg'
+import tileMaskable from '../../brand/tile-maskable.svg'
 import { Button } from '../../src/actions/Button'
 import { Heading } from '../../src/type/Heading'
 import { Kicker } from '../../src/type/Kicker'
 import { Text } from '../../src/type/Text'
 import type { RawExample } from '../registry'
 
-export const PRODUCTS: Array<[theme: string, name: string]> = [
-  ['trident-studio', 'Studio hub'],
-  ['trident-nil', 'NIL'],
-  ['trident-ops', 'Ops'],
-  ['trident-playbook', 'Playbook'],
-  ['trident-tools', 'Tools'],
-  ['trident-agents', 'Agents'],
+export const TILE_SIZES = [16, 24, 32, 48, 64, 128] as const
+
+/** Every file in brand/ that a product copies, with the pixel size it is drawn at and where it goes. */
+export const ICON_FILES: Array<{ file: string; src: string; size: string; use: string; onDark?: boolean }> = [
+  { file: 'tile.svg', src: tile, size: '512 x 512 vector', use: 'App icon, avatar and favicon source: the rounded tile on a transparent square' },
+  { file: 'tile-bleed.svg', src: tileBleed, size: '512 x 512 vector', use: 'Full-bleed square for stores that round the corners themselves' },
+  { file: 'tile-maskable.svg', src: tileMaskable, size: '512 x 512 vector', use: 'Maskable PWA source: the glyph sits inside the safe zone' },
+  { file: 'glyph-white.svg', src: glyphWhite, size: '512 x 512 vector', use: 'The white layers glyph alone, for a fill you already own', onDark: true },
+  { file: 'icon-192.png', src: icon192, size: '192 x 192', use: 'Web app manifest icon' },
+  { file: 'icon-512.png', src: icon512, size: '512 x 512', use: 'Web app manifest icon and store listings' },
+  { file: 'icon-maskable-512.png', src: iconMaskable512, size: '512 x 512', use: 'Web app manifest icon with purpose "maskable"' },
+  { file: 'apple-touch-icon.png', src: appleTouchIcon, size: '180 x 180', use: 'iOS home screen (apple-touch-icon), opaque' },
+  { file: 'app-icon-1024.png', src: appIcon1024, size: '1024 x 1024', use: 'iOS and macOS app icon catalog source, opaque square' },
 ]
-export const MARK_SIZES = [16, 32, 48, 64] as const
-
-const accents = (theme: string) => {
-  const roles = data.tokens.themes[theme]!.roles
-  const get = (r: string) => roles.find((x) => x.role === r)!.value
-  return { accent1: get('accent-1'), accent2: get('accent-2') }
-}
-
-function Mark({ theme, size, title }: { theme: string; size: number; title?: string }) {
-  const svg = depthLineMark({ ...accents(theme), title: title ?? '' })
-  return <span className="g-mark" style={{ inlineSize: size, blockSize: size }} dangerouslySetInnerHTML={{ __html: svg }} />
-}
 
 export const examples: RawExample[] = [
   {
-    id: 'marks',
-    title: 'Depth Line mark: each product’s accent pair',
-    description: 'One vector mark; each product keeps its own accent pair from tokens.json. Check the 16px column: the three rails must stay apart.',
+    id: 'tile',
+    title: 'The tile at every size',
+    description: 'The product tile from brand/tile.svg at the sizes it is used, from the 16px favicon to the 128px profile image. Teal to indigo at 135 degrees, 22% corners, nothing inside but the glyph. Check the 16px tile: the three layers must stay apart.',
     wide: true,
     showCode: false,
     render: () => (
-      <div className="g-api__scroll" role="region" aria-label="Depth Line marks by product" tabIndex={0}>
-        <table className="g-api__table g-marks">
+      <div className="g-api__scroll" role="region" aria-label="Trident UI tile sizes" tabIndex={0}>
+        <table className="g-api__table g-marks g-tiles">
           <thead>
             <tr>
-              <th scope="col">Product</th>
-              <th scope="col">Accent pair</th>
-              {MARK_SIZES.map((s) => (
+              <th scope="col">Use</th>
+              {TILE_SIZES.map((s) => (
                 <th scope="col" key={s}>
                   {s}px
                 </th>
@@ -55,24 +57,81 @@ export const examples: RawExample[] = [
             </tr>
           </thead>
           <tbody>
-            {PRODUCTS.map(([theme, name]) => {
-              const a = accents(theme)
-              return (
-                <tr key={theme} data-product={theme}>
-                  <th scope="row">{name}</th>
-                  <td>
-                    <code>
-                      {a.accent1} → {a.accent2}
-                    </code>
-                  </td>
-                  {MARK_SIZES.map((s) => (
-                    <td key={s}>
-                      <Mark theme={theme} size={s} title={s === 64 ? `${name} mark` : undefined} />
-                    </td>
-                  ))}
-                </tr>
-              )
-            })}
+            <tr>
+              <th scope="row">Tile</th>
+              {TILE_SIZES.map((s) => (
+                <td key={s}>
+                  <span className="g-mark" style={{ inlineSize: s, blockSize: s }}>
+                    <img src={tile} alt={s === 64 ? 'Trident UI tile' : ''} width={s} height={s} />
+                  </span>
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    ),
+  },
+  {
+    id: 'lockup',
+    title: 'Lockup: tile, product name, studio credit',
+    description: 'The tile beside the product name in the display face, with the studio credit as a kicker. The name and the credit stay live text; never put words inside the tile.',
+    wide: true,
+    showCode: false,
+    render: () => (
+      <div className="g-lockup">
+        <span className="g-mark" style={{ inlineSize: 56, blockSize: 56 }}>
+          <img src={tile} alt="" width={56} height={56} />
+        </span>
+        <div className="g-lockup__text">
+          <Heading level={4} size="3xl">
+            Trident UI
+          </Heading>
+          <Kicker>By Trident Studio</Kicker>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'files',
+    title: 'Icon files',
+    description: 'Every icon file a product copies from brand/, with the size it is drawn at and where it goes. favicon.ico holds 16, 32 and 48 pixel images and has no preview here.',
+    wide: true,
+    showCode: false,
+    render: () => (
+      <div className="g-api__scroll" role="region" aria-label="Brand icon files" tabIndex={0}>
+        <table className="g-api__table g-marks g-files">
+          <thead>
+            <tr>
+              <th scope="col">File</th>
+              <th scope="col">Size</th>
+              <th scope="col">Preview</th>
+              <th scope="col">Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ICON_FILES.map((f) => (
+              <tr key={f.file} data-icon-file={f.file}>
+                <th scope="row">
+                  <code>{f.file}</code>
+                </th>
+                <td>{f.size}</td>
+                <td>
+                  <span className={f.onDark ? 'g-mark g-glyph-chip' : 'g-mark'} style={{ inlineSize: 48, blockSize: 48 }}>
+                    <img src={f.src} alt="" width={48} height={48} />
+                  </span>
+                </td>
+                <td>{f.use}</td>
+              </tr>
+            ))}
+            <tr data-icon-file="favicon.ico">
+              <th scope="row">
+                <code>favicon.ico</code>
+              </th>
+              <td>16, 32 and 48 px</td>
+              <td>Browser tab</td>
+              <td>Legacy favicon for browsers that do not read the SVG</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -80,15 +139,17 @@ export const examples: RawExample[] = [
   },
   {
     id: 'contour-hero',
-    title: 'Contour backdrop on a hero mock',
-    description: 'The decorative contour (brand/depth-line.css) behind a text hero. Public marketing pages only; never on auth, money, legal or admin.',
+    title: 'Legacy: Depth Line contour backdrop on a hero mock',
+    description: 'The decorative contour (brand/depth-line.css) from the superseded Depth Line direction, kept so existing imports keep resolving. Public marketing pages only; never on auth, money, legal or admin.',
     wide: true,
     showCode: false,
     render: () => (
       <div className="trident-depth-line g-brand-hero">
         <div className="g-brand-hero__copy">
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <Mark theme={document.documentElement.dataset.theme === 'fleet' ? 'trident-studio' : (PRODUCTS.find(([t]) => t === document.documentElement.dataset.theme)?.[0] ?? 'trident-studio')} size={28} />
+            <span className="g-mark" style={{ inlineSize: 28, blockSize: 28 }}>
+              <img src={tile} alt="" width={28} height={28} />
+            </span>
             <Kicker>Trident Studio</Kicker>
           </div>
           <Heading level={4} size="3xl">

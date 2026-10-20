@@ -1,12 +1,11 @@
 /**
  * Vite plugin: exposes the gallery's build-time data as `virtual:gallery-data` (example sources,
- * props tables from dist/*.d.ts, token docs, version and changelog) and inlines the favicon, so the
+ * props tables from dist/*.d.ts, token docs, version and changelog) and inlines the favicon (the Trident UI tile), so the
  * gallery makes no request that can 404 (G17). Everything is computed in Node at build time.
  */
-import { readdirSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import type { Plugin } from 'vite'
-import { depthLineMark } from '../../brand/depth-line.mjs'
 import { componentApis } from './props.ts'
 import { exampleSources } from './sources.ts'
 import { tokenDocs } from './tokens.ts'
@@ -42,7 +41,8 @@ export function galleryDataPlugin(root: string): Plugin {
       return `export default ${JSON.stringify(galleryData(root))}`
     },
     transformIndexHtml(html) {
-      const svg = depthLineMark({ title: 'Trident UI' }).replace(/depth-line-\d+/g, 'favicon')
+      // The supplied tile (brand/tile.svg), inlined as a data URI like the old mark.
+      const svg = readFileSync(join(root, 'brand', 'tile.svg'), 'utf8')
       return html.replace('</head>', `  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,${encodeURIComponent(svg)}" />\n  </head>`)
     },
   }

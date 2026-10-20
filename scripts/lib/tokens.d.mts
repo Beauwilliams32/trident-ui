@@ -14,6 +14,8 @@ export declare function resolveRoles(tokens: Tokens, roles: Record<string, strin
 export declare function rawThemeRoles(tokens: Tokens, name: string, palette?: string): Record<string, string>
 export declare function themeScheme(tokens: Tokens, name: string): 'dark' | 'light'
 export declare function resolveTheme(tokens: Tokens, name: string, palette?: string): Record<string, string>
+export declare function themeExtra(tokens: Tokens, name: string): Record<string, string>
+export declare function themeElevation(tokens: Tokens, name: string): Record<string, string>
 export declare function themeVariants(tokens: Tokens): { theme: string; palette: string | undefined; id: string }[]
 export declare function durationVar(key: string): string
 export declare function easingVar(key: string): string

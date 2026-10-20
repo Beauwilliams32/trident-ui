@@ -6,6 +6,18 @@ and any rendered-colour change needs an entry here.
 
 ## Unreleased
 
+**Brand** (additive; every existing theme keeps its values):
+
+- The Trident Studio brand system is the source of truth for the studio family
+  ([`docs/BRAND.md`](docs/BRAND.md)). New themes `trident-ui` (dark) and `trident-ui-light` carry the
+  brand's colour (teal `#19C3B1` to indigo `#5B6CFF`, navy and mint surfaces), Playfair Display /
+  Inter / JetBrains Mono, the 6/10/16/24 radius steps, 240ms base motion and the raised and overlay
+  shadows, all on the existing `--ui-*` names. Text pairs reach 4.5:1 and control borders 3:1.
+- `brand/*` ships the supplied tile (`tile.svg`, bleed, maskable, `glyph-white.svg`), the manifest,
+  apple-touch, 1024px app icon and favicon files, and the brand's token file. The Depth Line mark is
+  superseded by the tile and kept unchanged for compatibility.
+- Playfair Display joins the self-hosted fonts (OFL-1.1, with a metric-matched fallback).
+
 **Rendered colour changes** (no colour role in the contrast matrix changed value):
 
 - Links inside `Alert` (including its `actions`), `Toast` and `FlashBanner` now take the tone ink
