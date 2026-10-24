@@ -68,8 +68,8 @@ describe('spec §3 brand values', () => {
   })
   it('quorum', () => {
     const r = resolveTheme(tokens, 'quorum')
-    expect([r.bg, r['bg-2'], r.ink, r.muted, r['accent-1'], r.warn, r.ok]).toEqual(['#0b0f14', '#070a0e', '#e8f0f6', '#7e909f', '#3fd0e0', '#f2b544', '#46d6a0'])
-    expect([r['status-live'], r['status-attention'], r['status-ok']]).toEqual(['#3fd0e0', '#f2b544', '#46d6a0'])
+    expect([r.bg, r['bg-2'], r.ink, r.muted, r['accent-1'], r.warn, r.ok]).toEqual(['#111728', '#0c101c', '#ffffff', '#8793ab', '#8fa3c7', '#f5b83d', '#2fd39a'])
+    expect([r['status-live'], r['status-attention'], r['status-ok']]).toEqual(['#8fa3c7', '#f5b83d', '#2fd39a'])
   })
 })
 
