@@ -1,0 +1,96 @@
+/* @trident/ui — GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* theme: wmh-dark — The portal's dark theme (data-portal-theme=wm-dark). Per-client admin accents from bootstrap.portalTheme go through ensureContrast(). */
+[data-theme="wmh-dark"],
+:root[data-portal-theme="wm-dark"] {
+  color-scheme: dark;
+  --ui-bg: #070b14;
+  --ui-bg-2: #0a1120;
+  --ui-surface: #0e1626;
+  --ui-surface-raised: #151f31;
+  --ui-glass: color-mix(in srgb, #0e1626 82%, transparent);
+  --ui-glass-strong: color-mix(in srgb, #151f31 90%, transparent);
+  --ui-glass-edge: rgba(148,163,184,.16);
+  --ui-specular: rgba(255,255,255,.10);
+  --ui-line: rgba(148,163,184,.16);
+  --ui-line-strong: #5f6f86;
+  --ui-ink: #f4f6fb;
+  --ui-ink-2: #c9d6e8;
+  --ui-muted: #94a3b8;
+  --ui-accent-1: #7c3aed;
+  --ui-accent-2: #2563eb;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(124,58,237,.18);
+  --ui-on-accent: #ffffff;
+  --ui-accent-text: #b69bff;
+  --ui-focus: var(--ui-accent-text);
+  --ui-ok: #34d399;
+  --ui-warn: #fbbf24;
+  --ui-danger: #f87171;
+  --ui-info: #7dd3fc;
+  --ui-status-live: var(--ui-accent-text);
+  --ui-status-attention: var(--ui-warn);
+  --ui-status-ok: var(--ui-ok);
+  --ui-status-error: var(--ui-danger);
+  --ui-status-reasoning: #b69bff;
+  --ui-font-display: Futura, 'Futura PT', 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-body: 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ui-r-xs: 6px;
+  --ui-r-sm: 10px;
+  --ui-r: 16px;
+  --ui-r-lg: 22px;
+  --ui-r-pill: 999px;
+  --ui-blur: 18px;
+  --ui-blur-heavy: 28px;
+  --ui-e0: none;
+  --ui-e1: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge);
+  --ui-e2: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge), 0 16px 40px -16px rgba(0,0,0,.55);
+  --ui-e3: 0 0 0 1px var(--ui-line-strong), 0 24px 64px -12px rgba(0,0,0,.65);
+  --ui-e4: 0 0 0 1px var(--ui-line-strong), 0 32px 80px -12px rgba(0,0,0,.7);
+  --ui-eyebrow: #e8b84a;
+  --ui-logo-grad: linear-gradient(135deg, #5d0045, #210018);
+  --ui-link: #3b7ef8;
+}
+[data-theme="wmh-dark"][data-portal-palette="violet"],
+[data-theme="wmh-dark"] [data-portal-palette="violet"] {
+  --ui-accent-1: #7c3aed;
+  --ui-accent-2: #2563eb;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(124,58,237,.18);
+  --ui-on-accent: #ffffff;
+  --ui-accent-text: #b69bff;
+  --ui-focus: #b69bff;
+  --ui-status-live: var(--ui-accent-text);
+}
+[data-theme="wmh-dark"][data-portal-palette="ocean"],
+[data-theme="wmh-dark"] [data-portal-palette="ocean"] {
+  --ui-accent-1: #2563eb;
+  --ui-accent-2: #7c3aed;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(37,99,235,.18);
+  --ui-on-accent: #ffffff;
+  --ui-accent-text: #3b7ef8;
+  --ui-focus: #3b7ef8;
+  --ui-status-live: var(--ui-accent-text);
+}
+[data-theme="wmh-dark"][data-portal-palette="forest"],
+[data-theme="wmh-dark"] [data-portal-palette="forest"] {
+  --ui-accent-1: #10b981;
+  --ui-accent-2: #2563eb;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: rgba(16,185,129,.18);
+  --ui-on-accent: #0b1220;
+  --ui-accent-text: #34d399;
+  --ui-focus: #34d399;
+  --ui-status-live: var(--ui-accent-text);
+}
+@media (prefers-contrast: more) {
+  [data-theme="wmh-dark"],
+  :root[data-portal-theme="wm-dark"] {
+    --ui-line-strong: #728195;
+    --ui-line: #5f6f86;
+    --ui-glass-edge: #5f6f86;
+    --ui-glass: var(--ui-surface);
+    --ui-glass-strong: var(--ui-surface-raised);
+  }
+}
