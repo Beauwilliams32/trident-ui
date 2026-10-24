@@ -67,7 +67,9 @@ describe('G17 version and changelog', () => {
   it('come from package.json and CHANGELOG.md', () => {
     const meta = galleryMeta(ROOT)
     expect(meta.version).toBe(pkg.version)
-    expect(meta.changelog[0]!.title).toBe('Unreleased')
+    // The gallery shows the newest CHANGELOG section: 'Unreleased' between releases, the
+    // version once it is cut (0.2.0 was cut by hand; see .changeset/archive/README.md).
+    expect(['Unreleased', pkg.version]).toContain(meta.changelog[0]!.title)
     expect(meta.changelog[0]!.items.length).toBeGreaterThan(0)
     expect(meta.changelogUrl).toBe('https://github.com/Beauwilliams32/trident-ui/blob/main/CHANGELOG.md')
   })

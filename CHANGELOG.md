@@ -4,7 +4,11 @@ Managed with [Changesets](https://github.com/changesets/changesets) (`npx change
 are in `.changeset/README.md`: a contrast-affecting change is **major**, a new theme is **minor**,
 and any rendered-colour change needs an entry here.
 
-## Unreleased
+## 0.2.0
+
+Tag `v0.2.0` (2026-10-24). Released for the brand system, the Depth Line mark, the
+quality review and the three colour table — a minor bump because every theme is additive and no
+existing theme, component or export changes value.
 
 **Brand** (additive; every existing theme keeps its values):
 
