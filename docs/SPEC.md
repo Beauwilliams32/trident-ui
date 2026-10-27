@@ -107,7 +107,10 @@
 - **Tauri Mac app (Tools):** keeps copying `public/tools` and `public/assets`. The existing byte-identical test catches drift. The download Worker is never redeployed as part of UI work.
 - **Drift control:**
   - Each repo has a `DESIGN-VERSION` file, and a test checks that the tag resolved in `package-lock.json` matches it.
-  - `scripts/ui-version-report.mjs` at workspace level lists every repo's pin.
+  - The workspace-level pin report is [`docs/CONSUMERS.md`](CONSUMERS.md) (audited 2026-10-27). It replaced a
+    planned `scripts/ui-version-report.mjs`, which was never written: most consumers do not pin a tag at all
+    (they vendor or inline the canonical CSS, or carry their own tokens), so the report records the
+    mechanism per repo instead of pretending every one has a tag to compare.
   - While repos migrate, projects not yet on React use `sync-tokens` plus a hash test, following the pattern in `test/motion-system.test.js`.
 - **Rejected:**
   - Private GitHub Packages: it needs auth on Netlify, for Quorum buyers and in open-core.
