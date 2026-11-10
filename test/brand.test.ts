@@ -37,6 +37,8 @@ const ASSETS: Asset[] = [
   { name: 'lockup-light.svg', sha256: '27d9f4396ca15e6e488665724102cbfa48683d63746430f089646338d50155b2' },
   { name: 'og-card.svg', sha256: '2e72a54727bb229bb7b9f6da6ba151139fc0b6b1584e2fac23d6531f164c65c7' },
   { name: 'og-card.png', sha256: '5f1f927dd069ca27b5163a25eee3eb4d345e222fb0e27162aa856590fca5f9eb', png: { width: 1200, height: 630, colorType: 2 } },
+  { name: 'studio-glyph-white.svg', sha256: '2ce559818072307b64cd14280f14b6839ae2850628af972ef09d485c820bc2bd' },
+  { name: 'studio-glyph-ink.svg', sha256: '5584bfaeda48bbc91c729c227c4fb178d936e4d6db129aed0b15c2b457d80ba4' },
 ]
 
 describe('brand tile files', () => {
@@ -74,6 +76,17 @@ describe('brand tile files', () => {
     const svg = file('glyph-white.svg').toString('utf8')
     expect(svg.match(/<polygon fill="#FFFFFF"/g)).toHaveLength(3)
     expect(svg).not.toContain('linearGradient')
+  })
+
+  it('ships Poseidons exact approved glyph as the Trident Studio house mark', () => {
+    const white = file('studio-glyph-white.svg').toString('utf8')
+    const ink = file('studio-glyph-ink.svg').toString('utf8')
+    expect(white).toContain('viewBox="0 0 340 510"')
+    expect((white.match(/<polygon\b/g) ?? []).length).toBe(7)
+    expect((white.match(/<circle\b/g) ?? []).length).toBe(1)
+    expect(white).toContain('fill="#FFFFFF"')
+    expect(ink).toContain('viewBox="0 0 340 510"')
+    expect(ink).toContain('fill="#0B0B0D"')
   })
 
   describe.each([

@@ -43,11 +43,20 @@ A product that keeps its own accent pair (the brand rule is one pair per product
 overrides `--ui-accent-1`, `--ui-accent-2` with `accentVars()` / `ensureContrast()`, which also derive
 `--ui-on-accent` and `--ui-accent-text`.
 
+## Trident Studio house mark
+
+The shared house mark is Poseidon's approved bold trident. Use the unmodified white or ink source at
+`brand/studio-glyph-white.svg` or `brand/studio-glyph-ink.svg` on cross-project Trident Studio surfaces.
+Both files are exact copies of Poseidon's approved glyph, including its seven solid blades and round
+finial. Do not redraw, simplify, add a ring, or substitute another trident shape. A product can retain
+its own documented icon, such as the layers glyph in Trident UI's product tile; that icon identifies
+the product and does not replace the shared house mark.
+
 ## The tile
 
-The product tile is the app icon, favicon source and avatar: a rounded square (22% corners), gradient
-`#19C3B1` to `#5B6CFF` at 135 degrees, the `layers` glyph at 62% of the tile. Nothing inside the tile
-except the glyph. The artwork was drawn in Adobe Illustrator and is copied, never redrawn.
+Trident UI's product tile is the app icon, favicon source and avatar: a rounded square (22% corners),
+gradient `#19C3B1` to `#5B6CFF` at 135 degrees, with its product-specific `layers` glyph. Nothing inside
+the tile except the glyph. The artwork was drawn in Adobe Illustrator and is copied, never redrawn.
 
 | File | Size | Use |
 |---|---|---|
