@@ -51,7 +51,7 @@ import { durations, springs } from '@trident/ui/tokens.mjs'
 | `marketing` | Hero, FeatureGrid, PricingTable, Faq, CtaBand, SiteHeader, SiteFooter and a MotionToggle that needs no `motion` peer. Copy and prices only ever come from props |
 | `server`, `islands`, `motion-lite`, `motion`, `three` | Separate entries; `motion` and `three` need their optional peers |
 | `fonts/*` | Variable woff2 (latin + latin-ext), per-family CSS, OFL licences |
-| `brand/*` | The Trident Studio tile and icon files (`tile.svg`, `glyph-white.svg`, manifest, apple-touch, app-icon and favicon files; [`brand/README.md`](brand/README.md)) and the brand's own `trident-ui.tokens.json`. The superseded Depth Line mark and contour stay for compatibility |
+| `brand/*` | The shared Trident Studio house glyph (`studio-glyph-white.svg`, `studio-glyph-ink.svg`) plus Trident UI's own tile and icon files (`tile.svg`, `glyph-white.svg`, manifest, apple-touch, app-icon and favicon files; [`brand/README.md`](brand/README.md)) and its `trident-ui.tokens.json`. The superseded Depth Line mark and contour stay for compatibility |
 | `eslint` | `restrictedSurfaces()` for money/auth/legal/admin directories ([docs](docs/ESLINT.md)) |
 
 ### Cascade layers: keep legacy resets below the components

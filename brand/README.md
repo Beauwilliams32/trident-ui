@@ -1,11 +1,16 @@
 # Brand
 
 The Trident Studio brand system (approved 2026-10-20), as shipped for Trident UI. The rules,
-colour table, token mapping and voice are in [`docs/BRAND.md`](../docs/BRAND.md). The artwork is the
-supplied Adobe Illustrator export; copy it, never redraw it.
+colour table, token mapping and voice are in [`docs/BRAND.md`](../docs/BRAND.md). Copy supplied
+artwork; never redraw it.
+
+The shared Trident Studio house mark is Poseidon's approved bold trident. Use its source files for
+cross-project Studio branding. The existing tile and lockup identify the Trident UI product and keep
+its layers glyph.
 
 | File | Size | Use |
 |---|---|---|
+| `studio-glyph-white.svg`, `studio-glyph-ink.svg` | 340 x 510 vector | Verbatim approved Poseidon house glyph for dark and light surfaces |
 | `tile.svg` | 512 vector | App icon, avatar, favicon source: rounded tile, teal to indigo at 135 degrees, 22% corners, the layers glyph at 62% |
 | `tile-bleed.svg` | 512 vector | Full-bleed square for stores that round the corners themselves |
 | `tile-maskable.svg` | 512 vector | Maskable PWA source, glyph inside the safe zone |
