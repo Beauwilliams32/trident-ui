@@ -15,6 +15,9 @@ export const springs = {
 export const durations = {
   instant: 0.08,
   fast: 0.16,
+  'mobile-fast': 0.16,
+  'mobile-base': 0.24,
+  'mobile-slow': 0.32,
   base: 0.2,
   page: 0.26,
   med: 0.32,

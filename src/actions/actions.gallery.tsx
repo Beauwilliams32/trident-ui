@@ -51,6 +51,18 @@ export const examples: GalleryExample[] = [
     ),
   },
   {
+    id: 'game-control',
+    title: 'Game control target (48px)',
+    description: 'Opt in to the visible 48px minimum for gameplay actions while retaining the product’s own labels, art and theme.',
+    render: () => (
+      <div style={row}>
+        <Button gameControl>Pause</Button>
+        <IconButton gameControl icon={Settings} aria-label="Game settings" />
+        <LinkButton gameControl href="#resume" variant="secondary">Resume</LinkButton>
+      </div>
+    ),
+  },
+  {
     id: 'button-states',
     title: 'Loading keeps the width; disabled',
     description: 'Loading shows a spinner inside the button, keeps its width and can swap the accessible name (“Saving…”).',

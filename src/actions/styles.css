@@ -103,6 +103,13 @@
   padding: 0;
 }
 
+/* Larger visible hit shape for game actions and other high-precision touch controls. */
+.ui-btn--game-control {
+  --_ui-btn-h: var(--ui-target-game);
+  min-width: var(--ui-target-game);
+  min-height: var(--ui-target-game);
+}
+
 /* Variants */
 .ui-btn--primary {
   background: var(--ui-accent-1);

@@ -84,6 +84,10 @@ only set custom properties and are unaffected.
   checkbox, radio, switch, tab and sortable header answers taps across at least 44x44 through an
   invisible hit region; the drawn size and the desktop rendering do not change. Leave at least 12px
   between small buttons (20px beside a 24px link button) so neighbouring regions do not overlap.
+  Set `gameControl` on `Button`, `LinkButton`, or `IconButton` when a visible 48px target suits a
+  game control. `--ui-dur-mobile-fast/base/slow` expose the shared 160/240/320ms mobile motion scale.
+  The cross-brand mobile contract and product-owned identity boundaries are documented in
+  [`docs/MOBILE-DESIGN-SYSTEM.md`](docs/MOBILE-DESIGN-SYSTEM.md).
 - **Increase Contrast.** Each theme ships `@media (prefers-contrast: more)` overrides generated from
   `tokens.json#high-contrast`: ink and muted at 7:1 or more, line-strong at 4.5:1, hairlines and
   glass solid.
