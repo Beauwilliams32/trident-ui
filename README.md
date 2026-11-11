@@ -42,9 +42,17 @@ import { THREE_COLORS } from '@trident/ui/three.mjs'
 import { durations, springs } from '@trident/ui/tokens.mjs'
 ```
 
+Projects that keep their own visual theme can import the small mobile interaction contract instead of the full default palette:
+
+```css
+@import '@trident/ui/mobile-contract.css';
+```
+
+It supplies shared 44px touch and 48px game targets, focus dimensions, and 160/240/320ms mobile motion tokens. Product colors, typography, surfaces, and component behavior remain project-owned.
+
 | Export | Contents |
 |---|---|
-| `tokens.css`, `themes/<name>.css`, `styles.css` | Zero-JS CSS. Themes: `trident-ui`, `trident-ui-light` (the Trident Studio brand), `fleet`, `trident-studio`, `trident-nil`, `trident-ops`, `trident-playbook`, `trident-tools`, `trident-agents`, `wmh-portal`, `wmh-marketing`, `wmh-dark`, `portfolio`, `quorum`, `legacy-aliases` |
+| `tokens.css`, `mobile-contract.css`, `themes/<name>.css`, `styles.css` | Zero-JS CSS. `mobile-contract.css` exports only shared touch/focus/motion tokens; themes: `trident-ui`, `trident-ui-light` (the Trident Studio brand), `fleet`, `trident-studio`, `trident-nil`, `trident-ops`, `trident-playbook`, `trident-tools`, `trident-agents`, `wmh-portal`, `wmh-marketing`, `wmh-dark`, `portfolio`, `quorum`, `legacy-aliases` |
 | `tokens.json`, `tokens.mjs`, `three.mjs` | JS tokens; generated three.js hex ints and Quorum's FALLBACK map |
 | `.` | React components (a11y, layout, type, actions, forms, display, feedback) + utils |
 | `app` | Radix overlays (Dialog, Sheet, ConfirmDialog, Popover, Tooltip, DropdownMenu, ContextMenu), Tabs, CommandPalette (cmdk), DataTable, Pagination, EmptyState, Skeleton. Install the Radix/cmdk peers you use |

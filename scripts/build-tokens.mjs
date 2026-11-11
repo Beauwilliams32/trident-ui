@@ -23,6 +23,20 @@ const tokens = loadTokens()
 mkdirSync(join(dist, 'themes'), { recursive: true })
 
 writeFileSync(join(dist, 'tokens.css'), buildTokensCss(tokens))
+const mobileContract = [
+  '/* @trident/ui — generated mobile interaction contract from tokens.json. */',
+  ':root {',
+  `  --ui-target-touch: ${tokens.component['target-touch']};`,
+  `  --ui-target-game: ${tokens.component['target-game']};`,
+  `  --ui-focus-width: ${tokens.component['focus-width']};`,
+  `  --ui-focus-offset: ${tokens.component['focus-offset']};`,
+  ...['mobile-fast', 'mobile-base', 'mobile-slow'].map((name) =>
+    `  --ui-dur-${name}: ${tokens.motion.duration[name]}ms;`,
+  ),
+  '}',
+  '',
+].join('\n')
+writeFileSync(join(dist, 'mobile-contract.css'), mobileContract)
 writeFileSync(join(dist, 'themes', 'fleet.css'), buildFleetCss(tokens))
 for (const name of Object.keys(tokens.themes)) writeFileSync(join(dist, 'themes', `${name}.css`), buildThemeCss(tokens, name))
 writeFileSync(join(dist, 'themes', 'legacy-aliases.css'), buildLegacyAliasesCss(tokens))
