@@ -38,7 +38,7 @@ describe('spec §3 fleet values', () => {
   it.each([
     ['trident-studio', '#2dd4bf', '#38bdf8'],
     ['trident-nil', '#fbbf24', '#f97316'],
-    ['trident-ops', '#34d399', '#10b981'],
+    ['trident-ops', '#2fd39a', '#0f9f72'],
     ['trident-playbook', '#a78bfa', '#818cf8'],
     ['trident-tools', '#0ea5e9', '#6366f1'],
     ['trident-agents', '#d946ef', '#8b5cf6'],
@@ -70,6 +70,19 @@ describe('spec §3 brand values', () => {
     const r = resolveTheme(tokens, 'quorum')
     expect([r.bg, r['bg-2'], r.ink, r.muted, r['accent-1'], r.warn, r.ok]).toEqual(['#111728', '#0c101c', '#ffffff', '#8793ab', '#8fa3c7', '#f5b83d', '#2fd39a'])
     expect([r['status-live'], r['status-attention'], r['status-ok']]).toEqual(['#8fa3c7', '#f5b83d', '#2fd39a'])
+  })
+  it('trident-ops', () => {
+    const r = resolveTheme(tokens, 'trident-ops')
+    expect([r.bg, r['bg-2'], r.surface, r['surface-raised']]).toEqual(['#0c1a26', '#0e242c', '#0e242c', '#0e242c'])
+    expect([r.glass, r['glass-strong']]).toEqual(['color-mix(in srgb, #0e242c 62%, transparent)', 'color-mix(in srgb, #0e242c 82%, transparent)'])
+    expect([r.line, r['line-strong'], r.ink, r['ink-2'], r.muted]).toEqual(['#113738', '#687688', '#ffffff', '#d2d7e1', '#9aa7bd'])
+    expect([r['accent-1'], r['accent-2'], r['on-accent']]).toEqual(['#2fd39a', '#0f9f72', '#0b0b0d'])
+    expect([r.ok, r.warn, r.danger, r.info]).toEqual(['#2fd39a', '#f5b83d', '#ff6b5e', '#3ba8f0'])
+    expect([r['status-live'], r['status-attention'], r['status-ok'], r['status-error']]).toEqual(['#2fd39a', '#f5b83d', '#2fd39a', '#ff6b5e'])
+    // The fleet type contract still holds for Ops (spec §4); only colour and radius follow the brand.
+    expect(r['font-display']).toContain('Space Grotesk')
+    expect(r['font-body']).toContain('Inter')
+    expect(r['r-lg']).toBe('24px')
   })
 })
 

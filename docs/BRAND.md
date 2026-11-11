@@ -180,7 +180,7 @@ on desktop and 16px on phones) is guidance, not a token: the package's `--ui-gri
 | Brand | Existing name |
 |---|---|
 | space 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 | `--ui-space-1 / 2 / 3 / 4 / 6 / 8 / 12 / 16`. The brand's own numbering differs from ours (brand `--space-5` is 24px, our `--ui-space-5` is 20px), so map by value |
-| radius sm / md / lg / xl / pill = 6 / 10 / 16 / 24 / 999 | `--ui-r-xs / --ui-r-sm / --ui-r / --ui-r-lg / --ui-r-pill` (`--ui-r-lg` is 24px in the studio themes, 22px elsewhere) |
+| radius sm / md / lg / xl / pill = 6 / 10 / 16 / 24 / 999 | `--ui-r-xs / --ui-r-sm / --ui-r / --ui-r-lg / --ui-r-pill` (`--ui-r-lg` is 24px in the studio themes and in Trident Ops, which takes the same `xl` step; 22px elsewhere) |
 | motion fast / base / slow = 160 / 240 / 320 ms | `--ui-dur-fast` (160), `--ui-dur` (240 in the studio themes, 200 elsewhere), `--ui-dur-med` (320) |
 | easing `cubic-bezier(.2,.8,.2,1)` | `--ui-ease` (identical) |
 | shadow raised / overlay | `--ui-shadow-raised`, `--ui-shadow-overlay`, used by `--ui-e2` and `--ui-e3` |

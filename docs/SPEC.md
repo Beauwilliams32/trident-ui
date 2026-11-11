@@ -169,7 +169,7 @@
 |---|---|
 | `trident-studio` (hub) | #2dd4bf → #38bdf8 |
 | `trident-nil` | #fbbf24 → #f97316 |
-| `trident-ops` | #34d399 → #10b981 |
+| `trident-ops` | #2fd39a → #0f9f72 |
 | `trident-playbook` | #a78bfa → #818cf8 |
 | `trident-tools` | #0ea5e9 → #6366f1 |
 | `trident-agents` | #d946ef → #8b5cf6 |
@@ -188,6 +188,17 @@
   - Gold #e8b84a and #c9a84c for eyebrows only.
   - Logo gradient #5d0045 → #210018.
 - **`wmh-dark`:** the portal's dark theme, plus per-client admin accents from `bootstrap.portalTheme`, passed through `ensureContrast`.
+
+### Trident Ops (shipped in the package)
+- **`trident-ops`** (dark, fleet family): the Ops brand rollout palette, on the fleet's shared glass mix, blur, elevation, motion and type contracts.
+  - bg #0c1a26, bg-2 #0e242c, surface #0e242c, surface-raised #0e242c.
+  - glass `color-mix(in srgb, #0e242c 62%, transparent)`, glass-strong 82%.
+  - line #113738, line-strong #687688.
+  - ink #ffffff, ink-2 #d2d7e1, muted #9aa7bd, on-accent #0b0b0d.
+  - accent-1 #2fd39a, accent-2 #0f9f72; accent-text is accent-1.
+  - ok #2fd39a, warn #f5b83d, danger #ff6b5e, info #3ba8f0.
+  - r-lg 24px (the rollout's `xl`; the fleet base is 22px).
+  - Type follows §4 (Fleet, including Ops by default): Space Grotesk / Inter / JetBrains Mono.
 
 ### Portfolio and Quorum (shipped in the package)
 - **`portfolio`:**
@@ -264,7 +275,7 @@ All fonts are self-hosted variable woff2 (latin and latin-ext) with metric-match
 - **Spacing:** 4px base. Steps: 0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128.
 - **Radius:**
   - xs 6 (chips, kbd), sm 10 (inputs, buttons), md 16 (cards), lg 22 (hero panels), pill 999.
-  - Overrides: portfolio 14; Kula 14/8.
+  - Overrides: portfolio 14; Kula 14/8; Trident Ops `lg` 24 (the Ops brand rollout's `xl` step, matching the studio themes).
 - **Elevation, light:**
   - e0: none.
   - e1: `0 1px 2px rgba(15,23,42,.06), 0 0 0 1px var(--ui-line)`.
