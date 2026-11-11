@@ -76,7 +76,7 @@ describe('spec §3 brand values', () => {
 describe('spec §6.2 motion tokens', () => {
   const m = tokens.motion
   it('durations', () =>
-    expect(m.duration).toEqual({ instant: 80, fast: 160, base: 200, page: 260, med: 320, slow: 480, reveal: 600, count: 1100 }))
+    expect(m.duration).toEqual({ instant: 80, fast: 160, 'mobile-fast': 160, 'mobile-base': 240, 'mobile-slow': 320, base: 200, page: 260, med: 320, slow: 480, reveal: 600, count: 1100 }))
   it('easings', () =>
     expect(m.easing).toEqual({
       ease: [0.2, 0.8, 0.2, 1],

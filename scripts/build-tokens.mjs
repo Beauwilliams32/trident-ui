@@ -10,6 +10,7 @@ import {
   THREE_COLOR_TABLE_FILE,
   buildFleetCss,
   buildLegacyAliasesCss,
+  buildMobileContractCss,
   buildThemeCss,
   buildThreeColorTableJson,
   buildThreeModule,
@@ -23,6 +24,7 @@ const tokens = loadTokens()
 mkdirSync(join(dist, 'themes'), { recursive: true })
 
 writeFileSync(join(dist, 'tokens.css'), buildTokensCss(tokens))
+writeFileSync(join(dist, 'mobile-contract.css'), buildMobileContractCss(tokens))
 writeFileSync(join(dist, 'themes', 'fleet.css'), buildFleetCss(tokens))
 for (const name of Object.keys(tokens.themes)) writeFileSync(join(dist, 'themes', `${name}.css`), buildThemeCss(tokens, name))
 writeFileSync(join(dist, 'themes', 'legacy-aliases.css'), buildLegacyAliasesCss(tokens))

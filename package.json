@@ -65,6 +65,7 @@
       "import": "./dist/three.js"
     },
     "./tokens.css": "./dist/tokens.css",
+    "./mobile-contract.css": "./dist/mobile-contract.css",
     "./styles.css": "./dist/styles.css",
     "./themes/*": "./dist/themes/*",
     "./tokens.json": "./dist/tokens.json",

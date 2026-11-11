@@ -308,6 +308,9 @@ Every value is also exported as a JS constant, so R3F damping reads the same num
 |---|---|---|
 | `--ui-dur-instant` | 80ms | |
 | `--ui-dur-fast` | 160ms | hover and focus |
+| `--ui-dur-mobile-fast` | 160ms | mobile control feedback |
+| `--ui-dur-mobile-base` | 240ms | mobile state transitions |
+| `--ui-dur-mobile-slow` | 320ms | mobile cards and sheets |
 | `--ui-dur` | 200ms | controls |
 | `--ui-dur-page` | 260ms | routes and tabs |
 | `--ui-dur-med` | 320ms | cards and sheets |
@@ -561,7 +564,7 @@ Each scene is decorative, sits beside or behind a **text H1**, and is never the 
 
   `ensureContrast` handles runtime accents. Pairs already tuned are kept (NIL status-closed 6.95:1, Ops' #6b7280 replacement).
 - **Focus:** always visible, never removed. Not hidden by the sticky nav (2.4.11), via `scroll-padding-top`.
-- **Target size:** at least 24×24 (2.5.8), and 44px for primary actions on touch.
+- **Target size:** at least 24×24 (2.5.8), and 44px for actions on touch. Use the `ui-btn--game-control` modifier for a visible 48px game control; keep game labels, HUDs and input methods specific to each title.
 - **Dragging:** every drag has an alternative (2.5.7).
 - **Keyboard:** Radix and cmdk handle keyboard paths. Escape closes overlays and returns focus.
 - **Structure:** one h1 per page, no skipped levels, a skip link, landmarks, `lang`, and alt text on every image.

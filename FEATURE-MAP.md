@@ -3,6 +3,8 @@
 | Feature | Where | Tested | Test file |
 |---|---|---|---|
 | tokens.json single source -> tokens.css / themes / tokens.mjs / three.mjs | `tokens.json`, `scripts/lib/tokens.mjs`, `scripts/build-tokens.mjs` | yes | `test/tokens.test.ts` |
+| Shared mobile interaction contract: generated `dist/mobile-contract.css` exporting the touch (44px), game (48px), focus (2px/2px) and mobile motion (160/240/320ms) tokens, carrying no brand colour so each surface keeps its own identity | `tokens.json`, `scripts/lib/tokens.mjs#buildMobileContractCss`, `scripts/build-tokens.mjs` | yes | `src/actions/actions.test.tsx` |
+| `gameControl` prop on Button / LinkButton / IconButton: the `ui-btn--game-control` modifier gives a visible 48px action target for game and high-precision touch controls | `src/actions/Button.tsx`, `src/actions/styles.css`, `tokens.json#component` | yes | `src/actions/actions.test.tsx` |
 | Spec §3 theme values (fleet + 6 accents, wmh-*, portfolio, quorum, trident-ui and trident-ui-light) | `tokens.json` | yes | `test/tokens.test.ts`, `test/contrast-matrix.test.ts` |
 | Contrast matrix, every theme and palette x §9 pairs | `tokens.json#contrast` | yes | `test/contrast-matrix.test.ts` |
 | `ensureContrast` / `accentVars` runtime accents | `src/utils/contrast.ts` | yes | `test/ensure-contrast.test.ts` |

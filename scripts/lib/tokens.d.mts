@@ -24,6 +24,8 @@ export declare function cssRoleValue(tokens: Tokens, raw: string): string
 export declare function globalDecls(tokens: Tokens): string[]
 export declare function semanticDecls(tokens: Tokens, name: string, opts?: { palette?: string }): string[]
 export declare function buildTokensCss(tokens: Tokens): string
+export declare const MOBILE_CONTRACT_DURATIONS: string[]
+export declare function buildMobileContractCss(tokens: Tokens): string
 export declare function buildThemeCss(tokens: Tokens, name: string): string
 export declare function buildFleetCss(tokens: Tokens): string
 export declare function buildLegacyAliasesCss(tokens: Tokens): string

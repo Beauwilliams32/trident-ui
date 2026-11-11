@@ -20,12 +20,14 @@ export interface ButtonStyleOptions {
   size?: ButtonSize
   fullWidth?: boolean
   iconOnly?: boolean
+  /** Uses the visible 48px minimum target for game controls. */
+  gameControl?: boolean
   className?: string
 }
 
 /** The class list a Button renders. Exported so server templates without React can match it. */
-export function buttonClassName({ variant = 'primary', size = 'md', fullWidth, iconOnly, className }: ButtonStyleOptions = {}): string {
-  return cx('ui-btn', `ui-btn--${variant}`, `ui-btn--${size}`, fullWidth && 'ui-btn--block', iconOnly && 'ui-btn--icon', className)
+export function buttonClassName({ variant = 'primary', size = 'md', fullWidth, iconOnly, gameControl, className }: ButtonStyleOptions = {}): string {
+  return cx('ui-btn', `ui-btn--${variant}`, `ui-btn--${size}`, fullWidth && 'ui-btn--block', iconOnly && 'ui-btn--icon', gameControl && 'ui-btn--game-control', className)
 }
 
 function Icon({ icon: IconComponent, size }: { icon: LucideIcon; size: number }) {
@@ -43,6 +45,8 @@ function Spinner({ size }: { size: number }) {
 interface CommonProps {
   variant?: ButtonVariant
   size?: ButtonSize
+  /** Use the shared visible 48px target for a game action. */
+  gameControl?: boolean
   /** Leading lucide-react icon (decorative; always aria-hidden). */
   icon?: LucideIcon
   /** Trailing lucide-react icon (decorative; always aria-hidden). */
@@ -69,6 +73,7 @@ export interface ButtonProps extends CommonProps, Omit<ButtonHTMLAttributes<HTML
 export function Button({
   variant = 'primary',
   size = 'md',
+  gameControl = false,
   icon,
   iconEnd,
   fullWidth,
@@ -97,7 +102,7 @@ export function Button({
       {...rest}
       ref={ref}
       type={type}
-      className={buttonClassName({ variant, size, fullWidth, className })}
+      className={buttonClassName({ variant, size, fullWidth, gameControl, className })}
       onClick={handleClick}
       aria-disabled={blocked ? true : rest['aria-disabled']}
       aria-busy={loading || undefined}
@@ -121,11 +126,11 @@ export interface LinkButtonProps extends CommonProps, AnchorHTMLAttributes<HTMLA
 }
 
 /** An `<a href>` styled as a button. Use for navigation; use Button for actions. */
-export function LinkButton({ variant = 'primary', size = 'md', icon, iconEnd, fullWidth, className, children, target, rel, ref, ...rest }: LinkButtonProps) {
+export function LinkButton({ variant = 'primary', size = 'md', icon, iconEnd, fullWidth, gameControl = false, className, children, target, rel, ref, ...rest }: LinkButtonProps) {
   const iconSize = ICON_SIZE[size]
   const safeRel = target === '_blank' && rel === undefined ? 'noopener noreferrer' : rel
   return (
-    <a {...rest} ref={ref} target={target} rel={safeRel} className={buttonClassName({ variant, size, fullWidth, className })}>
+    <a {...rest} ref={ref} target={target} rel={safeRel} className={buttonClassName({ variant, size, fullWidth, gameControl, className })}>
       <span className="ui-btn__label">
         {icon ? <Icon icon={icon} size={iconSize} /> : null}
         {children}
@@ -146,7 +151,7 @@ export interface IconButtonProps extends Omit<ButtonProps, 'icon' | 'iconEnd' | 
 }
 
 /** A square, icon-only button. `aria-label` is required by the type and checked at runtime in dev. */
-export function IconButton({ icon, size = 'md', variant = 'ghost', loading = false, type = 'button', className, onClick, ref, ...rest }: IconButtonProps) {
+export function IconButton({ icon, size = 'md', variant = 'ghost', gameControl = false, loading = false, type = 'button', className, onClick, ref, ...rest }: IconButtonProps) {
   if (!rest['aria-label'] || rest['aria-label'].trim() === '') {
     devWarn('IconButton requires a non-empty aria-label.')
   }
@@ -166,7 +171,7 @@ export function IconButton({ icon, size = 'md', variant = 'ghost', loading = fal
       {...rest}
       ref={ref}
       type={type}
-      className={buttonClassName({ variant, size, iconOnly: true, className })}
+      className={buttonClassName({ variant, size, iconOnly: true, gameControl, className })}
       onClick={handleClick}
       aria-disabled={blocked ? true : rest['aria-disabled']}
       aria-busy={loading || undefined}
