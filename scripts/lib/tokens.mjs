@@ -265,6 +265,28 @@ function highContrastBlock(tokens, name, selectors) {
 
 export const DEFAULT_THEME = 'trident-studio'
 
+/**
+ * The shared mobile interaction contract (spec §6.2): touch and focus sizing plus the three
+ * mobile motion durations. It is a contract, not a palette — no brand colour is emitted, so a
+ * product surface can adopt the shared interaction behaviour and keep its own identity.
+ */
+export const MOBILE_CONTRACT_DURATIONS = ['mobile-fast', 'mobile-base', 'mobile-slow']
+
+export function buildMobileContractCss(tokens) {
+  return [
+    HEADER,
+    '/* @trident/ui — generated mobile interaction contract from tokens.json. */',
+    ':root {',
+    `  --ui-target-touch: ${tokens.component['target-touch']};`,
+    `  --ui-target-game: ${tokens.component['target-game']};`,
+    `  --ui-focus-width: ${tokens.component['focus-width']};`,
+    `  --ui-focus-offset: ${tokens.component['focus-offset']};`,
+    ...MOBILE_CONTRACT_DURATIONS.map((name) => `  --ui-dur-${name}: ${tokens.motion.duration[name]}ms;`),
+    '}',
+    '',
+  ].join('\n')
+}
+
 export function buildTokensCss(tokens) {
   return [
     HEADER,

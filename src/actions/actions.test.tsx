@@ -1,10 +1,12 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 // eslint-disable-next-line no-restricted-imports -- test-only: prove the markup works with no JS.
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Plus, Settings } from 'lucide-react'
 import { axe } from 'vitest-axe'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { HEX_RE, loadTokens, resolveTheme, themeVariants } from '../../scripts/lib/tokens.mjs'
+import { HEX_RE, ROOT, buildMobileContractCss, loadTokens, resolveTheme, themeVariants } from '../../scripts/lib/tokens.mjs'
 import { contrastRatio, mix, parseHex, toHex } from '../utils/contrast'
 import * as root from '../index'
 import { BUTTON_HEIGHTS, Button, IconButton, LinkButton, buttonClassName, type ButtonSize, type ButtonVariant } from './index'
@@ -122,6 +124,61 @@ describe('Button', () => {
 
   it('buttonClassName matches for non-React templates', () => {
     expect(buttonClassName({ variant: 'ghost', size: 'lg', fullWidth: true, className: 'x' })).toBe('ui-btn ui-btn--ghost ui-btn--lg ui-btn--block x')
+  })
+})
+
+describe('gameControl (spec §6.2 target size, 48px game action)', () => {
+  it('the target-game token is 48px and larger than the 44px touch target', () => {
+    const c = loadTokens().component
+    expect(c['target-game']).toBe('48px')
+    expect(parseInt(c['target-game']!)).toBeGreaterThan(parseInt(c['target-touch']!))
+  })
+
+  it('adds the game-control modifier to the class list', () => {
+    expect(buttonClassName({ variant: 'primary', size: 'md', gameControl: true })).toBe('ui-btn ui-btn--primary ui-btn--md ui-btn--game-control')
+  })
+
+  it('renders the modifier on Button, LinkButton and IconButton', () => {
+    const { unmount } = render(
+      <Button gameControl>Resume</Button>,
+    )
+    expect(screen.getByRole('button', { name: 'Resume' }).className).toContain('ui-btn--game-control')
+    unmount()
+
+    render(<LinkButton gameControl href="/resume">Resume</LinkButton>)
+    expect(screen.getByRole('link', { name: 'Resume' }).className).toContain('ui-btn--game-control')
+  })
+
+  it('the modifier drives the visible hit shape from the token', () => {
+    const css = readFileSync(join(ROOT, 'src/actions/styles.css'), 'utf8')
+    const rule = css.slice(css.indexOf('.ui-btn--game-control'))
+    expect(rule).toContain('--_ui-btn-h: var(--ui-target-game);')
+    expect(rule).toContain('min-width: var(--ui-target-game);')
+    expect(rule).toContain('min-height: var(--ui-target-game);')
+  })
+})
+
+describe('generated mobile interaction contract (buildMobileContractCss)', () => {
+  it('exports only the shared touch, focus and mobile motion tokens', () => {
+    const css = buildMobileContractCss(loadTokens())
+    expect(css).toContain('--ui-target-touch: 44px;')
+    expect(css).toContain('--ui-target-game: 48px;')
+    expect(css).toContain('--ui-focus-width: 2px;')
+    expect(css).toContain('--ui-focus-offset: 2px;')
+    expect(css).toContain('--ui-dur-mobile-fast: 160ms;')
+    expect(css).toContain('--ui-dur-mobile-base: 240ms;')
+    expect(css).toContain('--ui-dur-mobile-slow: 320ms;')
+  })
+
+  it('carries no brand colour — it is a contract, not a palette', () => {
+    const css = buildMobileContractCss(loadTokens())
+    expect(css).not.toMatch(/#[0-9a-f]{6}/i)
+    expect(css).not.toMatch(/--ui-(accent|ink|surface|bg)\b/)
+  })
+
+  it('the build script writes that same CSS to dist/mobile-contract.css', () => {
+    const script = readFileSync(join(ROOT, 'scripts/build-tokens.mjs'), 'utf8')
+    expect(script).toContain("writeFileSync(join(dist, 'mobile-contract.css'), buildMobileContractCss(tokens))")
   })
 })
 
