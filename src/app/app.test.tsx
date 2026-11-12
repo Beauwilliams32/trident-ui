@@ -237,6 +237,7 @@ interface Row {
   plan: string
   mrr: number
 }
+/** Fictional sample rows, matching the sample clients used in the gallery (src/app/app.gallery.tsx). */
 const ROWS: Row[] = [
   { name: 'Harbor Coffee', plan: 'Studio', mrr: 120 },
   { name: 'North Gym', plan: 'Starter', mrr: 49 },

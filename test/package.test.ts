@@ -9,6 +9,9 @@ const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
 describe('package.json', () => {
   it('is @trident/ui, ESM, CSS-only side effects', () => {
     expect(pkg.name).toBe('@trident/ui')
+    expect(pkg.license).toBe('MIT')
+    expect(readFileSync(join(ROOT, 'LICENSE'), 'utf8')).toContain('MIT License')
+    expect(pkg.private).toBe(true) // visibility stays gated until history sanitation is verified
     expect(pkg.type).toBe('module')
     expect(pkg.sideEffects).toEqual(['*.css'])
     expect(pkg.scripts.prepublish).toBeUndefined()

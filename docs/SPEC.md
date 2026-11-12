@@ -74,9 +74,9 @@
 
 ## 1. Packaging
 
-- **Repo:** `Beauwilliams32/trident-ui`. The superproject ignores it, as it ignores `trident-social`. Public, MIT.
+- **Repo:** `Beauwilliams32/trident-ui`. MIT-licensed and public. Client-brand themes live in their own repositories, not this package.
 - **Build:** Vite 8 library mode plus tsup, producing ESM and `.d.ts`. `sideEffects: ["*.css"]`. No CSS-in-JS runtime.
-- **Install:** `"@trident/ui": "github:Beauwilliams32/trident-ui#v0.x.y"`. `dist/` is committed on the tag, and there is no `prepare` script, so an install is just a tarball fetch.
+- **Install:** `"@trident/ui": "github:Beauwilliams32/trident-ui#v0.x.y"`. Use `npm install --allow-git=all github:Beauwilliams32/trident-ui#v0.x.y` (also for a manifest dependency, pass `--allow-git=all` to `npm install`/`npm ci`). npm 12 defaults to `allow-git=none` and fails with `EALLOWGIT` without an override; `root` also works on npm 12.0.2 and npm 11.20.0 but not npm 11.12.0. `dist/` is committed on the tag and no preparation script runs.
 - **Releases** are tagged only from CI or a clean `main`. A `dist-matches-source` check (rebuild, then diff) blocks the tag. Changes are recorded with Changesets.
   - Any change that affects contrast is a **major** bump.
   - A new theme is minor.

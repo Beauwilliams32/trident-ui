@@ -4,13 +4,13 @@ Every consuming repo keeps a one-line `DESIGN-VERSION` file at its root holding 
 tag it is built against, e.g.
 
 ```
-v0.1.0
+v0.2.0
 ```
 
 and pins the dependency to the same tag:
 
 ```json
-"@trident/ui": "github:Beauwilliams32/trident-ui#v0.1.0"
+"@trident/ui": "github:Beauwilliams32/trident-ui#v0.2.0"
 ```
 
 Rules:
@@ -39,4 +39,4 @@ Rules:
    `trident-ui-tokens.json` with a sha256 per file. A hash test in the repo compares its copies to
    that manifest (the `test/motion-system.test.js` pattern), so hand edits to synced CSS fail.
 
-Only tags from CI or a clean `main` are valid pins; `npm run check:dist` must pass on the tag.
+Only tags from CI or a clean `main` are valid pins; `npm run check:dist` must pass on the tag. npm 12 requires an explicit Git dependency policy: run `npm install --allow-git=all` (or `npm ci --allow-git=all`) for the pinned manifest dependency. The same setting works on npm 11; `allow-git=root` is supported in npm 12.0.2 and npm 11.20.0, but fails in npm 11.12.0.

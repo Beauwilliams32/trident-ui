@@ -14,3 +14,15 @@ gallery/dist/
 test-results/
 playwright-report/
 blob-report/
+
+# Local secrets and credential material. None of these are tracked today; they are ignored so a
+# local file can never be committed by accident.
+.npmrc
+.netrc
+*.pem
+*.key
+*.p12
+*.pfx
+.dev.vars
+.wrangler/
+.vercel/

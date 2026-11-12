@@ -12,14 +12,15 @@ Trident Studio fleet, Williams Media, the portfolio and Quorum. The contract is
 [`docs/SPEC.md`](docs/SPEC.md); differences are in [`docs/DEVIATIONS.md`](docs/DEVIATIONS.md). The
 brand (tile, colour, type, voice) is the Trident Studio brand system: [`docs/BRAND.md`](docs/BRAND.md).
 
-> Public repo. Client themes (Kula, Corner Bar, Filippa) live in the
-> client repos and build on the token contract; they are not here.
+> This repository is published under the MIT license as a public Git dependency. Client-brand themes live in their own repositories, not in this package.
 
 ## Install
 
 ```json
 "@trident/ui": "github:Beauwilliams32/trident-ui#v0.x.y"
 ```
+
+Install a released tag with `npm install --allow-git=all github:Beauwilliams32/trident-ui#v0.x.y`. npm 12 defaults to `allow-git=none` and otherwise returns `EALLOWGIT`; the flag is also compatible with npm 11. On npm 12.0.2 and 11.20.0, `--allow-git=root` is a narrower option; npm 11.12.0 rejects `root`.
 
 `dist/` is committed on release tags only, and no script is named `prepare`, `prepack`, `build`,
 `install`, `preinstall` or `postinstall` (npm prepares a git dependency that has any of them, which

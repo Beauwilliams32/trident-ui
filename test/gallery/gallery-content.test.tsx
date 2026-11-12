@@ -83,6 +83,6 @@ describe('G3: the install snippet', () => {
   it('names the package.json version', () => {
     const type = examplesOf(modules['../../src/type/type.gallery.tsx']!).find((e) => e.id === 'mono-code-kbd')!
     const { container } = render(<>{type.render()}</>)
-    expect(container.querySelector('.ui-code-block')!.textContent).toBe(`npm install github:Beauwilliams32/trident-ui#v${pkg.version}`)
+    expect(container.querySelector('.ui-code-block')!.textContent).toBe(`npm install --allow-git=all github:Beauwilliams32/trident-ui#v${pkg.version}`)
   })
 })

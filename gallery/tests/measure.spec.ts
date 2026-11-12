@@ -235,7 +235,7 @@ test.describe('navigation and chrome', () => {
   test('G3 the install snippet names the package.json version and scrolls instead of wrapping', async ({ page }) => {
     await openGallery(page, 'fleet', 'reduced', 360)
     const block = page.locator('#ex-type-mono-code-kbd .g-body .ui-code-block')
-    await expect(block).toHaveText(`npm install github:Beauwilliams32/trident-ui#v${pkg.version}`)
+    await expect(block).toHaveText(`npm install --allow-git=all github:Beauwilliams32/trident-ui#v${pkg.version}`)
     const m = await block.evaluate((el) => ({ ws: getComputedStyle(el).whiteSpace, ox: getComputedStyle(el).overflowX, lines: Math.round(el.querySelector('code')!.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight)) }))
     expect(m).toEqual({ ws: 'pre', ox: 'auto', lines: 1 })
   })

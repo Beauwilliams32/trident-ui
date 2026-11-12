@@ -73,7 +73,7 @@ export const examples: GalleryExample[] = [
         <Text>
           Run <Code>npm run check</Code>, then press <Kbd keys={['Ctrl', 'K']} /> or <Kbd>Esc</Kbd>.
         </Text>
-        <CodeSample label="Install command" language="shell" code={`npm install github:Beauwilliams32/trident-ui#v${pkg.version}`} />
+        <CodeSample label="Install command" language="shell" code={`npm install --allow-git=all github:Beauwilliams32/trident-ui#v${pkg.version}`} />
       </div>
     ),
   },

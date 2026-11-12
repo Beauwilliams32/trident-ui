@@ -22,6 +22,8 @@ Two different mechanisms are in use, so "behind" means two different things:
 
 ## The table
 
+Detailed migration plans are held outside this repository; this package audit lists only consumer mechanisms, pins, and evidence.
+
 | Consumer | Mechanism | Pin | State | Planning | Evidence read |
 |---|---|---|---|---|---|
 | `localops-ai-saas` (Trident Ops) | **Package**, vendored tarball: `devDependencies["@trident/ui"] = "file:vendor/trident-ui-0.2.0.tgz"` plus a `DESIGN-VERSION` file | `v0.2.0` | **Current** — the pin is the newest tag (bumped 2026-10-26, `9675b9b`); it also vendors `src/frontend/trident-glass.css` byte-identical to the canonical file | n/a | `localops-ai-saas/package.json`, `DESIGN-VERSION`, `vendor/README.md`, `src/frontend/trident-glass.css` |
@@ -31,7 +33,7 @@ Two different mechanisms are in use, so "behind" means two different things:
 | `nil-platform` (Trident NIL) | **CSS, inlined**: copy inside `src/ui.js` (comment names the canonical file); no dependency | **none — unknown** | **Unknown** for the same reason as Playbook | n/a | `nil-platform/src/ui.js` lines 8, 789 |
 | `williams-media-portal` | **Own design system**: `src/public/ds.css`; no `@trident/ui`, no glass copy | none | **Own system** — not a consumer today; adoption is a separate planning task | n/a | `williams-media-portal/package.json` (no entry), `src/public/ds.css` |
 | `beau-portfolio` | **Own tokens**, merged: `public/styles.css` says "liquid-glass tokens (merged from trident-glass.css — surface + motion only)" | none | **Own system, partly derived** — surface + motion inherited, not tracked by hash | n/a | `beau-portfolio/public/styles.css` line 108 |
-| `quorum` (cockpit) | **Own palette**: `public/tokens.css` is "the one palette" with `public/theme.js` as the runtime bridge; no dependency yet | none | **Own system**; the planned React rewrite pins `@trident/ui` to a **git tag** at P0 | n/a | `quorum/package.json` (no entry), `public/tokens.css`, `public/theme.js` |
+| `quorum` (cockpit) | **Own palette**: `public/tokens.css` is "the one palette" with `public/theme.js` as the runtime bridge; no dependency yet | none | **Own system**; a planned React rewrite pins `@trident/ui` to a **git tag** at P0 | n/a | `quorum/package.json` (no entry), `public/tokens.css`, `public/theme.js` |
 | `trident-identity` | **Own palette**: `src/theme.js` `PALETTES`, moved onto the studio brand pair on 2026-10-26; no dependency | none | **Own system** (brand-migrated 2026-10-26) | n/a | `trident-identity/src/theme.js`, `package.json` (no entry) |
 
 ## What this audit deliberately does not say
