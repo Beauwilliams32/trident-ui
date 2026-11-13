@@ -13,11 +13,17 @@ Nothing here changes a consumer. Every cell was read from the file named in the 
 Two different mechanisms are in use, so "behind" means two different things:
 
 - **Package consumers** pin a tag (`@trident/ui` + a `DESIGN-VERSION` file). Current = the pin equals
-  the newest release tag. The newest tag is **`v0.2.0`**: annotated tag object
+  the newest release tag. The newest tag is **`v1.0.0`**: annotated tag object
+  `b6879b3fcb1c14d341adbff3cb34f99a89d3dbf0` peels to release commit
+  `3e01d740e6fbafc28b90653c8fd242b8a753caa9`. Its tagger timestamp is
+  **2026-11-12 20:18:17 -0700**; this is the tag date, not an independently verified
+  publication date. The previous release is **`v0.2.0`**: annotated tag object
   `25efa3aa1a9baeb9edf968008c7add1525ae6878` peels to release commit
-  `108a888a6b300e43bb87d0beb2e4b00a9255c843`. Its tagger timestamp is
-  **2026-10-24 04:15:02 -0600**; this is the tag date, not an independently verified
-  publication date. `main` also has later, unreleased changes.
+  `108a888a6b300e43bb87d0beb2e4b00a9255c843`, tagger timestamp
+  **2026-10-24 04:15:02 -0600** — likewise a tag date, not an independently verified publication
+  date. `main` is behind `v1.0.0`: the tag's release commits are not yet on `main`, so a
+  consumer can resolve the tag but cannot read it from `main`. This audit records pins as
+  observed on 2026-10-27, not a claim that any consumer has migrated.
 - **CSS/theme consumers** do not consume the package at all. They either vendor the canonical
   `trident-social/design/trident-glass.css` (sha256 `a2228fe11b12…`) or carry their own token file.
   Current = the copy is byte-identical to the canonical file; a product with its own tokens is
@@ -29,7 +35,7 @@ Detailed migration plans are held outside this repository; this package audit li
 
 | Consumer | Mechanism | Pin | State | Planning | Evidence read |
 |---|---|---|---|---|---|
-| `localops-ai-saas` (Trident Ops) | **Package**, vendored tarball: `devDependencies["@trident/ui"] = "file:vendor/trident-ui-0.2.0.tgz"` plus a `DESIGN-VERSION` file | `v0.2.0` | **Current** — the pin is the newest tag (bumped 2026-10-26, `9675b9b`); it also vendors `src/frontend/trident-glass.css` byte-identical to the canonical file | n/a | `localops-ai-saas/package.json`, `DESIGN-VERSION`, `vendor/README.md`, `src/frontend/trident-glass.css` |
+| `localops-ai-saas` (Trident Ops) | **Package**, vendored tarball: `devDependencies["@trident/ui"] = "file:vendor/trident-ui-0.2.0.tgz"` plus a `DESIGN-VERSION` file | `v0.2.0` | **Behind `v1.0.0`** — as observed on 2026-10-27 this pin was the newest tag (bumped 2026-10-24, `9675b9b`), but `v1.0.0` has since been published, so the pin now trails the newest tag. It also vendors `src/frontend/trident-glass.css` byte-identical to the canonical file | n/a | `localops-ai-saas/package.json`, `DESIGN-VERSION`, `vendor/README.md`, `src/frontend/trident-glass.css` |
 | `trident-social` (studio hub) | **CSS**, canonical: `design/trident-glass.css`, copied to `public/assets/trident-glass.css`; no `@trident/ui` dependency | none (it *is* the source of truth) | **Current by definition** — every other vendored copy is compared to this file | n/a | `trident-social/design/trident-glass.css` (sha `a2228fe1…`), `public/assets/trident-glass.css` (same) |
 | `trident-tools` | **CSS**, two vendored copies: `public/assets/trident-glass.css` and `apps/mac/src/assets/trident-glass.css`; no dependency | none | **Current** — both copies byte-identical to the canonical file (the repo also has its own site layer, `public/assets/trident-tools.css`, for tool-only rules) | n/a | both files (sha `a2228fe1…`) |
 | `trident-playbook` | **CSS, inlined**: a copy of `trident-glass.css` lives inside `src/worker.js` (its comment names `trident-social/design/trident-glass.css` as canonical); no dependency | **none — unknown** | **Unknown**: an inlined copy has no hash to compare, so drift is not measurable from outside. Treat it as "not tracked by this audit" rather than current | n/a | `trident-playbook/src/worker.js` lines 14–17 |
