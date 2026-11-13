@@ -1,0 +1,3348 @@
+/* @trident/ui — GENERATED from src/<group>/styles.css by scripts/build-styles.mjs. Do not edit. */
+/* --- src/styles/base.css --- */
+/* ------------------------------------------------------------------
+   @trident/ui base layer (foundation-owned). Reads only --ui-* tokens.
+   Group CSS (src/<group>/styles.css) is appended after this file.
+   Class prefix: .ui-  |  State attributes: data-*  |  No CSS-in-JS.
+   ------------------------------------------------------------------ */
+
+@layer ui-base, ui-components, ui-utilities;
+
+@layer ui-base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* 2.4.11: focus is never hidden by the sticky nav. */
+    scroll-padding-top: calc(var(--ui-nav-h) + var(--ui-space-4));
+  }
+
+  body {
+    margin: 0;
+    background: var(--ui-bg);
+    color: var(--ui-ink);
+    font-family: var(--ui-font-body);
+    font-size: var(--ui-text-base);
+    line-height: var(--ui-leading-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus ring (spec §7 FocusRing): 2px --ui-focus + 2px offset, never animated away. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: var(--ui-focus-width) solid var(--ui-focus);
+    outline-offset: var(--ui-focus-offset);
+  }
+
+  @media (forced-colors: active) {
+    :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--ui-accent-1) 35%, transparent);
+    color: var(--ui-ink);
+  }
+}
+
+@layer ui-utilities {
+  /* VisuallyHidden: present for assistive tech, invisible on screen. */
+  .ui-visually-hidden:not(:focus):not(:active) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .ui-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Reveal (spec §0.2, §6.3 rule 10): content hides ONLY when all of
+   html.ui-motion, scripting enabled, no reduced-motion preference, and
+   motion not paused. A 2.5s CSS failsafe reveals it if JS never arrives.
+   ------------------------------------------------------------------ */
+@keyframes ui-reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  html.ui-motion:not([data-motion='paused']) [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(var(--ui-reveal-distance));
+    animation: ui-reveal-failsafe 0s 2.5s forwards;
+  }
+
+  html.ui-motion:not([data-motion='paused']) [data-reveal] {
+    transition:
+      opacity var(--ui-dur-reveal) var(--ui-ease-emph),
+      transform var(--ui-dur-reveal) var(--ui-ease-emph);
+    transition-delay: calc(min(var(--i, 0), var(--ui-stagger-max)) * var(--ui-stagger));
+  }
+}
+
+/* ------------------------------------------------------------------
+   Global motion kill switch (spec §6.4). The ONLY place !important is
+   allowed in this package. Reduced motion or html[data-motion=paused]:
+   durations collapse, loops stop, reveals show immediately.
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-motion='paused'] *,
+html[data-motion='paused'] *::before,
+html[data-motion='paused'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* --- src/a11y/styles.css --- */
+@layer ui-components {
+/* a11y group: SkipLink, FocusRing. VisuallyHidden's class lives in src/styles/base.css. */
+
+/* SkipLink (WCAG 2.4.1): off screen until focused, then above the sticky nav. No transition. */
+.ui-skip-link {
+  position: absolute;
+  inset-block-start: var(--ui-space-2);
+  inset-inline-start: var(--ui-space-2);
+  z-index: 2147483000;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--ui-target-touch);
+  padding: var(--ui-space-2) var(--ui-space-4);
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-base);
+  font-weight: var(--ui-weight-display);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  box-shadow: var(--ui-e3);
+}
+
+.ui-skip-link:not(:focus):not(:focus-visible) {
+  clip-path: inset(50%);
+  inline-size: 1px;
+  block-size: 1px;
+  min-block-size: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* FocusRing: 2px --ui-focus + 2px offset; never animated away (spec §6.3 rule 8). */
+.ui-focus-ring:focus-visible,
+.ui-focus-ring-within:has(:focus-visible) {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: var(--ui-focus-offset);
+  transition: none;
+}
+
+.ui-focus-ring[data-focus-inset]:focus-visible,
+.ui-focus-ring-within[data-focus-inset]:has(:focus-visible) {
+  outline-offset: calc(-1 * var(--ui-focus-width) - 1px);
+}
+
+@media (forced-colors: active) {
+  .ui-focus-ring:focus-visible,
+  .ui-focus-ring-within:has(:focus-visible) {
+    outline-color: Highlight;
+  }
+
+  .ui-skip-link {
+    border-color: CanvasText;
+  }
+}
+
+}
+/* --- src/layout/styles.css --- */
+@layer ui-components {
+/* layout group: Container, Stack, Cluster, Grid, Section (spec §5). Classes only, no inline styles. */
+
+/* Container: content width + fluid gutter (at least 16px at phone width). */
+.ui-container {
+  inline-size: 100%;
+  max-inline-size: calc(var(--ui-container-max) + 2 * var(--ui-grid-gutter));
+  margin-inline: auto;
+  padding-inline: max(var(--ui-grid-gutter), var(--ui-grid-gutter-min));
+}
+
+.ui-container-marketing {
+  --ui-container-max: var(--ui-grid-content-marketing);
+}
+
+.ui-container-app {
+  --ui-container-max: var(--ui-grid-content-app);
+}
+
+.ui-container-prose {
+  --ui-container-max: var(--ui-measure);
+}
+
+.ui-container-full {
+  max-inline-size: none;
+}
+
+/* Stack and Cluster. */
+.ui-stack {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+:where(ul, ol).ui-stack,
+:where(ul, ol).ui-cluster {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  min-inline-size: 0;
+}
+
+.ui-cluster.ui-nowrap {
+  flex-wrap: nowrap;
+}
+
+.ui-align-start {
+  align-items: flex-start;
+}
+
+.ui-align-center {
+  align-items: center;
+}
+
+.ui-align-end {
+  align-items: flex-end;
+}
+
+.ui-align-baseline {
+  align-items: baseline;
+}
+
+.ui-align-stretch {
+  align-items: stretch;
+}
+
+.ui-justify-start {
+  justify-content: flex-start;
+}
+
+.ui-justify-center {
+  justify-content: center;
+}
+
+.ui-justify-end {
+  justify-content: flex-end;
+}
+
+.ui-justify-between {
+  justify-content: space-between;
+}
+
+/* Gap steps (spec §5 spacing scale). */
+.ui-gap-0 {
+  gap: var(--ui-space-0);
+}
+.ui-gap-0-5 {
+  gap: var(--ui-space-0-5);
+}
+.ui-gap-1 {
+  gap: var(--ui-space-1);
+}
+.ui-gap-1-5 {
+  gap: var(--ui-space-1-5);
+}
+.ui-gap-2 {
+  gap: var(--ui-space-2);
+}
+.ui-gap-3 {
+  gap: var(--ui-space-3);
+}
+.ui-gap-4 {
+  gap: var(--ui-space-4);
+}
+.ui-gap-5 {
+  gap: var(--ui-space-5);
+}
+.ui-gap-6 {
+  gap: var(--ui-space-6);
+}
+.ui-gap-8 {
+  gap: var(--ui-space-8);
+}
+.ui-gap-10 {
+  gap: var(--ui-space-10);
+}
+.ui-gap-12 {
+  gap: var(--ui-space-12);
+}
+.ui-gap-16 {
+  gap: var(--ui-space-16);
+}
+.ui-gap-20 {
+  gap: var(--ui-space-20);
+}
+.ui-gap-24 {
+  gap: var(--ui-space-24);
+}
+.ui-gap-32 {
+  gap: var(--ui-space-32);
+}
+
+/* Grid. */
+.ui-grid {
+  display: grid;
+  min-inline-size: 0;
+}
+
+.ui-grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.ui-grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ui-grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.ui-grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.ui-grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.ui-grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.ui-grid-cols-7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.ui-grid-cols-8 {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+.ui-grid-cols-9 {
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+.ui-grid-cols-10 {
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+.ui-grid-cols-11 {
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+.ui-grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.ui-grid-min-xs {
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+}
+.ui-grid-min-sm {
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+}
+.ui-grid-min-md {
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+}
+.ui-grid-min-lg {
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+}
+
+@media (max-width: 767.98px) {
+  .ui-grid-collapse {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Section bands. */
+.ui-section {
+  display: block;
+}
+
+.ui-section-none {
+  padding-block: 0;
+}
+
+.ui-section-sm {
+  padding-block: var(--ui-space-8);
+}
+
+.ui-section-md {
+  padding-block: clamp(var(--ui-space-12), 8vw, var(--ui-space-20));
+}
+
+.ui-section-lg {
+  padding-block: clamp(var(--ui-space-16), 10vw, var(--ui-space-32));
+}
+
+.ui-section-alt {
+  background: var(--ui-bg-2);
+}
+
+.ui-section-surface {
+  background: var(--ui-surface);
+}
+
+/* Gallery-only helper box (used by layout.gallery.tsx). */
+.ui-gallery-box {
+  padding: var(--ui-space-3);
+  border: 1px dashed var(--ui-line-strong);
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-ink-2);
+  font-size: var(--ui-text-sm);
+}
+
+}
+/* --- src/type/styles.css --- */
+@layer ui-components {
+/* type group: Heading, Text, Kicker, GradText, Mono, Code, Kbd, Prose (spec §4). */
+
+/* Scale steps (shared by Heading and Text). */
+.ui-fs-2xs {
+  font-size: var(--ui-text-2xs);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-fs-xs {
+  font-size: var(--ui-text-xs);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-fs-sm {
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-base);
+}
+
+.ui-fs-base {
+  font-size: var(--ui-text-base);
+  line-height: var(--ui-leading-base);
+}
+
+.ui-fs-md {
+  font-size: var(--ui-text-md);
+  line-height: var(--ui-leading-base);
+}
+
+.ui-fs-lg {
+  font-size: var(--ui-text-lg);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-fs-xl {
+  font-size: var(--ui-text-xl);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-fs-2xl {
+  font-size: var(--ui-text-2xl);
+  line-height: var(--ui-leading-tight);
+}
+
+.ui-fs-3xl {
+  font-size: var(--ui-text-3xl);
+  line-height: var(--ui-leading-tight);
+}
+
+.ui-fs-4xl {
+  font-size: var(--ui-text-4xl);
+  line-height: var(--ui-leading-tight);
+}
+
+.ui-fs-display {
+  font-size: var(--ui-text-display);
+  line-height: var(--ui-leading-display);
+}
+
+/* Tones and weights. */
+.ui-tone-ink-2 {
+  color: var(--ui-ink-2);
+}
+
+.ui-tone-muted {
+  color: var(--ui-muted);
+}
+
+.ui-tone-accent {
+  color: var(--ui-accent-text);
+}
+
+.ui-weight-body {
+  font-weight: var(--ui-weight-body);
+}
+
+.ui-weight-medium {
+  font-weight: var(--ui-weight-medium);
+}
+
+.ui-weight-display {
+  font-weight: var(--ui-weight-display);
+}
+
+.ui-weight-bold {
+  font-weight: var(--ui-weight-bold);
+}
+
+.ui-measure {
+  max-inline-size: var(--ui-measure);
+}
+
+/* Heading. */
+.ui-heading {
+  margin: 0;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-weight: var(--ui-weight-display);
+  letter-spacing: var(--ui-tracking-display);
+  text-wrap: balance;
+}
+
+.ui-heading.ui-tone-ink-2 {
+  color: var(--ui-ink-2);
+}
+
+.ui-heading.ui-tone-muted {
+  color: var(--ui-muted);
+}
+
+.ui-heading.ui-tone-accent {
+  color: var(--ui-accent-text);
+}
+
+/* Text. */
+.ui-text {
+  margin: 0;
+  font-family: var(--ui-font-body);
+  text-wrap: pretty;
+}
+
+/* Kicker: 12px, 600, +0.14em, uppercase. */
+.ui-kicker {
+  margin: 0;
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-2xs);
+  font-weight: var(--ui-weight-kicker);
+  line-height: var(--ui-leading-snug);
+  letter-spacing: var(--ui-tracking-kicker);
+  text-transform: uppercase;
+}
+
+.ui-kicker-accent {
+  color: var(--ui-accent-text);
+}
+
+.ui-kicker-muted {
+  color: var(--ui-muted);
+}
+
+.ui-kicker-ink-2 {
+  color: var(--ui-ink-2);
+}
+
+/* Portfolio allows accent-as-text only at >= 15px semibold (spec §3); a 12px kicker is smaller. */
+[data-theme='portfolio'] .ui-kicker-accent {
+  color: var(--ui-ink-2);
+}
+
+/* GradText: solid accent-text fallback, gradient where background-clip:text works. */
+.ui-grad-text {
+  color: var(--ui-accent-text);
+}
+
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  .ui-grad-text {
+    background: var(--ui-accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+}
+
+@media (forced-colors: active) {
+  .ui-grad-text {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+}
+
+@media print {
+  .ui-grad-text {
+    background: none;
+    color: inherit;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* Mono, Code, Kbd. */
+.ui-mono {
+  font-family: var(--ui-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'zero' 1;
+}
+
+.ui-code,
+.ui-prose :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-xs);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-mono);
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+.ui-code-block,
+.ui-prose pre {
+  margin: 0;
+  padding: var(--ui-space-4);
+  overflow-x: auto;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-mono);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-base);
+  tab-size: 2;
+}
+
+.ui-code-block code,
+.ui-prose pre code {
+  font: inherit;
+}
+
+.ui-kbd {
+  display: inline-block;
+  min-inline-size: 1.6em;
+  padding: 0.05em 0.4em;
+  border: 1px solid var(--ui-line-strong);
+  border-block-end-width: 2px;
+  border-radius: var(--ui-kbd-r);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-mono);
+  font-size: 0.85em;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ui-kbd-combo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.ui-kbd-sep {
+  color: var(--ui-muted);
+}
+
+/* TextLink (.ui-link): the one link style. Underlined by default, never colour alone (WCAG 1.4.1).
+   Package components with links inside (Alert, Toast, FlashBanner, ViewTransitionLink) reuse it. */
+.ui-link {
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-accent-text);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.ui-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.ui-link[data-underline='hover']:not(:hover):not(:focus-visible) {
+  text-decoration-line: none;
+}
+
+.ui-link[data-tone='inherit'] {
+  color: inherit;
+}
+
+@media (forced-colors: active) {
+  .ui-link {
+    color: LinkText;
+  }
+}
+
+/* Prose: long-form HTML. */
+.ui-prose {
+  max-inline-size: var(--ui-measure);
+  color: var(--ui-ink-2);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-base);
+  line-height: var(--ui-leading-base);
+  overflow-wrap: break-word;
+}
+
+.ui-prose > * {
+  margin-block: 0;
+}
+
+.ui-prose > * + * {
+  margin-block-start: 1em;
+}
+
+.ui-prose :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-weight: var(--ui-weight-display);
+  letter-spacing: var(--ui-tracking-display);
+  line-height: var(--ui-leading-tight);
+  text-wrap: balance;
+}
+
+.ui-prose > :is(h2, h3, h4) {
+  margin-block-start: 1.8em;
+}
+
+.ui-prose > :is(h2, h3, h4) + * {
+  margin-block-start: 0.6em;
+}
+
+.ui-prose h1 {
+  font-size: var(--ui-text-4xl);
+}
+
+.ui-prose h2 {
+  font-size: var(--ui-text-2xl);
+}
+
+.ui-prose h3 {
+  font-size: var(--ui-text-xl);
+}
+
+.ui-prose :is(h4, h5, h6) {
+  font-size: var(--ui-text-lg);
+}
+
+.ui-prose :is(strong, b) {
+  color: var(--ui-ink);
+  font-weight: var(--ui-weight-display);
+}
+
+/* Links are underlined: never colour alone (WCAG 1.4.1). */
+.ui-prose a {
+  color: var(--ui-accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.ui-prose a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.ui-prose :is(ul, ol) {
+  padding-inline-start: 1.4em;
+}
+
+.ui-prose li + li {
+  margin-block-start: 0.4em;
+}
+
+.ui-prose li::marker {
+  color: var(--ui-muted);
+}
+
+.ui-prose blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--ui-space-4);
+  border-inline-start: 3px solid var(--ui-line-strong);
+  color: var(--ui-ink);
+  font-style: italic;
+}
+
+.ui-prose hr {
+  border: 0;
+  border-block-start: 1px solid var(--ui-line);
+  margin-block: 2em;
+}
+
+.ui-prose :is(img, video, svg) {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+.ui-prose table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-prose :is(th, td) {
+  padding: var(--ui-space-2) var(--ui-space-3);
+  border-block-end: 1px solid var(--ui-line);
+  text-align: start;
+  vertical-align: top;
+}
+
+.ui-prose th {
+  color: var(--ui-ink);
+  font-weight: var(--ui-weight-display);
+}
+
+}
+/* --- src/actions/styles.css --- */
+@layer ui-components {
+/* ------------------------------------------------------------------
+   actions: Button, LinkButton, IconButton (spec §7).
+   Reads only --ui-* tokens. Animates only transform and opacity (§6.3):
+   hover/press feedback is an opacity overlay (::before), not a colour tween.
+   ------------------------------------------------------------------ */
+
+@keyframes ui-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.ui-btn {
+  --_ui-btn-h: var(--ui-btn-h);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--_ui-btn-h);
+  min-width: var(--ui-target-min);
+  margin: 0;
+  padding: 0 var(--ui-btn-px);
+  /* Transparent border: invisible normally, drawn in forced-colors mode. */
+  border: 1px solid transparent;
+  border-radius: var(--ui-btn-r);
+  background: transparent;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-medium);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--ui-dur-fast) var(--ui-ease);
+}
+
+.ui-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ui-dur-fast) var(--ui-ease);
+}
+
+.ui-btn__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-space-2);
+  transition: opacity var(--ui-dur-fast) var(--ui-ease);
+}
+
+.ui-btn__icon {
+  flex: none;
+}
+
+.ui-btn:hover::before {
+  opacity: 0.06;
+}
+
+.ui-btn:active:not([aria-disabled='true']):not(:disabled) {
+  transform: translateY(1px);
+}
+
+.ui-btn:active:not([aria-disabled='true']):not(:disabled)::before {
+  opacity: 0.1;
+}
+
+/* Sizes: 32 / 36 / 44 */
+.ui-btn--sm {
+  --_ui-btn-h: var(--ui-btn-h-sm);
+  padding-inline: var(--ui-space-3);
+  font-size: var(--ui-text-xs);
+}
+
+.ui-btn--md {
+  --_ui-btn-h: var(--ui-btn-h);
+}
+
+.ui-btn--lg {
+  --_ui-btn-h: var(--ui-btn-h-lg);
+  padding-inline: var(--ui-space-5);
+  font-size: var(--ui-text-base);
+}
+
+.ui-btn--block {
+  display: flex;
+  width: 100%;
+}
+
+.ui-btn--icon {
+  width: var(--_ui-btn-h);
+  padding: 0;
+}
+
+/* Larger visible hit shape for game actions and other high-precision touch controls. */
+.ui-btn--game-control {
+  --_ui-btn-h: var(--ui-target-game);
+  min-width: var(--ui-target-game);
+  min-height: var(--ui-target-game);
+}
+
+/* Variants */
+.ui-btn--primary {
+  background: var(--ui-accent-1);
+  color: var(--ui-on-accent);
+}
+
+/* The primary overlay moves the fill AWAY from the on-accent ink (its inverse), so hover and press
+   raise contrast instead of lowering it. Without relative-colour support there is no overlay. */
+.ui-btn--primary::before {
+  background: transparent;
+  background: rgb(from var(--ui-on-accent) calc(255 - r) calc(255 - g) calc(255 - b));
+}
+
+.ui-btn--secondary {
+  background: var(--ui-glass);
+  border-color: var(--ui-glass-edge);
+  box-shadow: inset 0 1px 0 var(--ui-specular);
+  color: var(--ui-ink);
+}
+
+.ui-btn--ghost {
+  background: transparent;
+  color: var(--ui-ink);
+}
+
+/* Danger is danger text on the page (never text on a danger fill), so it inherits the §9 status
+   contrast; the border carries the colour at rest, the currentColor overlay on hover. */
+.ui-btn--danger {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--ui-danger) 60%, transparent);
+  color: var(--ui-danger);
+}
+
+.ui-btn--link {
+  min-height: var(--ui-target-min);
+  padding: 0;
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: from-font;
+}
+
+.ui-btn--link::before {
+  display: none;
+}
+
+.ui-btn--link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Disabled (exempt from contrast, still perceivable) */
+.ui-btn:disabled,
+.ui-btn[aria-disabled='true']:not([data-loading]) {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.ui-btn:disabled::before,
+.ui-btn[aria-disabled='true']::before {
+  opacity: 0;
+}
+
+/* Loading keeps the width: the label stays in layout at opacity 0, the spinner overlays it. */
+.ui-btn[data-loading] {
+  cursor: progress;
+}
+
+.ui-btn[data-loading] > .ui-btn__label {
+  opacity: 0;
+}
+
+.ui-btn__spinner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.ui-btn__spinner > svg {
+  animation: ui-spin 0.8s linear infinite;
+}
+
+@media (forced-colors: active) {
+  .ui-btn {
+    border-color: ButtonText;
+  }
+
+  .ui-btn--link {
+    border-color: transparent;
+    color: LinkText;
+  }
+
+  .ui-btn:disabled,
+  .ui-btn[aria-disabled='true']:not([data-loading]) {
+    border-color: GrayText;
+    color: GrayText;
+    opacity: 1;
+  }
+}
+
+/* Touch (spec §9: 44px for actions on touch; Apple HIG 44pt; Material's touch-target pattern).
+   On a coarse pointer the hit region grows to at least --ui-target-touch with an invisible ::after,
+   centred on the button, so the drawn size and the layout stay exactly as on desktop. Keep 12px or
+   more between small buttons so neighbouring regions do not overlap. */
+@media (pointer: coarse) {
+  .ui-btn::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}
+
+}
+/* --- src/forms/styles.css --- */
+@layer ui-components {
+/* ------------------------------------------------------------------
+   forms: Form, Field, Fieldset, Input, Textarea, Select, Checkbox,
+   Radio, Switch, FormError, ErrorSummary (spec §7, §9).
+   Native controls, token colours, no colour tweens (§6.3 rule 1).
+   ------------------------------------------------------------------ */
+
+.ui-form {
+  display: grid;
+  gap: var(--ui-space-5);
+}
+
+/* Field */
+.ui-field {
+  display: grid;
+  gap: var(--ui-space-1-5);
+  min-width: 0;
+}
+
+.ui-field__label,
+.ui-fieldset__legend {
+  color: var(--ui-ink);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-medium);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-field__req {
+  color: var(--ui-danger);
+}
+
+.ui-field__hint,
+.ui-choice__hint {
+  margin: 0;
+  color: var(--ui-muted);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-1-5);
+  margin: 0;
+  color: var(--ui-danger);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-medium);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-field__error-icon {
+  flex: none;
+  margin-top: 1px;
+}
+
+/* Text inputs, textarea, select */
+.ui-input {
+  display: block;
+  width: 100%;
+  min-height: var(--ui-input-h);
+  margin: 0;
+  padding: 0 var(--ui-space-3);
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-input-r);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  /* >= 16px so iOS Safari never zooms on focus. */
+  font-size: max(16px, var(--ui-text-base));
+  line-height: 1.4;
+}
+
+.ui-input::placeholder {
+  color: var(--ui-muted);
+  opacity: 1;
+}
+
+.ui-input:hover:not(:disabled) {
+  border-color: var(--ui-ink-2);
+}
+
+.ui-input[aria-invalid='true'] {
+  border-color: var(--ui-danger);
+  box-shadow: inset 0 0 0 1px var(--ui-danger);
+}
+
+.ui-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ui-input[type='file'] {
+  padding-block: var(--ui-space-2);
+}
+
+.ui-textarea {
+  min-height: calc(var(--ui-input-h) * 2);
+  padding-block: var(--ui-space-2);
+  line-height: var(--ui-leading-base);
+  resize: vertical;
+}
+
+.ui-select {
+  position: relative;
+  display: block;
+}
+
+.ui-select__control {
+  appearance: none;
+  padding-inline-end: calc(var(--ui-space-3) * 2 + 18px);
+  cursor: pointer;
+}
+
+.ui-select__control[multiple] {
+  padding-block: var(--ui-space-2);
+  padding-inline-end: var(--ui-space-3);
+}
+
+.ui-select__control[multiple] + .ui-select__icon {
+  display: none;
+}
+
+.ui-select__control option {
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+}
+
+.ui-select__icon {
+  position: absolute;
+  inset-inline-end: var(--ui-space-3);
+  top: 50%;
+  translate: 0 -50%;
+  color: var(--ui-ink-2);
+  pointer-events: none;
+}
+
+/* Fieldset */
+.ui-fieldset {
+  display: grid;
+  gap: var(--ui-space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ui-fieldset__legend {
+  margin-bottom: var(--ui-space-1-5);
+  padding: 0;
+}
+
+.ui-fieldset__options {
+  display: grid;
+  gap: var(--ui-space-3);
+}
+
+/* Checkbox / Radio / Switch: the native input sits invisibly over a 24px+ target (2.5.8). */
+.ui-choice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--ui-space-3);
+  row-gap: var(--ui-space-1);
+  align-items: start;
+}
+
+.ui-choice__control {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+}
+
+.ui-choice__input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ui-choice__input:disabled {
+  cursor: not-allowed;
+}
+
+.ui-choice__box {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ui-line-strong);
+  border-radius: 6px;
+  background: var(--ui-surface);
+  color: var(--ui-on-accent);
+}
+
+.ui-choice--radio .ui-choice__box {
+  border-radius: 50%;
+}
+
+.ui-choice__mark,
+.ui-choice__dot {
+  opacity: 0;
+  transition: opacity var(--ui-dur-fast) var(--ui-ease);
+}
+
+.ui-choice__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.ui-choice__input:checked + .ui-choice__box {
+  border-color: var(--ui-accent-1);
+  background: var(--ui-accent-1);
+}
+
+.ui-choice__input:checked + .ui-choice__box > * {
+  opacity: 1;
+}
+
+.ui-choice__input[aria-invalid='true'] + .ui-choice__box,
+.ui-choice__input[aria-invalid='true'] + .ui-switch__track {
+  border-color: var(--ui-danger);
+}
+
+.ui-choice__input:focus-visible + .ui-choice__box,
+.ui-choice__input:focus-visible + .ui-switch__track {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: var(--ui-focus-offset);
+}
+
+.ui-choice__input:disabled + .ui-choice__box,
+.ui-choice__input:disabled + .ui-switch__track,
+.ui-choice:has(.ui-choice__input:disabled) .ui-choice__label {
+  opacity: 0.55;
+}
+
+.ui-choice__label {
+  grid-column: 2;
+  padding-block: 2px;
+  color: var(--ui-ink);
+  font-size: var(--ui-text-base);
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.ui-choice__hint,
+.ui-choice__error {
+  grid-column: 2;
+}
+
+/* Switch: 40 x 24 track, thumb position carries the state (not colour alone). */
+.ui-switch {
+  width: 40px;
+}
+
+.ui-switch__track {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ui-line-strong);
+  border-radius: var(--ui-r-pill);
+  background: var(--ui-surface);
+}
+
+.ui-switch__thumb {
+  --_ui-dir: 1;
+  position: absolute;
+  top: 2px;
+  inset-inline-start: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ui-ink-2);
+  transition: transform var(--ui-dur) var(--ui-spring);
+}
+
+.ui-switch__thumb:dir(rtl) {
+  --_ui-dir: -1;
+}
+
+.ui-choice__input:checked + .ui-switch__track {
+  border-color: var(--ui-accent-1);
+  background: var(--ui-accent-1);
+}
+
+.ui-choice__input:checked + .ui-switch__track > .ui-switch__thumb {
+  background: var(--ui-on-accent);
+  transform: translateX(calc(16px * var(--_ui-dir)));
+}
+
+/* Touch (spec §9; Apple HIG 44pt). On a coarse pointer the invisible native input grows to a
+   44x44 hit region around the drawn box, and text inputs reach 44px. Option rows get 20px apart so
+   neighbouring regions never overlap. Desktop (fine pointer) is unchanged. */
+@media (pointer: coarse) {
+  .ui-choice__input {
+    inset: min(0px, calc((24px - var(--ui-target-touch)) / 2));
+    width: auto;
+    height: auto;
+  }
+
+  .ui-switch .ui-choice__input {
+    inset-inline: min(0px, calc((40px - var(--ui-target-touch)) / 2));
+  }
+
+  .ui-fieldset__options {
+    row-gap: var(--ui-space-5);
+  }
+
+  .ui-input:not(.ui-textarea):not([multiple]) {
+    min-height: max(var(--ui-input-h), var(--ui-target-touch));
+  }
+}
+
+/* Form-level error and error summary: ink text on surface; danger carried by border + icon. */
+.ui-form-error,
+.ui-error-summary {
+  border: 1px solid var(--ui-danger);
+  border-inline-start-width: 4px;
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+}
+
+.ui-form-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-3);
+  padding: var(--ui-space-3) var(--ui-space-4);
+}
+
+.ui-form-error__icon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--ui-danger);
+}
+
+.ui-form-error__title {
+  margin: 0 0 var(--ui-space-1);
+  font-weight: var(--ui-weight-bold);
+}
+
+.ui-form-error__message > :first-child {
+  margin-top: 0;
+}
+
+.ui-form-error__message > :last-child {
+  margin-bottom: 0;
+}
+
+.ui-error-summary {
+  padding: var(--ui-space-4) var(--ui-space-5);
+}
+
+.ui-error-summary__title {
+  margin: 0 0 var(--ui-space-2);
+  color: var(--ui-ink);
+  font-size: var(--ui-text-lg);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-leading-snug);
+}
+
+.ui-error-summary__description {
+  margin: 0 0 var(--ui-space-2);
+  color: var(--ui-ink-2);
+}
+
+.ui-error-summary__list {
+  display: grid;
+  gap: var(--ui-space-1);
+  margin: 0;
+  padding-inline-start: var(--ui-space-5);
+}
+
+.ui-error-summary__list a {
+  color: var(--ui-danger);
+  font-weight: var(--ui-weight-medium);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (forced-colors: active) {
+  .ui-choice__box,
+  .ui-switch__track {
+    forced-color-adjust: none;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .ui-switch__thumb {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+
+  .ui-choice__input:checked + .ui-choice__box,
+  .ui-choice__input:checked + .ui-switch__track {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .ui-choice__input:checked + .ui-switch__track > .ui-switch__thumb {
+    background: HighlightText;
+  }
+
+  .ui-choice__input:focus-visible + .ui-choice__box,
+  .ui-choice__input:focus-visible + .ui-switch__track {
+    outline-color: Highlight;
+  }
+
+  .ui-error-summary__list a {
+    color: LinkText;
+  }
+}
+
+}
+/* --- src/display/styles.css --- */
+@layer ui-components {
+/* ------------------------------------------------------------------
+   display group: Badge, StatusPill, Chip, Avatar, Card, StatCard.
+   Wrapped in @layer ui-components by scripts/build-styles.mjs.
+   Reads only --ui-* tokens. Motion only behind the gate (spec §6.4).
+   ------------------------------------------------------------------ */
+
+/* Tone model (src/display/tone.ts; contrast proven in tone.test.ts).
+   Fill = role 12% over surface; text = role 75% + ink 25%. Keep both
+   numbers in sync with TONE_TINT_PCT / TONE_INK_PCT. */
+.ui-tone {
+  --ui-tone: var(--ui-ink-2);
+  --ui-tone-fill: color-mix(in srgb, var(--ui-tone) 12%, var(--ui-surface));
+  --ui-tone-ink: color-mix(in srgb, var(--ui-tone) 75%, var(--ui-ink));
+  --ui-tone-edge: color-mix(in srgb, var(--ui-tone) 35%, transparent);
+}
+.ui-tone[data-tone='neutral'] {
+  --ui-tone: var(--ui-ink-2);
+}
+.ui-tone[data-tone='accent'] {
+  --ui-tone: var(--ui-accent-text);
+}
+.ui-tone[data-tone='info'] {
+  --ui-tone: var(--ui-info);
+}
+.ui-tone[data-tone='ok'] {
+  --ui-tone: var(--ui-ok);
+}
+.ui-tone[data-tone='warn'] {
+  --ui-tone: var(--ui-warn);
+}
+.ui-tone[data-tone='danger'] {
+  --ui-tone: var(--ui-danger);
+}
+.ui-tone[data-tone='reasoning'] {
+  --ui-tone: var(--ui-status-reasoning);
+}
+
+/* Badge ------------------------------------------------------------ */
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.22rem 0.6rem;
+  border: 1px solid var(--ui-tone-edge);
+  border-radius: var(--ui-r-pill);
+  background: var(--ui-tone-fill);
+  color: var(--ui-tone-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-xs);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.ui-badge[data-size='sm'] {
+  padding: 0.12rem 0.45rem;
+  font-size: var(--ui-text-2xs);
+}
+.ui-badge__icon,
+.ui-chip__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* StatusPill ------------------------------------------------------- */
+.ui-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.22rem 0.65rem;
+  border: 1px solid var(--ui-tone-edge);
+  border-radius: var(--ui-r-pill);
+  background: var(--ui-tone-fill);
+  color: var(--ui-tone-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-2xs);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ui-status__dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ui-tone);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ui-tone) 22%, transparent);
+}
+
+/* Chip ------------------------------------------------------------- */
+.ui-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 28px;
+  padding: 0 0.6rem;
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-chip-r);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.ui-chip[data-tone]:not([data-tone='neutral']),
+.ui-chip[data-selected] {
+  border-color: var(--ui-tone-edge);
+  background: var(--ui-tone-fill);
+  color: var(--ui-tone-ink);
+}
+.ui-chip[data-selected] {
+  box-shadow: inset 0 0 0 1px var(--ui-tone-ink);
+}
+.ui-chip[data-disabled] {
+  opacity: 0.6;
+}
+.ui-chip:has(.ui-chip__toggle),
+.ui-chip:has(.ui-chip__remove) {
+  padding-inline: 0;
+}
+.ui-chip__toggle,
+.ui-chip__remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: var(--ui-target-min);
+  min-height: var(--ui-target-min);
+  margin: 0;
+  padding: 0 0.6rem;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.ui-chip__remove {
+  justify-content: center;
+  padding: 0;
+  margin-inline-start: -0.35rem;
+}
+/* Only a removable chip without a toggle drops its own padding (the remove button sits flush at the
+   end), so only that chip's first label or icon needs the start inset back. A static chip keeps the
+   chip's symmetric 0.6rem padding (G10: it used to get both, 19px start vs 10px end). */
+.ui-chip:has(.ui-chip__remove):not(:has(.ui-chip__toggle)) > .ui-chip__label:first-child,
+.ui-chip:has(.ui-chip__remove):not(:has(.ui-chip__toggle)) > .ui-chip__icon:first-child {
+  padding-inline-start: 0.6rem;
+}
+.ui-chip__toggle:disabled,
+.ui-chip__remove:disabled {
+  cursor: not-allowed;
+}
+@media (hover: hover) {
+  .ui-chip__toggle:hover:not(:disabled),
+  .ui-chip__remove:hover:not(:disabled) {
+    background: color-mix(in srgb, currentColor 8%, transparent);
+  }
+}
+
+/* Touch (spec §9; Material's chip touch target): on a coarse pointer the toggle and remove buttons
+   get an invisible 44x44 hit region, and interactive chips take 8px more room around them so the
+   regions of neighbouring chips never overlap. The drawn chip is unchanged. */
+@media (pointer: coarse) {
+  .ui-chip:has(.ui-chip__toggle, .ui-chip__remove) {
+    margin-block: var(--ui-space-2);
+  }
+  .ui-chip:has(.ui-chip__remove) {
+    margin-inline-end: var(--ui-space-3);
+  }
+  .ui-chip__toggle,
+  .ui-chip__remove {
+    position: relative;
+  }
+  .ui-chip__toggle::after,
+  .ui-chip__remove::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}
+
+/* Avatar ----------------------------------------------------------- */
+.ui-avatar {
+  --ui-avatar-size: 58px;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--ui-avatar-size);
+  height: var(--ui-avatar-size);
+  overflow: hidden;
+  border-radius: calc(var(--ui-avatar-size) * 0.26);
+  background: var(--ui-surface-raised);
+  box-shadow: inset 0 0 0 1px var(--ui-glass-edge);
+  vertical-align: middle;
+}
+.ui-avatar[data-shape='circle'] {
+  border-radius: 50%;
+}
+.ui-avatar[data-fallback] {
+  /* on-accent on accent-1 is >= 4.5:1 in every theme (spec §9 matrix). */
+  background: var(--ui-accent-1);
+  color: var(--ui-on-accent);
+}
+.ui-avatar__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ui-avatar__initials {
+  font-family: var(--ui-font-display);
+  font-size: calc(var(--ui-avatar-size) * 0.38);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+/* Card ------------------------------------------------------------- */
+.ui-card {
+  --ui-tilt-x: 0;
+  --ui-tilt-y: 0;
+  position: relative;
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-card-r);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  box-shadow: var(--ui-e1);
+  isolation: isolate;
+}
+.ui-card[data-padding='none'] {
+  padding: 0;
+}
+.ui-card[data-padding='sm'] {
+  padding: var(--ui-space-4);
+}
+.ui-card[data-padding='md'] {
+  padding: var(--ui-card-pad);
+}
+.ui-card[data-padding='lg'] {
+  padding: var(--ui-space-8);
+}
+.ui-card[data-variant='glass'] {
+  border-color: var(--ui-glass-edge);
+  background: var(--ui-glass);
+  box-shadow: var(--ui-e2);
+  -webkit-backdrop-filter: blur(var(--ui-glass-blur)) saturate(var(--ui-glass-saturate));
+  backdrop-filter: blur(var(--ui-glass-blur)) saturate(var(--ui-glass-saturate));
+}
+.ui-card[data-accent] {
+  border-color: color-mix(in srgb, var(--ui-accent-1) 30%, var(--ui-line));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ui-accent-1) 9%, transparent), transparent 70%),
+    var(--ui-surface);
+}
+.ui-card[data-interactive]:focus-within {
+  border-color: var(--ui-line-strong);
+}
+@media (forced-colors: active) {
+  .ui-card {
+    border-color: CanvasText;
+  }
+}
+
+/* Specular sweep: a pseudo-element moved by transform only. Hidden
+   unless the motion gate is open; the kill switch in base.css still
+   collapses durations for reduced motion and Pause. */
+.ui-card[data-interactive]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 35%, var(--ui-specular) 50%, transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-60%);
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-interactive] {
+    transition:
+      transform var(--ui-dur-med) var(--ui-ease),
+      box-shadow var(--ui-dur-med) var(--ui-ease);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-interactive]:hover {
+    transform: translateY(var(--ui-lift));
+    box-shadow: var(--ui-e3);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-interactive]::before {
+    transition:
+      transform var(--ui-dur-reveal) var(--ui-ease),
+      opacity var(--ui-dur-fast) var(--ui-ease);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-interactive]:hover::before {
+    opacity: 1;
+    transform: translateX(60%);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-tilt] {
+    transform: perspective(900px) rotateX(calc(var(--ui-tilt-x) * -1 * var(--ui-tilt-max)))
+      rotateY(calc(var(--ui-tilt-y) * var(--ui-tilt-max)));
+    transition: transform var(--ui-dur-fast) var(--ui-ease);
+  }
+  html.ui-motion:not([data-motion='paused']) .ui-card[data-tilt][data-interactive]:hover {
+    transform: perspective(900px) translateY(var(--ui-lift)) rotateX(calc(var(--ui-tilt-x) * -1 * var(--ui-tilt-max)))
+      rotateY(calc(var(--ui-tilt-y) * var(--ui-tilt-max)));
+  }
+}
+
+/* StatCard --------------------------------------------------------- */
+.ui-stat {
+  display: grid;
+  gap: var(--ui-space-1);
+  align-content: start;
+}
+.ui-stat[data-padding='md'] {
+  padding: var(--ui-space-5);
+}
+.ui-stat__label,
+.ui-stat__value,
+.ui-stat__trend,
+.ui-stat__sub {
+  margin: 0;
+}
+.ui-stat__label {
+  color: var(--ui-muted);
+  font-size: var(--ui-text-2xs);
+  font-weight: var(--ui-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ui-stat__value {
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-2xl);
+  font-weight: var(--ui-weight-display);
+  line-height: 1.05;
+  letter-spacing: var(--ui-tracking-display);
+  overflow-wrap: anywhere;
+}
+.ui-stat__trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  margin-top: var(--ui-space-1);
+  padding: 0.26rem 0.55rem;
+  border: 1px solid var(--ui-tone-edge);
+  border-radius: var(--ui-r-pill);
+  background: var(--ui-tone-fill);
+  color: var(--ui-tone-ink);
+  font-size: var(--ui-text-xs);
+  font-weight: var(--ui-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+.ui-stat__note {
+  font-weight: var(--ui-weight-medium);
+}
+.ui-stat__sub {
+  color: var(--ui-muted);
+  font-size: var(--ui-text-sm);
+}
+
+}
+/* --- src/feedback/styles.css --- */
+@layer ui-components {
+/* ------------------------------------------------------------------
+   feedback group: Alert, FlashBanner, Toast, ToastRegion.
+   Wrapped in @layer ui-components by scripts/build-styles.mjs.
+   Uses the .ui-tone model from src/display/styles.css (joined first).
+   Title text is ink and body text ink-2 on the tone fill; both are
+   contrast-tested in src/feedback/feedback-contrast.test.ts.
+   ------------------------------------------------------------------ */
+
+/* Alert / FlashBanner ---------------------------------------------- */
+.ui-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-3);
+  padding: var(--ui-space-3) var(--ui-space-4);
+  border: 1px solid var(--ui-tone-edge);
+  border-inline-start-width: 4px;
+  border-inline-start-color: var(--ui-tone);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-tone-fill);
+  color: var(--ui-ink);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-snug);
+}
+.ui-alert:focus {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: var(--ui-focus-offset);
+}
+.ui-alert__icon,
+.ui-toast__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--ui-tone-ink);
+}
+.ui-alert__body,
+.ui-toast__body {
+  display: grid;
+  flex: 1;
+  gap: var(--ui-space-1);
+  min-width: 0;
+}
+.ui-alert__title,
+.ui-toast__title {
+  margin: 0;
+  color: var(--ui-ink);
+  font-weight: var(--ui-weight-bold);
+}
+.ui-alert__message,
+.ui-toast__message {
+  margin: 0;
+  color: var(--ui-ink-2);
+}
+.ui-alert__message > :first-child {
+  margin-top: 0;
+}
+.ui-alert__message > :last-child {
+  margin-bottom: 0;
+}
+.ui-alert__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ui-space-2);
+  margin-top: var(--ui-space-1);
+}
+/* Links inside a message take the tone ink (tested >= 4.5:1 on the tone fill in every theme, see
+   src/display/tone.test.ts), underlined so colour is never the only cue (WCAG 1.4.1). Without
+   this a bare <a> fell back to the browser's link blue (G1). LinkButtons keep their own colours. */
+.ui-alert :where(a:not(.ui-btn)),
+.ui-toast :where(a:not(.ui-btn)) {
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-tone-ink);
+  font-weight: var(--ui-weight-medium);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.ui-alert :where(a:not(.ui-btn)):hover,
+.ui-toast :where(a:not(.ui-btn)):hover {
+  text-decoration-thickness: 2px;
+}
+@media (forced-colors: active) {
+  .ui-alert :where(a:not(.ui-btn)),
+  .ui-toast :where(a:not(.ui-btn)) {
+    color: LinkText;
+  }
+}
+.ui-alert__dismiss,
+.ui-toast__close {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  /* Logical, so the button tucks into the inline end in right-to-left pages too (G19). */
+  margin-block: -2px 0;
+  margin-inline: 0 -6px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--ui-r-pill);
+  background: transparent;
+  color: var(--ui-ink-2);
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .ui-alert__dismiss:hover,
+  .ui-toast__close:hover {
+    border-color: var(--ui-tone-edge);
+    background: color-mix(in srgb, var(--ui-tone) 10%, transparent);
+    color: var(--ui-ink);
+  }
+}
+/* Touch (spec §9): a 44x44 invisible hit region around the 28px dismiss control. */
+@media (pointer: coarse) {
+  .ui-alert__dismiss,
+  .ui-toast__close {
+    position: relative;
+  }
+  .ui-alert__dismiss::after,
+  .ui-toast__close::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}
+.ui-flash {
+  width: 100%;
+  font-size: var(--ui-text-base);
+}
+@media (forced-colors: active) {
+  .ui-alert,
+  .ui-toast {
+    border-color: CanvasText;
+  }
+}
+
+/* Toast ------------------------------------------------------------ */
+.ui-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-3);
+  width: min(420px, 100%);
+  padding: var(--ui-space-4);
+  border: 1px solid var(--ui-tone-edge);
+  border-radius: var(--ui-r);
+  background: var(--ui-tone-fill);
+  color: var(--ui-ink);
+  box-shadow: var(--ui-e4);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-snug);
+  pointer-events: auto;
+}
+
+@keyframes ui-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion='paused']) .ui-toast {
+    animation: ui-toast-in var(--ui-dur-med) var(--ui-spring-pop) both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Spec §6.4: no movement; the toast simply appears. */
+  .ui-toast {
+    animation: none;
+  }
+}
+
+.ui-toast-region {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-space-3);
+  width: min(420px, calc(100vw - 2 * var(--ui-space-4)));
+  pointer-events: none;
+}
+.ui-toast-region[data-position^='top'] {
+  top: calc(var(--ui-nav-h, 0px) + var(--ui-space-4));
+}
+.ui-toast-region[data-position^='bottom'] {
+  bottom: var(--ui-space-4);
+  flex-direction: column-reverse;
+}
+.ui-toast-region[data-position$='right'] {
+  right: var(--ui-space-4);
+}
+.ui-toast-region[data-position$='left'] {
+  left: var(--ui-space-4);
+}
+.ui-toast-region[data-position$='center'] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+}
+/* --- src/motion-lite/styles.css --- */
+@layer ui-components {
+/* motion-lite: Tilt and the Pause-motion button. Only transform and opacity animate (spec §6.3.1).
+   The reveal hiding rule, its 2.5s failsafe and the reduced-motion/Pause kill switch live in
+   src/styles/base.css (spec §0.2, §6.3.10, §6.4); nothing here overrides with important. */
+
+[data-tilt] {
+  transform: perspective(900px) rotateX(var(--ui-tilt-x, 0deg)) rotateY(var(--ui-tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform var(--ui-dur-med) var(--ui-ease);
+}
+
+[data-tilt][data-tilting] {
+  transition-duration: var(--ui-dur-instant);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tilt] {
+    transform: none;
+  }
+}
+
+html[data-motion='paused'] [data-tilt] {
+  transform: none;
+}
+
+.ui-motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-2);
+  min-height: 24px;
+  min-width: 24px;
+  padding: var(--ui-space-1) var(--ui-space-3);
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-r-pill);
+  background: transparent;
+  color: var(--ui-ink-2);
+  font: inherit;
+  font-size: var(--ui-text-sm);
+  cursor: pointer;
+}
+
+.ui-motion-toggle:hover {
+  color: var(--ui-ink);
+}
+
+.ui-motion-toggle[aria-pressed='true'] {
+  border-color: var(--ui-focus);
+  color: var(--ui-ink);
+}
+
+/* Touch (spec §9): the Pause-motion control keeps its drawn size; its hit region reaches 44px. */
+@media (pointer: coarse) {
+  .ui-motion-toggle {
+    position: relative;
+  }
+  .ui-motion-toggle::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}
+
+}
+/* --- src/motion/styles.css --- */
+@layer ui-components {
+/* motion (apps): AmbientGlow and CountUp digits. Transform and opacity only (spec §6.3.1).
+   The drift loop runs longer than 5s, so it must stop under Pause and reduced motion (§6.3.5):
+   the base.css kill switch collapses it, and the rules below also remove it outright. */
+
+.ui-ambient-glow {
+  position: absolute;
+  inset: -20% -10% auto;
+  z-index: 0;
+  height: 70%;
+  pointer-events: none;
+  background: radial-gradient(closest-side, var(--ui-accent-1), transparent 70%);
+  opacity: 0.22;
+  filter: blur(40px);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.ui-ambient-glow[data-tone='accent-2'] {
+  background: radial-gradient(closest-side, var(--ui-accent-2), transparent 70%);
+}
+
+.ui-ambient-glow[data-tone='glow'] {
+  background: radial-gradient(closest-side, var(--ui-glow), transparent 70%);
+  opacity: 0.6;
+}
+
+@keyframes ui-ambient-drift {
+  from {
+    transform: translate3d(-4%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 3%, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion='paused']) .ui-ambient-glow[data-drift] {
+    animation: ui-ambient-drift 14s var(--ui-ease-inout) infinite alternate;
+  }
+}
+
+.ui-count-digits {
+  font-variant-numeric: tabular-nums;
+}
+
+}
+/* --- src/app/styles.css --- */
+@layer ui-components {
+/* ------------------------------------------------------------------
+   app (@trident/ui/app): overlays, menus, tabs, command palette, data
+   table, pagination, empty state, skeleton (spec §7 P1).
+   Overlays sit on a SOLID raised surface with no blur (spec §5 e3/e4).
+   Motion: opacity and transform only, behind the reduced-motion and
+   Pause gates; exits run at 0.7x the enter (spec §6.3 rules 1-2).
+   ------------------------------------------------------------------ */
+
+/* Scrim ------------------------------------------------------------ */
+.ui-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgb(2 6 12 / 0.66);
+}
+:root[data-scheme='light'] .ui-overlay {
+  background: rgb(15 23 42 / 0.42);
+}
+
+/* Dialog, ConfirmDialog, Sheet, CommandPalette --------------------- */
+.ui-dialog {
+  --_ui-dialog-w: 560px;
+  position: fixed;
+  z-index: 901;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  translate: -50% -50%;
+  display: grid;
+  align-content: start;
+  gap: var(--ui-space-4);
+  inline-size: min(var(--_ui-dialog-w), calc(100vw - 2 * var(--ui-space-4)));
+  max-block-size: calc(100dvh - 2 * var(--ui-space-8));
+  overflow: auto;
+  padding: var(--ui-space-6);
+  border: 1px solid var(--ui-line-strong);
+  border-radius: var(--ui-r-lg);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink);
+  box-shadow: var(--ui-e4);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-base);
+  line-height: var(--ui-leading-base);
+}
+.ui-dialog:dir(rtl) {
+  translate: 50% -50%;
+}
+.ui-dialog[data-size='sm'] {
+  --_ui-dialog-w: 420px;
+}
+.ui-dialog[data-size='lg'] {
+  --_ui-dialog-w: 760px;
+}
+.ui-dialog:focus-visible {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: var(--ui-focus-offset);
+}
+.ui-dialog__header {
+  display: grid;
+  gap: var(--ui-space-1-5);
+  padding-inline-end: var(--ui-space-10);
+}
+.ui-dialog[data-role='alertdialog'] .ui-dialog__header {
+  padding-inline-end: 0;
+}
+.ui-dialog__title {
+  margin: 0;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-xl);
+  font-weight: var(--ui-weight-display);
+  line-height: var(--ui-leading-tight);
+  letter-spacing: var(--ui-tracking-display);
+}
+.ui-dialog__description {
+  margin: 0;
+  color: var(--ui-ink-2);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-base);
+}
+.ui-dialog__body {
+  min-width: 0;
+  color: var(--ui-ink-2);
+}
+.ui-dialog__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--ui-space-3);
+  padding-block-start: var(--ui-space-1);
+}
+.ui-dialog__close {
+  position: absolute;
+  inset-block-start: var(--ui-space-3);
+  inset-inline-end: var(--ui-space-3);
+}
+
+.ui-sheet {
+  inset-block: 0;
+  inset-inline: auto 0;
+  translate: none;
+  inline-size: min(420px, 100vw);
+  max-block-size: none;
+  border-radius: 0;
+  border-block: 0;
+  border-inline-end: 0;
+}
+.ui-sheet:dir(rtl) {
+  translate: none;
+}
+.ui-sheet[data-side='left'] {
+  inset-inline: 0 auto;
+  border-inline-start: 0;
+  border-inline-end: 1px solid var(--ui-line-strong);
+}
+.ui-sheet[data-side='bottom'],
+.ui-sheet[data-side='top'] {
+  inset-inline: 0;
+  inline-size: 100%;
+  max-block-size: 85dvh;
+  border-inline: 0;
+}
+.ui-sheet[data-side='bottom'] {
+  inset-block: auto 0;
+  border-block-start: 1px solid var(--ui-line-strong);
+  border-start-start-radius: var(--ui-r-lg);
+  border-start-end-radius: var(--ui-r-lg);
+}
+.ui-sheet[data-side='top'] {
+  inset-block: 0 auto;
+  border-block-end: 1px solid var(--ui-line-strong);
+  border-end-start-radius: var(--ui-r-lg);
+  border-end-end-radius: var(--ui-r-lg);
+}
+
+/* Popover, Tooltip, menus ------------------------------------------ */
+.ui-popover,
+.ui-menu {
+  z-index: 950;
+  border: 1px solid var(--ui-line-strong);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink);
+  box-shadow: var(--ui-e4);
+  font-family: var(--ui-font-body);
+}
+.ui-popover {
+  min-inline-size: 220px;
+  max-inline-size: min(360px, calc(100vw - 2 * var(--ui-space-4)));
+  padding: var(--ui-space-4);
+  border-radius: var(--ui-r);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-base);
+}
+.ui-popover__arrow {
+  fill: var(--ui-surface-raised);
+}
+
+/* Inverse chip: ink on the page colour, the same pair as body text inverted (>= 4.5:1). */
+.ui-tooltip {
+  z-index: 960;
+  max-inline-size: 280px;
+  padding: var(--ui-space-1-5) var(--ui-space-2-5, 10px);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-ink);
+  color: var(--ui-bg);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-xs);
+  font-weight: var(--ui-weight-medium);
+  line-height: var(--ui-leading-snug);
+}
+.ui-tooltip__arrow {
+  fill: var(--ui-ink);
+}
+
+.ui-menu {
+  min-inline-size: 200px;
+  max-inline-size: min(320px, calc(100vw - 2 * var(--ui-space-4)));
+  padding: var(--ui-space-1-5);
+  border-radius: var(--ui-r-sm);
+  font-size: var(--ui-text-sm);
+}
+.ui-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-space-2-5, 10px);
+  min-block-size: 36px;
+  padding-inline: var(--ui-space-2-5, 10px);
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-ink);
+  line-height: 1.3;
+  cursor: default;
+  user-select: none;
+}
+.ui-menu__item[data-highlighted],
+.ui-menu__item[data-selected='true'] {
+  background: color-mix(in srgb, var(--ui-accent-1) 16%, var(--ui-surface-raised));
+}
+.ui-menu__item:focus-visible {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: calc(-1 * var(--ui-focus-width));
+}
+.ui-menu__item[data-danger] {
+  color: var(--ui-danger);
+}
+/* Radix marks a disabled item with a bare data-disabled; cmdk writes data-disabled="false" on
+   every enabled item, so match only the disabled ones. */
+.ui-menu__item[data-disabled]:not([data-disabled='false']) {
+  opacity: 0.55;
+}
+.ui-menu__icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--ui-ink-2);
+}
+.ui-menu__item[data-danger] .ui-menu__icon {
+  color: inherit;
+}
+.ui-menu__text {
+  flex: 1;
+  min-width: 0;
+}
+.ui-menu__shortcut {
+  margin-inline-start: auto;
+  padding-inline-start: var(--ui-space-4);
+  color: var(--ui-muted);
+  font-family: var(--ui-font-mono);
+  font-size: var(--ui-text-xs);
+}
+.ui-menu__separator {
+  block-size: 1px;
+  margin: var(--ui-space-1-5) calc(-1 * var(--ui-space-1-5));
+  background: var(--ui-line);
+}
+.ui-menu__label,
+.ui-command__group [cmdk-group-heading] {
+  padding: var(--ui-space-2) var(--ui-space-2-5, 10px) var(--ui-space-1);
+  color: var(--ui-muted);
+  font-size: var(--ui-text-2xs);
+  font-weight: var(--ui-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Tabs ------------------------------------------------------------- */
+.ui-tabs__list {
+  display: flex;
+  gap: var(--ui-space-1);
+  overflow-x: auto;
+  border-block-end: 1px solid var(--ui-line);
+  scrollbar-width: thin;
+}
+.ui-tabs__tab {
+  position: relative;
+  flex: none;
+  min-block-size: 40px;
+  margin: 0;
+  padding-inline: var(--ui-space-3-5, 14px);
+  border: 0;
+  border-radius: var(--ui-r-xs) var(--ui-r-xs) 0 0;
+  background: transparent;
+  color: var(--ui-ink-2);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-medium);
+  cursor: pointer;
+}
+.ui-tabs__tab:hover {
+  color: var(--ui-ink);
+}
+.ui-tabs__tab:focus-visible {
+  outline-offset: calc(-1 * var(--ui-focus-width));
+}
+/* The active tab is told apart by its bar and ink, never colour alone. */
+.ui-tabs__tab[data-state='active'] {
+  color: var(--ui-ink);
+}
+.ui-tabs__tab[data-state='active']::after {
+  content: '';
+  position: absolute;
+  inset-inline: var(--ui-space-2);
+  inset-block-end: -1px;
+  block-size: 2px;
+  border-radius: 2px;
+  background: var(--ui-accent-1);
+}
+.ui-tabs__tab[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.ui-tabs__panel {
+  padding-block-start: var(--ui-space-4);
+  color: var(--ui-ink-2);
+}
+.ui-tabs__panel:focus-visible {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: var(--ui-focus-offset);
+}
+@media (forced-colors: active) {
+  .ui-tabs__tab[data-state='active']::after {
+    background: Highlight;
+  }
+}
+
+/* Command palette (a .ui-dialog) ----------------------------------- */
+.ui-command {
+  inset-block-start: 16vh;
+  translate: -50% 0;
+  display: block;
+  inline-size: min(600px, calc(100vw - 2 * var(--ui-space-4)));
+  padding: 0;
+  overflow: hidden;
+}
+.ui-command:dir(rtl) {
+  translate: 50% 0;
+}
+.ui-command__search {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-space-2-5, 10px);
+  padding-inline: var(--ui-space-4);
+  border-block-end: 1px solid var(--ui-line);
+  color: var(--ui-muted);
+}
+.ui-command__input {
+  flex: 1;
+  min-block-size: 52px;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  font-size: max(16px, var(--ui-text-base));
+}
+/* The base focus ring, drawn inside the search bar so the dialog edge does not clip it. */
+.ui-command__input:focus-visible {
+  border-radius: var(--ui-r-xs);
+  outline-offset: calc(-1 * var(--ui-focus-width));
+}
+.ui-command__input::placeholder {
+  color: var(--ui-muted);
+  opacity: 1;
+}
+.ui-command__list {
+  max-block-size: min(360px, 50dvh);
+  overflow: auto;
+  padding: var(--ui-space-1-5);
+}
+.ui-command__empty {
+  padding: var(--ui-space-6);
+  color: var(--ui-muted);
+  font-size: var(--ui-text-sm);
+  text-align: center;
+}
+
+/* DataTable -------------------------------------------------------- */
+.ui-table-wrap {
+  --_ui-row-h: 40px;
+  display: grid;
+  gap: var(--ui-space-3);
+  min-width: 0;
+}
+.ui-table-wrap[data-density='compact'] {
+  --_ui-row-h: 32px;
+}
+.ui-table-wrap[data-density='comfortable'] {
+  --_ui-row-h: 48px;
+}
+.ui-table-toolbar,
+.ui-table-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-3);
+}
+.ui-table-footer {
+  justify-content: flex-end;
+}
+.ui-table-scroll {
+  min-width: 0;
+  overflow: auto;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface);
+}
+.ui-table-scroll:focus-visible {
+  outline: var(--ui-focus-width) solid var(--ui-focus);
+  outline-offset: var(--ui-focus-offset);
+}
+.ui-table {
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-sm);
+  font-variant-numeric: tabular-nums;
+}
+.ui-table__caption {
+  padding: var(--ui-space-3) var(--ui-space-4);
+  border-block-end: 1px solid var(--ui-line);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-md);
+  font-weight: var(--ui-weight-display);
+  text-align: start;
+}
+.ui-table thead th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  block-size: var(--_ui-row-h);
+  padding: 0 var(--ui-space-4);
+  border-block-end: 1px solid var(--ui-line-strong);
+  background: var(--ui-surface-raised);
+  color: var(--ui-ink-2);
+  font-size: var(--ui-text-xs);
+  font-weight: var(--ui-weight-bold);
+  letter-spacing: 0.02em;
+  text-align: start;
+  white-space: nowrap;
+}
+.ui-table thead th[aria-sort='ascending'],
+.ui-table thead th[aria-sort='descending'] {
+  color: var(--ui-ink);
+}
+.ui-table tbody :is(td, th) {
+  block-size: var(--_ui-row-h);
+  padding: 0 var(--ui-space-4);
+  border-block-end: 1px solid var(--ui-line);
+  text-align: start;
+  vertical-align: middle;
+}
+.ui-table tbody th {
+  color: var(--ui-ink);
+  font-weight: var(--ui-weight-medium);
+}
+.ui-table tbody td {
+  color: var(--ui-ink-2);
+}
+.ui-table tbody tr:last-child > * {
+  border-block-end: 0;
+}
+.ui-table :is(td, th)[data-numeric] {
+  text-align: end;
+}
+@media (hover: hover) {
+  .ui-table tbody tr:not([data-empty]):not([data-loading]):hover > * {
+    background: color-mix(in srgb, var(--ui-ink) 4%, var(--ui-surface));
+  }
+}
+.ui-table tbody tr[data-empty] > td {
+  block-size: auto;
+  padding: var(--ui-space-2) var(--ui-space-4);
+}
+.ui-table__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-1-5);
+  min-block-size: 28px;
+  margin-inline: calc(-1 * var(--ui-space-2));
+  padding: var(--ui-space-1) var(--ui-space-2);
+  border: 0;
+  border-radius: var(--ui-r-xs);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+.ui-table__sort:hover {
+  background: color-mix(in srgb, var(--ui-ink) 8%, transparent);
+  color: var(--ui-ink);
+}
+th[data-numeric] .ui-table__sort {
+  flex-direction: row-reverse;
+}
+.ui-table__sort-idle {
+  opacity: 0.6;
+}
+
+/* Pagination ------------------------------------------------------- */
+.ui-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ui-space-3);
+}
+.ui-pagination__status {
+  color: var(--ui-ink-2);
+  font-size: var(--ui-text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* EmptyState ------------------------------------------------------- */
+.ui-empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--ui-space-2);
+  max-inline-size: 46ch;
+  margin-inline: auto;
+  padding: var(--ui-space-10) var(--ui-space-6);
+  text-align: center;
+}
+.ui-empty[data-size='sm'] {
+  padding: var(--ui-space-6) var(--ui-space-4);
+}
+.ui-empty__icon {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 48px;
+  block-size: 48px;
+  margin-block-end: var(--ui-space-2);
+  border: 1px solid color-mix(in srgb, var(--ui-accent-1) 30%, var(--ui-line));
+  border-radius: var(--ui-r);
+  background: color-mix(in srgb, var(--ui-accent-1) 10%, transparent);
+  color: var(--ui-accent-text);
+}
+.ui-empty__media {
+  inline-size: min(100%, 240px);
+  margin-block-end: var(--ui-space-2);
+}
+.ui-empty__title {
+  margin: 0;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-lg);
+  font-weight: var(--ui-weight-display);
+  line-height: var(--ui-leading-snug);
+  letter-spacing: var(--ui-tracking-display);
+  text-wrap: balance;
+}
+.ui-empty[data-size='sm'] .ui-empty__title {
+  font-size: var(--ui-text-md);
+}
+.ui-empty__description {
+  margin: 0;
+  color: var(--ui-ink-2);
+  font-size: var(--ui-text-sm);
+  line-height: var(--ui-leading-base);
+  text-wrap: pretty;
+}
+.ui-empty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* 16px between wrapped rows: on touch each action's hit region grows to 44px. */
+  gap: var(--ui-space-4) var(--ui-space-3);
+  margin-block-start: var(--ui-space-2);
+}
+
+/* Skeleton --------------------------------------------------------- */
+.ui-skeleton {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  block-size: 0.9em;
+  overflow: hidden;
+  border-radius: var(--ui-r-xs);
+  background: color-mix(in srgb, var(--ui-ink) 10%, var(--ui-surface));
+}
+.ui-skeleton[data-shape='block'] {
+  block-size: 4rem;
+  border-radius: var(--ui-r-sm);
+}
+.ui-skeleton[data-shape='pill'] {
+  border-radius: var(--ui-r-pill);
+}
+.ui-skeleton[data-shape='circle'] {
+  inline-size: 2.5rem;
+  block-size: auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.ui-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ui-ink) 9%, transparent), transparent);
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.ui-skeleton-group {
+  display: grid;
+  gap: var(--ui-space-2);
+}
+@keyframes ui-skeleton-sweep {
+  from {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+}
+@media (forced-colors: active) {
+  .ui-skeleton {
+    border: 1px solid GrayText;
+  }
+}
+
+/* Motion: behind the gate; the base.css kill switch also collapses it ------ */
+@keyframes ui-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes ui-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes ui-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+@keyframes ui-pop-out {
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+@keyframes ui-sheet-in-x {
+  from {
+    transform: translateX(calc(var(--_ui-sheet-dir, 1) * 100%));
+  }
+}
+@keyframes ui-sheet-out-x {
+  to {
+    transform: translateX(calc(var(--_ui-sheet-dir, 1) * 100%));
+  }
+}
+@keyframes ui-sheet-in-y {
+  from {
+    transform: translateY(calc(var(--_ui-sheet-dir, 1) * 100%));
+  }
+}
+@keyframes ui-sheet-out-y {
+  to {
+    transform: translateY(calc(var(--_ui-sheet-dir, 1) * 100%));
+  }
+}
+.ui-sheet[data-side='left'],
+.ui-sheet[data-side='top'] {
+  --_ui-sheet-dir: -1;
+}
+.ui-sheet[data-side='right']:dir(rtl) {
+  --_ui-sheet-dir: -1;
+}
+.ui-sheet[data-side='left']:dir(rtl) {
+  --_ui-sheet-dir: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion='paused']) .ui-overlay[data-state='open'] {
+    animation: ui-fade-in var(--ui-dur-med) var(--ui-ease);
+  }
+  html:not([data-motion='paused']) .ui-overlay[data-state='closed'] {
+    animation: ui-fade-out calc(var(--ui-dur-med) * 0.7) var(--ui-ease-exit);
+  }
+  html:not([data-motion='paused']) .ui-dialog:not(.ui-sheet)[data-state='open'],
+  html:not([data-motion='paused']) :is(.ui-popover, .ui-menu)[data-state='open'] {
+    animation: ui-pop-in var(--ui-dur-fast) var(--ui-ease-emph);
+  }
+  html:not([data-motion='paused']) .ui-dialog:not(.ui-sheet)[data-state='closed'],
+  html:not([data-motion='paused']) :is(.ui-popover, .ui-menu)[data-state='closed'] {
+    animation: ui-pop-out calc(var(--ui-dur-fast) * 0.7) var(--ui-ease-exit);
+  }
+  html:not([data-motion='paused']) .ui-tooltip[data-state$='open'] {
+    animation: ui-fade-in var(--ui-dur-fast) var(--ui-ease);
+  }
+  html:not([data-motion='paused']) .ui-sheet:is([data-side='right'], [data-side='left'])[data-state='open'] {
+    animation: ui-sheet-in-x var(--ui-dur-med) var(--ui-ease-emph);
+  }
+  html:not([data-motion='paused']) .ui-sheet:is([data-side='right'], [data-side='left'])[data-state='closed'] {
+    animation: ui-sheet-out-x calc(var(--ui-dur-med) * 0.7) var(--ui-ease-exit);
+  }
+  html:not([data-motion='paused']) .ui-sheet:is([data-side='top'], [data-side='bottom'])[data-state='open'] {
+    animation: ui-sheet-in-y var(--ui-dur-med) var(--ui-ease-emph);
+  }
+  html:not([data-motion='paused']) .ui-sheet:is([data-side='top'], [data-side='bottom'])[data-state='closed'] {
+    animation: ui-sheet-out-y calc(var(--ui-dur-med) * 0.7) var(--ui-ease-exit);
+  }
+  /* Skeleton: one sweep of at most 1s, then static (spec §6.3 rule 7). */
+  html:not([data-motion='paused']) .ui-skeleton::after {
+    animation: ui-skeleton-sweep 1s var(--ui-ease-inout) 1 forwards;
+  }
+}
+
+@media (forced-colors: active) {
+  .ui-dialog,
+  .ui-popover,
+  .ui-menu,
+  .ui-tooltip {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* Touch (spec §9): 44px rows and an invisible 44px hit region on small controls. */
+@media (pointer: coarse) {
+  .ui-menu__item,
+  .ui-tabs__tab {
+    min-block-size: var(--ui-target-touch);
+  }
+  .ui-table__sort {
+    position: relative;
+  }
+  .ui-table__sort::after {
+    content: '';
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+    inset-inline: min(0px, calc((100% - var(--ui-target-touch)) / 2));
+  }
+}
+
+}
+/* --- src/marketing/styles.css --- */
+@layer ui-components {
+/* ------------------------------------------------------------------
+   marketing (@trident/ui/marketing): Hero, FeatureGrid, PricingTable,
+   Faq, CtaBand, SiteHeader, SiteFooter (spec §7 P1). Ported from the
+   Ops landing (landing/landing.css), the first page built on the
+   package. Reads only --ui-* tokens; no animation of its own.
+   ------------------------------------------------------------------ */
+
+.ui-marketing__head {
+  display: grid;
+  gap: var(--ui-space-2);
+  margin-block-end: var(--ui-space-8);
+}
+.ui-marketing__head[data-align='center'] {
+  justify-items: center;
+  text-align: center;
+}
+.ui-marketing__head:has(> .ui-visually-hidden:only-child) {
+  margin-block-end: 0;
+}
+
+/* SiteHeader ------------------------------------------------------- */
+.ui-site-header {
+  position: relative;
+  z-index: 3;
+  border-block-end: 1px solid var(--ui-line);
+}
+.ui-site-header[data-overlay] {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  border-block-end: 0;
+}
+.ui-site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-2) var(--ui-space-4);
+  min-block-size: var(--ui-nav-h);
+  padding-block: var(--ui-space-2);
+}
+.ui-site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-2-5, 10px);
+  min-block-size: var(--ui-target-min);
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-lg);
+  font-weight: var(--ui-weight-bold);
+  letter-spacing: var(--ui-tracking-display);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ui-site-header__brand :is(img, svg) {
+  flex: none;
+  inline-size: 28px;
+  block-size: 28px;
+}
+.ui-site-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ui-space-2) var(--ui-space-4);
+}
+
+/* Hero ------------------------------------------------------------- */
+.ui-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  padding-block: var(--ui-space-16);
+  overflow: hidden;
+}
+.ui-hero[data-full] {
+  min-block-size: 100vh;
+  min-block-size: 100svh;
+}
+.ui-hero[data-under-nav] {
+  padding-block-start: calc(var(--ui-nav-h) + var(--ui-space-8));
+}
+.ui-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.ui-hero__backdrop > :is(.ui-lazy3d, .ui-poster) {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  aspect-ratio: auto;
+}
+/* Scrim: the copy sits on the page colour; the backdrop shows below it on phones and to the right
+   from 980px (the 3D gate). Above the canvas, below the copy. */
+.ui-hero__backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, var(--ui-bg) 0%, var(--ui-bg) 56%, color-mix(in srgb, var(--ui-bg) 45%, transparent) 72%, transparent 90%),
+    linear-gradient(0deg, var(--ui-bg) 0%, transparent 10%);
+}
+.ui-hero__inner {
+  position: relative;
+  display: grid;
+  gap: var(--ui-space-10);
+  align-items: center;
+}
+.ui-hero__copy {
+  display: grid;
+  gap: var(--ui-space-5);
+  max-inline-size: 640px;
+}
+.ui-hero__title em {
+  display: block;
+  color: var(--ui-accent-text);
+  font-style: normal;
+}
+.ui-hero__lede {
+  max-inline-size: 46ch;
+}
+.ui-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ui-space-3);
+  margin-block-start: var(--ui-space-1);
+}
+.ui-hero__actions > .ui-btn {
+  flex: 1 1 auto;
+}
+.ui-hero__media :is(img, picture, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-radius: var(--ui-r-lg);
+}
+@media (min-width: 640px) {
+  .ui-hero__actions > .ui-btn {
+    flex: 0 0 auto;
+  }
+}
+@media (min-width: 980px) {
+  .ui-hero[data-media] .ui-hero__inner {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  }
+  .ui-hero__backdrop::after {
+    background:
+      linear-gradient(90deg, var(--ui-bg) 0%, color-mix(in srgb, var(--ui-bg) 90%, transparent) 38%, color-mix(in srgb, var(--ui-bg) 20%, transparent) 64%, transparent 100%),
+      linear-gradient(0deg, var(--ui-bg) 0%, transparent 16%);
+  }
+}
+
+/* FeatureGrid ------------------------------------------------------ */
+.ui-features__list,
+.ui-pricing__plans,
+.ui-plan__features {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ui-features__list {
+  display: grid;
+  gap: var(--ui-space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+.ui-features__list > li > .ui-card,
+.ui-pricing__plans > li > .ui-card {
+  block-size: 100%;
+}
+.ui-feature {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-space-3);
+}
+.ui-feature__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border: 1px solid color-mix(in srgb, var(--ui-accent-1) 30%, var(--ui-line));
+  border-radius: var(--ui-r-sm);
+  background: color-mix(in srgb, var(--ui-accent-1) 10%, transparent);
+  color: var(--ui-accent-text);
+}
+
+/* PricingTable (money surface: no motion) -------------------------- */
+.ui-pricing__plans {
+  display: grid;
+  gap: var(--ui-space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  align-items: stretch;
+}
+.ui-plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-space-4);
+}
+.ui-plan__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-2);
+}
+.ui-plan__price {
+  margin: 0;
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-4xl);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1;
+  letter-spacing: var(--ui-tracking-display);
+}
+.ui-plan__period {
+  margin-inline-start: 2px;
+  color: var(--ui-muted);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-sm);
+  font-weight: var(--ui-weight-body);
+  letter-spacing: 0;
+}
+.ui-plan__features {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ui-space-3);
+  color: var(--ui-ink-2);
+  font-size: var(--ui-text-sm);
+}
+.ui-plan__features > li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-2);
+}
+.ui-plan__features svg {
+  flex: none;
+  margin-block-start: 3px;
+  color: var(--ui-accent-text);
+}
+.ui-plan__cta {
+  display: grid;
+}
+.ui-pricing__note {
+  margin-block-start: var(--ui-space-6);
+  text-align: center;
+}
+
+/* Faq (<details>, works without JS) -------------------------------- */
+.ui-faq__list {
+  border-block-start: 1px solid var(--ui-line);
+}
+.ui-faq__item {
+  border-block-end: 1px solid var(--ui-line);
+}
+.ui-faq__item > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-4);
+  min-block-size: 56px;
+  padding-block: var(--ui-space-3);
+  border-radius: var(--ui-r-xs);
+  color: var(--ui-ink);
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-md);
+  font-weight: var(--ui-weight-display);
+  cursor: pointer;
+  list-style: none;
+}
+.ui-faq__item > summary::-webkit-details-marker {
+  display: none;
+}
+.ui-faq__item > summary::after {
+  content: '+';
+  flex: none;
+  color: var(--ui-accent-text);
+  font-family: var(--ui-font-body);
+  font-size: var(--ui-text-xl);
+  font-weight: var(--ui-weight-body);
+  line-height: 1;
+}
+.ui-faq__item[open] > summary::after {
+  content: '\2212';
+}
+.ui-faq__answer {
+  padding-block-end: var(--ui-space-5);
+  max-inline-size: var(--ui-measure);
+  color: var(--ui-ink-2);
+}
+.ui-faq__answer > p {
+  margin: 0;
+}
+
+/* CtaBand ---------------------------------------------------------- */
+.ui-cta-band__panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-6);
+  padding: var(--ui-space-8);
+  border: 1px solid color-mix(in srgb, var(--ui-accent-1) 30%, var(--ui-line));
+  border-radius: var(--ui-r-lg);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--ui-accent-1) 12%, transparent), transparent 60%),
+    var(--ui-surface);
+}
+.ui-cta-band__copy {
+  display: grid;
+  gap: var(--ui-space-2);
+  max-inline-size: 52ch;
+}
+
+/* SiteFooter ------------------------------------------------------- */
+.ui-site-footer {
+  padding-block: var(--ui-space-8);
+  border-block-start: 1px solid var(--ui-line);
+}
+.ui-site-footer__inner,
+.ui-site-footer__end,
+.ui-site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ui-space-3) var(--ui-space-5);
+}
+.ui-site-footer__inner {
+  justify-content: space-between;
+  gap: var(--ui-space-4);
+}
+.ui-site-footer__note {
+  margin: 0;
+  color: var(--ui-muted);
+  font-size: var(--ui-text-sm);
+}
+.ui-site-footer__links a:not(.ui-btn) {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--ui-target-min);
+  font-size: var(--ui-text-sm);
+}
+
+@media (pointer: coarse) {
+  .ui-site-footer__links a:not(.ui-btn),
+  .ui-site-header__nav a:not(.ui-btn),
+  .ui-site-header__brand {
+    min-block-size: var(--ui-target-touch);
+  }
+  .ui-faq__item > summary {
+    min-block-size: max(56px, var(--ui-target-touch));
+  }
+}
+
+}
+/* --- src/three/styles.css --- */
+@layer ui-components {
+/* @trident/ui/three — the Lazy3D slot (spec §6.5). Fixed aspect ratio (CLS 0), poster painted
+   first, canvas stacked on top and inert unless the scene is interactive. */
+.ui-lazy3d {
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  contain: layout paint;
+  isolation: isolate;
+}
+
+.ui-lazy3d__poster,
+.ui-lazy3d__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.ui-lazy3d__stage {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ui-lazy3d[data-interactive] .ui-lazy3d__stage {
+  pointer-events: auto;
+}
+
+.ui-lazy3d__stage canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.ui-poster {
+  position: absolute;
+  inset: 0;
+}
+
+.ui-poster picture,
+.ui-poster__img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.ui-poster__img {
+  object-fit: cover;
+}
+
+/* No image: a procedural token glow, never an empty box. Both ellipses are sized in percent of the
+   slot and end inside it (the outer one reaches 3% from the top, bottom and right edges), so the
+   glow always fades to the base colour before any edge whatever the slot's ratio (G11: the old
+   farthest-corner circles were cut off by the slot and left a hard-edged rectangle). */
+.ui-poster--procedural {
+  background:
+    radial-gradient(ellipse 24% 38% at 60% 50%, color-mix(in srgb, var(--ui-accent-1) 50%, transparent), transparent),
+    radial-gradient(ellipse 37% 47% at 60% 50%, color-mix(in srgb, var(--ui-accent-2) 26%, transparent), transparent),
+    var(--ui-bg-2, var(--ui-bg));
+}
+
+.ui-status-orbit__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The on-screen copy of the orbit (visible): one row per card, the state as a StatusPill (G21). */
+.ui-status-orbit__list[data-visible] {
+  display: grid;
+  margin-block-start: var(--ui-space-3);
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-surface);
+}
+
+.ui-status-orbit__list[data-visible] > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-2);
+  padding: var(--ui-space-2) var(--ui-space-3);
+  color: var(--ui-ink);
+  font-size: var(--ui-text-sm);
+}
+
+.ui-status-orbit__list[data-visible] > li + li {
+  border-block-start: 1px solid var(--ui-line);
+}
+
+@media (forced-colors: active) {
+  .ui-lazy3d__stage {
+    display: none;
+  }
+}
+
+@media print {
+  .ui-lazy3d__stage {
+    display: none;
+  }
+}
+
+}

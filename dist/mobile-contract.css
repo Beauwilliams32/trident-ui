@@ -1,0 +1,11 @@
+/* @trident/ui — GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* @trident/ui — generated mobile interaction contract from tokens.json. */
+:root {
+  --ui-target-touch: 44px;
+  --ui-target-game: 48px;
+  --ui-focus-width: 2px;
+  --ui-focus-offset: 2px;
+  --ui-dur-mobile-fast: 160ms;
+  --ui-dur-mobile-base: 240ms;
+  --ui-dur-mobile-slow: 320ms;
+}

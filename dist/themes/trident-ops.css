@@ -1,0 +1,59 @@
+/* @trident/ui — GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* theme: trident-ops — Trident Ops on the Ops brand rollout (build/brand-systems/ops): the Ops dark palette, its accent pair and its signals, on the fleet's shared glass mix, blur, elevation, motion and type contracts. */
+[data-theme="trident-ops"] {
+  color-scheme: dark;
+  --ui-bg: #0c1a26;
+  --ui-bg-2: #0e242c;
+  --ui-surface: #0e242c;
+  --ui-surface-raised: #0e242c;
+  --ui-glass: color-mix(in srgb, #0e242c 62%, transparent);
+  --ui-glass-strong: color-mix(in srgb, #0e242c 82%, transparent);
+  --ui-glass-edge: rgba(255,255,255,.08);
+  --ui-specular: rgba(255,255,255,.13);
+  --ui-line: #113738;
+  --ui-line-strong: #687688;
+  --ui-ink: #ffffff;
+  --ui-ink-2: #d2d7e1;
+  --ui-muted: #9aa7bd;
+  --ui-accent-1: #2fd39a;
+  --ui-accent-2: #0f9f72;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: color-mix(in srgb, var(--ui-accent-1) 22%, transparent);
+  --ui-on-accent: #0b0b0d;
+  --ui-accent-text: var(--ui-accent-1);
+  --ui-focus: var(--ui-accent-text);
+  --ui-ok: #2fd39a;
+  --ui-warn: #f5b83d;
+  --ui-danger: #ff6b5e;
+  --ui-info: #3ba8f0;
+  --ui-status-live: var(--ui-accent-text);
+  --ui-status-attention: var(--ui-warn);
+  --ui-status-ok: var(--ui-ok);
+  --ui-status-error: var(--ui-danger);
+  --ui-status-reasoning: #b69bff;
+  --ui-font-display: 'Space Grotesk', 'Space Grotesk Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-body: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ui-r-xs: 6px;
+  --ui-r-sm: 10px;
+  --ui-r: 16px;
+  --ui-r-lg: 24px;
+  --ui-r-pill: 999px;
+  --ui-blur: 14px;
+  --ui-blur-heavy: 24px;
+  --ui-e0: none;
+  --ui-e1: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge);
+  --ui-e2: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge), 0 16px 40px -16px rgba(0,0,0,.55);
+  --ui-e3: 0 0 0 1px var(--ui-line-strong), 0 24px 64px -12px rgba(0,0,0,.65);
+  --ui-e4: 0 0 0 1px var(--ui-line-strong), 0 32px 80px -12px rgba(0,0,0,.7);
+}
+@media (prefers-contrast: more) {
+  [data-theme="trident-ops"] {
+    --ui-muted: #a0acc1;
+    --ui-line-strong: #7d8999;
+    --ui-line: #687688;
+    --ui-glass-edge: #687688;
+    --ui-glass: var(--ui-surface);
+    --ui-glass-strong: var(--ui-surface-raised);
+  }
+}

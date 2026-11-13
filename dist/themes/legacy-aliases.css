@@ -1,0 +1,74 @@
+/* @trident/ui — GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* Legacy aliases (spec §2.1): old names -> --ui-*. Each repo deletes this import once its CSS is ported. */
+:root,
+[data-theme] {
+  --tg-bg: var(--ui-bg);
+  --tg-bg2: var(--ui-bg-2);
+  --tg-ink: var(--ui-ink);
+  --tg-muted: var(--ui-muted);
+  --tg-line: var(--ui-line);
+  --tg-a1: var(--ui-accent-1);
+  --tg-a2: var(--ui-accent-2);
+  --tg-grad: var(--ui-accent-grad);
+  --tg-glow: var(--ui-glow);
+  --tg-glass: var(--ui-glass);
+  --tg-glass-strong: var(--ui-glass-strong);
+  --tg-glass-edge: var(--ui-glass-edge);
+  --tg-specular: var(--ui-specular);
+  --tg-display: var(--ui-font-display);
+  --tg-body: var(--ui-font-body);
+  --tg-r: var(--ui-r);
+  --tg-r-lg: var(--ui-r-lg);
+  --tg-r-pill: var(--ui-r-pill);
+  --tg-fast: var(--ui-dur-fast);
+  --tg-med: var(--ui-dur-med);
+  --tg-ease: var(--ui-ease);
+  --tg-spring: var(--ui-spring);
+  --violet-50: var(--p-violet-50);
+  --violet-100: var(--p-violet-100);
+  --violet-300: var(--p-violet-300);
+  --violet-500: var(--p-violet-500);
+  --violet-600: var(--p-violet-600);
+  --violet-700: var(--p-violet-700);
+  --violet-glow: rgba(124,58,237,.18);
+  --glass-surface: var(--ui-glass);
+  --glass-surface-strong: var(--ui-glass-strong);
+  --glass-shadow: var(--ui-e2);
+  --glass-shadow-hover: var(--ui-e3);
+  --glass-blur: var(--ui-blur);
+  --glass-blur-heavy: var(--ui-blur-heavy);
+  --glass-border: var(--ui-glass-edge);
+  --dur-fast: var(--ui-dur-fast);
+  --dur: var(--ui-dur);
+  --dur-slow: var(--ui-dur-med);
+  --dur-page: var(--ui-dur-page);
+  --dur-reveal: var(--ui-dur-reveal);
+  --dur-count: var(--ui-dur-count);
+  --primary: var(--ui-accent-1);
+  --primary-light: var(--ui-accent-1);
+  --primary-dark: var(--ui-accent-2);
+  --bg-card: var(--ui-glass);
+}
+/* Quorum: theme.js reads these names by value; --q-* literals are set by themes/quorum.css. */
+[data-theme="quorum"] {
+  --bg: var(--q-bg);
+  --bg0: var(--q-bg0);
+  --bg1: var(--q-bg1);
+  --bg2: var(--q-bg2);
+  --stage-wall: var(--q-stage-wall);
+  --stage-mid: var(--q-stage-mid);
+  --stage-floor: var(--q-stage-floor);
+  --stage-edge: var(--q-stage-edge);
+  --fg0: var(--q-fg0);
+  --fg1: var(--q-fg1);
+  --fg2: var(--q-fg2);
+  --muted: var(--q-muted);
+  --ghost: var(--q-ghost);
+  --accent: var(--q-accent);
+  --accent-strong: var(--q-accent-strong);
+  --warn: var(--q-warn);
+  --ok: var(--q-ok);
+  --error: var(--q-error);
+  --info: var(--q-info);
+  --purple: var(--q-purple);
+}

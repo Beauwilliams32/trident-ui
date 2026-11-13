@@ -1,0 +1,66 @@
+/* @trident/ui — GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit. */
+/* theme: trident-ui — Trident UI on the Trident Studio brand system, dark (the brand default). bg, surface, line, ink, muted, signals and the accent pair are the brand tokens; bg-2, surface-raised, ink-2, line-strong and status-reasoning are derived (docs/BRAND.md). */
+[data-theme="trident-ui"] {
+  color-scheme: dark;
+  --ui-bg: #0b1927;
+  --ui-bg-2: #0c1e2b;
+  --ui-surface: #0c222e;
+  --ui-surface-raised: #0d2b36;
+  --ui-glass: var(--ui-surface);
+  --ui-glass-strong: var(--ui-surface-raised);
+  --ui-glass-edge: var(--ui-line);
+  --ui-specular: rgba(255,255,255,.06);
+  --ui-line: #0d343d;
+  --ui-line-strong: #616e81;
+  --ui-ink: #ffffff;
+  --ui-ink-2: #d7dce5;
+  --ui-muted: #9aa7bd;
+  --ui-accent-1: #19c3b1;
+  --ui-accent-2: #5b6cff;
+  --ui-accent-grad: linear-gradient(135deg, var(--ui-accent-1), var(--ui-accent-2));
+  --ui-glow: color-mix(in srgb, var(--ui-accent-1) 22%, transparent);
+  --ui-on-accent: #0b0b0d;
+  --ui-accent-text: var(--ui-accent-1);
+  --ui-focus: var(--ui-accent-text);
+  --ui-ok: #2fd39a;
+  --ui-warn: #f5b83d;
+  --ui-danger: #ff6b5e;
+  --ui-info: #3ba8f0;
+  --ui-status-live: var(--ui-accent-text);
+  --ui-status-attention: var(--ui-warn);
+  --ui-status-ok: var(--ui-ok);
+  --ui-status-error: var(--ui-danger);
+  --ui-status-reasoning: #9da7ff;
+  --ui-font-display: 'Playfair Display', 'Playfair Display Fallback', Georgia, 'Times New Roman', serif;
+  --ui-font-body: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
+  --ui-font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ui-r-xs: 6px;
+  --ui-r-sm: 10px;
+  --ui-r: 16px;
+  --ui-r-lg: 24px;
+  --ui-r-pill: 999px;
+  --ui-blur: 14px;
+  --ui-blur-heavy: 24px;
+  --ui-e0: none;
+  --ui-e1: inset 0 1px 0 var(--ui-specular), 0 0 0 1px var(--ui-glass-edge);
+  --ui-e2: 0 0 0 1px var(--ui-line), var(--ui-shadow-raised);
+  --ui-e3: 0 0 0 1px var(--ui-line-strong), var(--ui-shadow-overlay);
+  --ui-e4: 0 0 0 1px var(--ui-line-strong), 0 32px 80px -12px rgba(0,0,0,.7);
+  --ui-dur: 240ms;
+  --ui-weight-display: 700;
+  --ui-text-base: 17px;
+  --ui-text-4xl: clamp(36px, 5.5vw, 40px);
+  --ui-text-display: clamp(40px, 6vw, 72px);
+  --ui-shadow-raised: 0 6px 18px rgba(0,0,0,.18);
+  --ui-shadow-overlay: 0 16px 40px rgba(0,0,0,.32);
+}
+@media (prefers-contrast: more) {
+  [data-theme="trident-ui"] {
+    --ui-muted: #9eabc0;
+    --ui-line-strong: #7d8898;
+    --ui-line: #616e81;
+    --ui-glass-edge: #616e81;
+    --ui-glass: var(--ui-surface);
+    --ui-glass-strong: var(--ui-surface-raised);
+  }
+}
