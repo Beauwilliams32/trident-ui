@@ -11,7 +11,7 @@ describe('package.json', () => {
     expect(pkg.name).toBe('@trident/ui')
     expect(pkg.license).toBe('MIT')
     expect(readFileSync(join(ROOT, 'LICENSE'), 'utf8')).toContain('MIT License')
-    expect(pkg.private).toBe(true) // visibility stays gated until history sanitation is verified
+    expect(pkg.private).toBe(true) // deliberate: npm publication is not the channel (spec §0.2); this also stops Changesets versioning the package
     expect(pkg.type).toBe('module')
     expect(pkg.sideEffects).toEqual(['*.css'])
     expect(pkg.scripts.prepublish).toBeUndefined()

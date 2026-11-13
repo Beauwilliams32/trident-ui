@@ -12,9 +12,9 @@ Nothing here changes a consumer. Every cell was read from the file named in the 
 
 Two different mechanisms are in use, so "behind" means two different things:
 
-- **Package consumers** pin a tag (`@trident/ui` + a `DESIGN-VERSION` file). Current = the pin equals
-  the newest released tag. The newest tag is **`v0.2.0`** (`df2fb04`, released 2026-10-26; `main` is
-  past it only with unreleased docs).
+- **Package consumers** pin a tag (`@trident/ui` + a `DESIGN-VERSION` file). The latest
+  prepared release is **`v1.0.0`**; this audit records pins as observed on 2026-10-27,
+  not a claim that any consumer has migrated. Current means the pin equals the newest released tag.
 - **CSS/theme consumers** do not consume the package at all. They either vendor the canonical
   `trident-social/design/trident-glass.css` (sha256 `a2228fe11b12…`) or carry their own token file.
   Current = the copy is byte-identical to the canonical file; a product with its own tokens is

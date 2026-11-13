@@ -1,6 +1,6 @@
 {
   "name": "@trident/ui",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Trident design system: tokens, themes, fonts and React 19 components for the Trident Studio fleet, Williams Media, Portfolio and Quorum.",
   "private": true,
   "license": "MIT",

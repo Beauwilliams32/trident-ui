@@ -4,6 +4,25 @@ Managed with [Changesets](https://github.com/changesets/changesets) (`npx change
 are in `.changeset/README.md`: a contrast-affecting change is **major**, a new theme is **minor**,
 and any rendered-colour change needs an entry here.
 
+## 1.0.0
+
+Prepared for Git-tag distribution (2026-11-12). This is a major release because the
+`trident-ops` colour roles change the contrast matrix.
+
+- **Rendered colour — Trident Ops:** the theme now follows the Ops brand rollout, with
+  accent `#2fd39a` / `#0f9f72`, its own navy/teal surfaces, status colours and 24px
+  large radius. Its 31 changed contrast-matrix ratios still pass all 29 checks. Only
+  `trident-ops` changes; the live LocalOps consumer already renders these values using
+  local overrides, which are not removed in this release.
+- Add the generated colour-neutral `mobile-contract.css` for 44px touch targets, 48px
+  game controls, focus sizing and 160/240/320ms motion; Button gains an explicit
+  `gameControl` option.
+- Ship white and ink source artwork for the approved Trident Studio house mark, distinct
+  from the Trident UI product tile.
+- Prepare the MIT-licensed public Git/tag channel and document `npm install
+  --allow-git=all github:Beauwilliams32/trident-ui#v1.0.0`. This is not an npm registry
+  publication; `package.json` remains `private: true`.
+
 ## 0.2.0
 
 Tag `v0.2.0` (2026-10-24). Released for the brand system, the Depth Line mark, the
