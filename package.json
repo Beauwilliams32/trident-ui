@@ -60,6 +60,10 @@
       "types": "./dist/marketing.d.ts",
       "import": "./dist/marketing.js"
     },
+    "./patterns": {
+      "types": "./dist/patterns.d.ts",
+      "import": "./dist/patterns.js"
+    },
     "./three": {
       "types": "./dist/three.d.ts",
       "import": "./dist/three.js"
