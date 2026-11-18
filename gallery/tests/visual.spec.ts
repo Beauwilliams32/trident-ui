@@ -27,8 +27,21 @@ for (const theme of THEMES)
           // the contrast matrix, not by pixels (docs/DEVIATIONS.md, 2026-10-11).
           if (NOT_SNAPSHOTTED.has(g)) continue
           if (g === 'brand') {
-            await expect(page.locator('.g-house-lockup')).toHaveCount(2)
-            await expect(page.locator('.g-house-lockup .ui-brand-mark')).toHaveCount(2)
+            const lockups = page.locator('.g-house-lockup')
+            await expect(lockups).toHaveCount(2)
+            for (const lockup of await lockups.all()) await expect(lockup.locator('.ui-brand-mark')).toHaveCount(1)
+          }
+          if (g === 'marketing') {
+            const siteHeaderMark = page.locator('section[data-group="marketing"] .ui-site-header__brand img')
+            await expect(siteHeaderMark).toHaveCount(1)
+            await expect(siteHeaderMark).toHaveAttribute('width', '28')
+            await expect(siteHeaderMark).toHaveAttribute('height', '28')
+            const intrinsicSize = await siteHeaderMark.evaluate((img) => {
+              const image = img as HTMLImageElement
+              return [image.naturalWidth, image.naturalHeight]
+            })
+            expect(intrinsicSize[0]).toBeGreaterThan(0)
+            expect(intrinsicSize[1]).toBeGreaterThan(0)
           }
           await expect.soft(page.locator(`section[data-group="${g}"]`)).toHaveScreenshot(`${theme}/${motion}-${width}-${g}.png`)
         }
