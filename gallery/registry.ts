@@ -63,7 +63,7 @@ export const GROUP_INFO: Record<string, { title: string; summary: string; entry?
   app: { title: 'App overlays and data', summary: 'Radix overlays, menus, tabs, the command palette, and the data table, empty state and skeleton.', entry: '@trident/ui/app' },
   marketing: { title: 'Marketing compositions', summary: 'Hero, features, pricing, FAQ, call-to-action, header and footer. Copy and prices always arrive as props.', entry: '@trident/ui/marketing' },
   three: { title: '3D', summary: 'Lazy3D slots, posters and the status orbit. 3D only ever appears as its poster in these screenshots.', entry: '@trident/ui/three' },
-  brand: { title: 'Brand', summary: 'The Trident Studio tile, lockups, link-preview card and icon files shipped in brand/, plus the legacy Depth Line contour. Shown for owner creative review; not released yet.' },
+  brand: { title: 'Brand', summary: 'Trident UI’s product tile and lockup, the approved Trident Studio house glyph, supplied lockups and icon files, plus the legacy Depth Line contour.' },
 }
 
 /** Page order; the component groups follow dist/styles.css (scripts/build-styles.mjs). */

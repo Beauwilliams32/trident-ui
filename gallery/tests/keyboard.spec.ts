@@ -48,11 +48,14 @@ for (const theme of ['fleet', 'wmh-portal'] as const) {
     test('Tooltip shows on focus, Escape hides it and focus stays', async ({ page }) => {
       await openGallery(page, theme, 'reduced', 1280)
       const button = page.locator('section[data-group="app"]').getByRole('button', { name: 'Archive', exact: true })
-      // A real keyboard focus (Radix shows tooltips on focus-visible, not on programmatic focus).
+      // Return to the trigger with a real Tab after Shift+Tab settles the focus-open tooltip.
       await button.focus()
       await page.keyboard.press('Shift+Tab')
+      await expect(button).toHaveAttribute('data-state', 'closed')
       await page.keyboard.press('Tab')
       await expect(button).toBeFocused()
+      await expect(button).toHaveAttribute('data-state', 'instant-open')
+      await expect(button).toHaveAttribute('aria-describedby', /.+/)
       const tip = page.getByRole('tooltip')
       await expect(tip).toHaveText('Archive')
       await page.keyboard.press('Escape')

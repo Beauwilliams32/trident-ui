@@ -6,6 +6,8 @@ import { ENTRIES, EXTERNAL } from './entries.config.mjs'
 // Vite 8 library mode: ESM JavaScript for every subpath entry. Types come from tsup (tsup.config.ts);
 // CSS/tokens come from scripts/build-tokens.mjs and scripts/build-styles.mjs.
 export default defineConfig({
+  // This library emits its approved glyph beside the entry; keep its URL package-relative.
+  base: './',
   plugins: [react()],
   build: {
     outDir: 'dist',

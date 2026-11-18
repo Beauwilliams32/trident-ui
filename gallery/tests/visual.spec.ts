@@ -14,6 +14,9 @@ for (const theme of THEMES)
     for (const width of WIDTHS)
       test(`visual ${theme} ${motion} ${width}`, async ({ page }) => {
         await openGallery(page, theme, motion, width)
+        // Brand source assets are separate package files; wait for decoding before recording or
+        // comparing screenshots so a slow local SVG fetch cannot make a mark disappear at random.
+        await page.locator('img').evaluateAll((images) => Promise.all(images.map((image) => (image as HTMLImageElement).decode())))
         // 3D is snapshotted only through its poster: no WebGL canvas may exist (spec §6.4, §10.6).
         await expect(page.locator('canvas')).toHaveCount(0)
         await expect(page.locator('[data-poster]').first()).toBeVisible()
@@ -23,6 +26,23 @@ for (const theme of THEMES)
           // Text-only documentation: the install and token tables are checked by measure.spec.ts and
           // the contrast matrix, not by pixels (docs/DEVIATIONS.md, 2026-10-11).
           if (NOT_SNAPSHOTTED.has(g)) continue
+          if (g === 'brand') {
+            const lockups = page.locator('.g-house-lockup')
+            await expect(lockups).toHaveCount(2)
+            for (const lockup of await lockups.all()) await expect(lockup.locator('.ui-brand-mark')).toHaveCount(1)
+          }
+          if (g === 'marketing') {
+            const siteHeaderMark = page.locator('section[data-group="marketing"] .ui-site-header__brand img')
+            await expect(siteHeaderMark).toHaveCount(1)
+            await expect(siteHeaderMark).toHaveAttribute('width', '28')
+            await expect(siteHeaderMark).toHaveAttribute('height', '28')
+            const intrinsicSize = await siteHeaderMark.evaluate((img) => {
+              const image = img as HTMLImageElement
+              return [image.naturalWidth, image.naturalHeight]
+            })
+            expect(intrinsicSize[0]).toBeGreaterThan(0)
+            expect(intrinsicSize[1]).toBeGreaterThan(0)
+          }
           await expect.soft(page.locator(`section[data-group="${g}"]`)).toHaveScreenshot(`${theme}/${motion}-${width}-${g}.png`)
         }
       })
