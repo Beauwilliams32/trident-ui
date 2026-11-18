@@ -52,6 +52,12 @@ finial. Do not redraw, simplify, add a ring, or substitute another trident shape
 its own documented icon, such as the layers glyph in Trident UI's product tile; that icon identifies
 the product and does not replace the shared house mark.
 
+In React surfaces import `BrandMark` or `TridentMark` from `@trident/ui/marketing`. Use
+`BrandLockup` when a live product name and studio credit sit beside the glyph. The component loads
+the exact ink or white SVG as a separate package asset, so both the artwork and the marketing entry's
+bundle budget stay intact. The gallery's Brand section previews both tones alongside Trident UI's
+separate product tile and lockup.
+
 ## The tile
 
 Trident UI's product tile is the app icon, favicon source and avatar: a rounded square (22% corners),
@@ -73,8 +79,8 @@ the tile except the glyph. The artwork was drawn in Adobe Illustrator and is cop
 Rules: keep a quarter of the tile free on every side; 16px is the smallest size; never rotate, recolour
 or add text inside the tile; the product name next to it is live text in the display face, with
 "By Trident Studio" as the credit. Where words cannot be live text, use the supplied lockups below. The
-gallery's **Brand** section shows the tile at 16 to 128px, the live-text lockup, the supplied lockups and
-link-preview card, and every icon file.
+gallery's **Brand** section shows the tile at 16 to 128px, the live-text product lockup, the approved
+house mark in both tones, the supplied lockups and link-preview card, and every icon file.
 
 ## Lockups and the link-preview card
 

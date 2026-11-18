@@ -58,6 +58,38 @@
   inline-size: 28px;
   block-size: 28px;
 }
+.ui-site-header__brand img.ui-brand-mark {
+  object-fit: contain;
+}
+.ui-brand-mark {
+  display: block;
+  flex: none;
+  object-fit: contain;
+}
+.ui-brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-2-5, 10px);
+  color: inherit;
+  line-height: 1.1;
+  text-decoration: none;
+}
+.ui-brand-lockup__text {
+  display: grid;
+  gap: var(--ui-space-1, 4px);
+}
+.ui-brand-lockup__kicker {
+  color: var(--ui-muted);
+  font-family: var(--ui-font-mono);
+  font-size: var(--ui-text-xs);
+  letter-spacing: var(--ui-tracking-kicker);
+}
+.ui-brand-lockup__name {
+  font-family: var(--ui-font-display);
+  font-size: var(--ui-text-lg);
+  font-weight: var(--ui-weight-bold);
+  letter-spacing: var(--ui-tracking-display);
+}
 .ui-site-header__nav {
   display: flex;
   flex-wrap: wrap;

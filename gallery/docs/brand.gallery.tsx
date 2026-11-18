@@ -1,5 +1,5 @@
 /**
- * Brand (G13): the Trident Studio tile and glyph shipped in brand/ at the sizes products use them,
+ * Brand (G13): the Trident UI product tile and approved Trident Studio house glyph at the sizes used,
  * the "Trident UI by Trident Studio" lockup (tile plus live text), the supplied outlined lockups and
  * 1200 x 630 link-preview card, the icon files with their pixel sizes, and the legacy Depth Line
  * contour backdrop. The artwork is the supplied Illustrator export (brand/*.svg, brand/*.png);
@@ -20,6 +20,7 @@ import tile from '../../brand/tile.svg'
 import tileBleed from '../../brand/tile-bleed.svg'
 import tileMaskable from '../../brand/tile-maskable.svg'
 import { Button } from '../../src/actions/Button'
+import { BrandLockup, BrandMark } from '../../src/marketing'
 import { Heading } from '../../src/type/Heading'
 import { Kicker } from '../../src/type/Kicker'
 import { Text } from '../../src/type/Text'
@@ -121,6 +122,35 @@ export const examples: RawExample[] = [
             </figcaption>
           </figure>
         ))}
+      </div>
+    ),
+  },
+  {
+    id: 'studio-house-mark',
+    title: 'Trident Studio house mark',
+    description: 'The shared Poseidon-approved bold glyph in its unmodified ink and white source files. Product tiles and names stay product-specific; this lockup keeps the studio credit as live text.',
+    wide: true,
+    showCode: false,
+    render: () => (
+      <div className="g-brand-art">
+        <figure className="g-brand-art__item">
+          <div className="g-brand-art__stage g-brand-art__stage--light">
+            <div className="g-house-lockup">
+              <BrandMark title="Trident Studio" size={48} />
+              <BrandLockup name="Trident UI" kicker="Trident Studio" size={48} />
+            </div>
+          </div>
+          <figcaption>Ink house glyph with live product name and studio credit.</figcaption>
+        </figure>
+        <figure className="g-brand-art__item">
+          <div className="g-brand-art__stage g-brand-art__stage--dark">
+            <div className="g-house-lockup">
+              <BrandMark title="Trident Studio" tone="white" size={48} />
+              <BrandLockup name="Trident UI" kicker="Trident Studio" tone="white" size={48} />
+            </div>
+          </div>
+          <figcaption>White house glyph on a dark surface, from the supplied white source.</figcaption>
+        </figure>
       </div>
     ),
   },

@@ -14,6 +14,9 @@ for (const theme of THEMES)
     for (const width of WIDTHS)
       test(`visual ${theme} ${motion} ${width}`, async ({ page }) => {
         await openGallery(page, theme, motion, width)
+        // Brand source assets are separate package files; wait for decoding before recording or
+        // comparing screenshots so a slow local SVG fetch cannot make a mark disappear at random.
+        await page.locator('img').evaluateAll((images) => Promise.all(images.map((image) => (image as HTMLImageElement).decode())))
         // 3D is snapshotted only through its poster: no WebGL canvas may exist (spec §6.4, §10.6).
         await expect(page.locator('canvas')).toHaveCount(0)
         await expect(page.locator('[data-poster]').first()).toBeVisible()

@@ -612,9 +612,21 @@ body {
 }
 .g-brand-art__stage--dark {
   background: #0b1927;
+  color: #fff;
 }
 .g-brand-art__stage--light {
   background: #e8f3f3;
+  color: #0b0b0d;
+}
+.g-house-lockup {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  inline-size: 100%;
+}
+.g-brand-art__stage .ui-brand-lockup__kicker {
+  color: inherit;
+  opacity: 0.72;
 }
 .g-brand-art__stage--card {
   background: #0b1927;

@@ -4,6 +4,7 @@
  */
 import type { ReactNode } from 'react'
 import { BarChart3, CalendarClock, ShieldCheck } from 'lucide-react'
+import productTile from '../../brand/tile.svg'
 import { LinkButton } from '../actions/Button'
 import { PosterFallback } from '../three/PosterFallback'
 import { TextLink } from '../type/TextLink'
@@ -20,11 +21,7 @@ export interface GalleryExample {
 
 export const group = 'marketing'
 
-const Mark = () => (
-  <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-    <rect width="64" height="64" rx="14" fill="var(--ui-accent-1)" />
-  </svg>
-)
+const Mark = () => <img src={productTile} width="28" height="28" alt="" />
 
 export const examples: GalleryExample[] = [
   {
