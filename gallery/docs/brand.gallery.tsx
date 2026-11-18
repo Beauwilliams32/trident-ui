@@ -20,7 +20,7 @@ import tile from '../../brand/tile.svg'
 import tileBleed from '../../brand/tile-bleed.svg'
 import tileMaskable from '../../brand/tile-maskable.svg'
 import { Button } from '../../src/actions/Button'
-import { BrandLockup, BrandMark } from '../../src/marketing'
+import { BrandLockup } from '../../src/marketing'
 import { Heading } from '../../src/type/Heading'
 import { Kicker } from '../../src/type/Kicker'
 import { Text } from '../../src/type/Text'
@@ -136,7 +136,6 @@ export const examples: RawExample[] = [
         <figure className="g-brand-art__item">
           <div className="g-brand-art__stage g-brand-art__stage--light">
             <div className="g-house-lockup">
-              <BrandMark title="Trident Studio" size={48} />
               <BrandLockup name="Trident UI" kicker="Trident Studio" size={48} />
             </div>
           </div>
@@ -145,7 +144,6 @@ export const examples: RawExample[] = [
         <figure className="g-brand-art__item">
           <div className="g-brand-art__stage g-brand-art__stage--dark">
             <div className="g-house-lockup">
-              <BrandMark title="Trident Studio" tone="white" size={48} />
               <BrandLockup name="Trident UI" kicker="Trident Studio" tone="white" size={48} />
             </div>
           </div>

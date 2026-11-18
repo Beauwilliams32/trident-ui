@@ -26,6 +26,10 @@ for (const theme of THEMES)
           // Text-only documentation: the install and token tables are checked by measure.spec.ts and
           // the contrast matrix, not by pixels (docs/DEVIATIONS.md, 2026-10-11).
           if (NOT_SNAPSHOTTED.has(g)) continue
+          if (g === 'brand') {
+            await expect(page.locator('.g-house-lockup')).toHaveCount(2)
+            await expect(page.locator('.g-house-lockup .ui-brand-mark')).toHaveCount(2)
+          }
           await expect.soft(page.locator(`section[data-group="${g}"]`)).toHaveScreenshot(`${theme}/${motion}-${width}-${g}.png`)
         }
       })
