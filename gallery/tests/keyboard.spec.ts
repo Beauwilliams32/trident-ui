@@ -47,17 +47,27 @@ for (const theme of ['fleet', 'wmh-portal'] as const) {
 
     test('Tooltip shows on focus, Escape hides it and focus stays', async ({ page }) => {
       await openGallery(page, theme, 'reduced', 1280)
-      const button = page.locator('section[data-group="app"]').getByRole('button', { name: 'Archive', exact: true })
-      // Return to the trigger with a real Tab after Shift+Tab settles the focus-open tooltip.
-      await button.focus()
-      await page.keyboard.press('Shift+Tab')
-      await expect(button).toHaveAttribute('data-state', 'closed')
-      await page.keyboard.press('Tab')
+      const app = page.locator('section[data-group="app"]')
+      const button = app.getByRole('button', { name: 'Archive', exact: true })
+      // Use real keyboard navigation so the browser's focus scroll is part of the regression path.
+      await app.getByRole('button', { name: 'Share', exact: true }).focus()
+      let reachedArchive = false
+      for (let step = 0; step < 6; step += 1) {
+        await page.keyboard.press('Tab')
+        if (await button.evaluate((element) => element === document.activeElement)) {
+          reachedArchive = true
+          break
+        }
+      }
+      expect(reachedArchive, 'Archive must be reachable with keyboard Tab').toBe(true)
       await expect(button).toBeFocused()
+      expect(await button.evaluate((element) => element.matches(':focus-visible'))).toBe(true)
       await expect(button).toHaveAttribute('data-state', 'instant-open')
-      await expect(button).toHaveAttribute('aria-describedby', /.+/)
       const tip = page.getByRole('tooltip')
       await expect(tip).toHaveText('Archive')
+      const tooltipId = await tip.getAttribute('id')
+      expect(tooltipId).toBeTruthy()
+      await expect(button).toHaveAttribute('aria-describedby', tooltipId!)
       await page.keyboard.press('Escape')
       await expect(tip).toBeHidden()
       await expect(button).toBeFocused()
