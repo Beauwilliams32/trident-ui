@@ -144,7 +144,10 @@ describe('Popover and Tooltip', () => {
       </Tooltip>,
     )
     const trigger = screen.getByRole('button', { name: 'Archive' })
-    fireEvent.focus(trigger)
+    await act(async () => {
+      trigger.focus()
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
+    })
     const tip = await screen.findByRole('tooltip')
     expect(tip.textContent).toContain('Archive post')
   })
